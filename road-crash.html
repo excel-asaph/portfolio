@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en" data-wf-page="road-crash" data-wf-site="678cf6b9ec8afcb96a1835c0">
+<head>
+  <meta charset="utf-8">
+  <title>Road Crash Severity Nigeria — Excel Asaph</title>
+  <meta content="Predicting fatal vs. non-fatal road crash severity using FRSC national data — XGBoost, SVM, and regularized neural networks on a severely imbalanced dataset (477:4), solved with SMOTE." name="description">
+  <meta content="Road Crash Severity Nigeria | Excel Asaph" property="og:title">
+  <meta content="XGBoost 97.2% accuracy on Nigeria FRSC crash data." property="og:description">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/emmanuels-portfolio-35c9fa.webflow.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({ google: { families: ["Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"] } });</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart" in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.svg" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.svg" rel="apple-touch-icon">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    html { scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
+    html::-webkit-scrollbar { display: none; }
+
+    /* ══ ROAD CRASH — STEEL GRAY ACCENT SYSTEM ══ */
+    :root {
+      --rc-darkest: #0f172a;
+      --rc-dark:    #1e293b;
+      --rc-accent:  #475569;
+      --rc-mid:     #94a3b8;
+      --rc-light:   #f8fafc;
+      --rc-warm:    #e2e8f0;
+    }
+    body { background-color: var(--rc-light); }
+
+    /* ══ SCROLL INDICATOR ══ */
+    .scroll-indicator {
+      position: fixed; right: 18px; top: 50%;
+      transform: translateY(-50%);
+      width: 6px; height: 28vh;
+      z-index: 999; pointer-events: none; opacity: 0;
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .scroll-indicator.visible {
+      opacity: 1;
+      transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .scroll-indicator-track { position: absolute; inset: 0; background: rgba(71,85,105,0.15); border-radius: 999px; }
+    .scroll-indicator-thumb {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 28px; background: var(--rc-accent);
+      border-radius: 999px; top: 0; will-change: top;
+    }
+
+    /* ══ EDITORIAL HERO ══ */
+    .rc-editorial-hero { padding: 72px 152px 40px; text-align: center; }
+    .rc-editorial-title {
+      font-size: clamp(40px, 6.5vw, 100px);
+      font-weight: 800; color: var(--rc-darkest);
+      letter-spacing: -4px; line-height: 0.9; margin: 0 0 56px;
+    }
+    .rc-editorial-meta { display: flex; justify-content: center; gap: 72px; margin-bottom: 100px; }
+    .rc-editorial-meta-item { font-size: 15px; font-weight: 300; color: #607d8b; margin: 0; }
+    .rc-editorial-meta-item strong { color: #3a4248; font-weight: 700; }
+    .rc-showcase-frame {
+      background: var(--rc-darkest); border-radius: 22px; padding: 18px;
+      max-width: 1160px; margin: 0 auto;
+      box-shadow: 0 60px 160px rgba(15,23,42,0.22), 0 0 0 1px rgba(15,23,42,0.08);
+    }
+    .rc-showcase-inner { border-radius: 10px; overflow: hidden; background: #000; }
+    @media (max-width: 991px) {
+      .rc-editorial-hero { padding: 48px 70px 64px; }
+      .rc-editorial-title { letter-spacing: -3px; }
+      .rc-editorial-meta { flex-wrap: wrap; }
+    }
+    @media (max-width: 767px) {
+      .rc-editorial-hero { padding: 40px 40px 56px; }
+      .rc-editorial-meta-item { max-width: 50%; padding: 20px; }
+    }
+    @media (max-width: 479px) {
+      .rc-editorial-hero { padding: 32px 20px 48px; }
+      .rc-editorial-title { letter-spacing: -2px; }
+    }
+
+    /* ══ NAV OVERRIDES ══ */
+    .nav-block { background-color: transparent !important; background-image: none !important; height: auto !important; margin-bottom: 0 !important; }
+    .navbar-no-shadow-container { background: transparent !important; }
+    .text-block-7.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
+    .text-block-9.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df { color: var(--rc-darkest) !important; }
+    .nav-link.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
+    .text-block-10.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
+    .nav-dropdown-icon.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df { color: var(--rc-darkest) !important; }
+
+    /* ══ ACCENT COLOR OVERRIDES ══ */
+    .dot { color: var(--rc-accent) !important; }
+    .bold-text-5, .bold-text-6 { color: var(--rc-accent) !important; }
+    .bold-text-8, .bold-text-9, .bold-text-13 { color: var(--rc-accent) !important; }
+
+    /* ══ OBSERVATION CARDS ══ */
+    .observation-card { background-color: #ffffff !important; position: relative; overflow: hidden; }
+    .observation-card .project-body-heading { color: var(--rc-darkest) !important; position: relative; z-index: 1; }
+    .observation-card p { position: relative; z-index: 1; }
+    .obs-ph-icon { font-size: 44px; color: var(--rc-accent); margin-bottom: 20px; display: block; line-height: 1; position: relative; z-index: 1; }
+    .obs-ph-ghost { position: absolute; bottom: -24px; right: -12px; font-size: 150px; color: var(--rc-accent); opacity: 0.08; pointer-events: none; line-height: 1; z-index: 0; }
+
+    /* ══ PROJECT SIDE BLOCK ══ */
+    .project-side-block .side-block-heading { color: var(--rc-accent) !important; transition: color 0.3s ease; }
+    .project-side-block .github-link img {
+      filter: invert(35%) sepia(10%) saturate(600%) hue-rotate(185deg) brightness(80%) contrast(90%);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .project-side-block .link-block:hover .side-block-heading { color: #334155 !important; }
+    .project-side-block .link-block:hover .github-link img { transform: scale(1.12); }
+
+    /* ══ DIVIDERS ══ */
+    .key-observation-section .horizontal-bar.dark,
+    .software-blueprint-section .horizontal-bar.dark,
+    .section-9 .horizontal-bar.dark,
+    .horizontal-bar.dark { background-color: rgba(71,85,105,0.2) !important; }
+    .section-11 .horizontal-bar.light { background-color: rgba(71,85,105,0.15) !important; }
+
+    /* ══ CHAPTER CONTENT SECTIONS ══ */
+    .key-observation-section,
+    .software-blueprint-section,
+    .section-9,
+    .section-11 {
+      background-color: var(--rc-light) !important;
+      background-image: none !important;
+      padding-bottom: 120px !important;
+    }
+    .key-observation-section, .software-blueprint-section { padding-top: 150px; }
+    .key-observation-section .project-body-heading.light.experience-heading,
+    .software-blueprint-section .project-body-heading.light.experience-heading { color: var(--rc-accent) !important; }
+    .key-observation-section .project-body-heading.light,
+    .software-blueprint-section .project-body-heading.light { color: #3a4248 !important; }
+    .key-observation-section .bold-text-2.white,
+    .software-blueprint-section .bold-text-2.white { color: var(--rc-darkest) !important; }
+
+    /* ══ CHAPTER (dark) ══ */
+    .rc-chapter { background: var(--rc-darkest); }
+    .rc-chapter .chapter-h1 { color: var(--rc-mid); }
+    .rc-chapter .chapter-top-paragraph, .rc-chapter .paragraph-2 { color: var(--rc-mid); }
+
+    /* ══ TINT SECTION ══ */
+    .rc-tint-section { background-color: var(--rc-light); padding-top: 150px; }
+
+    /* ══ LARGE STATEMENT ══ */
+    .large-statement {
+      font-size: clamp(28px, 4vw, 46px); font-weight: 800; color: #0f172a;
+      line-height: 1.2; letter-spacing: -0.5px; max-width: 800px; margin: 48px 0 24px;
+    }
+    .large-statement em { font-style: normal; color: var(--rc-accent); }
+
+    /* ══ SCENE BLOCK ══ */
+    .scene-block { margin: 40px 0; border-radius: 16px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.10); }
+
+    /* ══ TWO-COL SCENE ══ */
+    .two-col-scene { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 32px 0; }
+
+    /* ══ METRICS ROW ══ */
+    .rc-metric-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 32px 0; }
+    .rc-metric-card {
+      background: transparent;
+      border: 1.5px solid rgba(71,85,105,0.3);
+      border-radius: 12px; padding: 24px 20px; text-align: center;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .rc-metric-card:hover { border-color: rgba(71,85,105,0.6); background: rgba(71,85,105,0.04); }
+    .rc-metric-card.highlight { border-color: var(--rc-accent); background: rgba(71,85,105,0.06); }
+    .rc-metric-n { font-size: 38px; font-weight: 800; color: var(--rc-darkest); display: block; margin-bottom: 6px; line-height: 1; }
+    .rc-metric-l { font-size: 12px; color: #607d8b; line-height: 1.4; }
+
+    /* ══ RESULTS TABLE ══ */
+    .results-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 24px 0; border-radius: 8px; }
+    .results-table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13px; font-family: "Open Sans", sans-serif; }
+    .results-table th { background: var(--rc-darkest); color: var(--rc-mid); padding: 12px 14px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+    .results-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; font-weight: 500; }
+    .results-table tr:last-child td { border-bottom: none; }
+    .results-table .best-row td { background: #f8fafc; }
+    .results-table .best-val { color: var(--rc-darkest); font-weight: 800; }
+    .xgb-badge { display: inline-flex; align-items: center; gap: 4px; background: #f0fdf4; color: #166534; border-radius: 999px; padding: 2px 10px; font-size: 10px; font-weight: 700; }
+    .warn-badge { background: #fef3c7; color: #92400e; border-radius: 999px; padding: 2px 10px; font-size: 10px; font-weight: 700; display: inline-block; }
+
+    /* ══ IMBALANCE VIZ ══ */
+    .imbalance-viz { background: var(--rc-darkest); border-radius: 16px; padding: 32px; margin: 32px 0; }
+    .imbalance-bar-wrap { margin: 14px 0; }
+    .imbalance-label { display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-bottom: 6px; font-weight: 600; }
+    .imbalance-bar { height: 20px; border-radius: 4px; background: rgba(255,255,255,0.05); }
+    .imbalance-fill { height: 100%; border-radius: 4px; }
+
+    /* ══ FEATURE GRID ══ */
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 24px 0; }
+    .feature-item { background: #fff; border: 1.5px solid var(--rc-warm); border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
+    .feature-code { font-family: monospace; font-size: 12px; font-weight: 700; color: var(--rc-accent); background: var(--rc-light); padding: 4px 8px; border-radius: 6px; flex-shrink: 0; min-width: 90px; text-align: center; }
+    .feature-desc { font-size: 12px; color: #607d8b; }
+
+    /* ══ ARCH IMAGE ══ */
+    .arch-wrap { border: 1.5px solid var(--rc-warm); border-radius: 16px; overflow: hidden; margin: 32px 0; }
+    .arch-label { background: var(--rc-light); border-bottom: 1px solid var(--rc-warm); padding: 14px 20px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--rc-accent); }
+    .arch-wrap img { width: 100%; display: block; }
+
+    /* ══ TAGS ══ */
+    .rc-tag { background-color: var(--rc-light); border: 1px solid var(--rc-warm); }
+    .rc-tag-text { color: var(--rc-accent); font-weight: 600; }
+
+    /* ══ ML PROGRESS ══ */
+    .ml-progress-fill { height: 4px; background: var(--rc-accent); border-radius: 4px; width: 0; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .ml-progress-fill.animated { width: var(--target-width); }
+
+    /* ══ MODEL GRID ══ */
+    .rc-model-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 28px 0;
+    }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 767px) {
+      .rc-metric-row { grid-template-columns: 1fr 1fr; }
+      .two-col-scene { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .rc-model-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 479px) {
+      .rc-model-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="body">
+  <div id="page-enter-overlay" style="position:fixed;inset:0;z-index:9999;background:#f8fafc;pointer-events:none;transition:opacity 0.65s cubic-bezier(0.4,0,0.2,1);"></div>
+  <script>requestAnimationFrame(()=>{requestAnimationFrame(()=>{var e=document.getElementById('page-enter-overlay');if(e){e.style.opacity='0';setTimeout(()=>e.remove(),700);}})});</script>
+
+  <!-- ══ SCROLL INDICATOR ══ -->
+  <div class="scroll-indicator" id="scroll-indicator">
+    <div class="scroll-indicator-track"></div>
+    <div class="scroll-indicator-thumb" id="scroll-indicator-thumb"></div>
+  </div>
+
+  <!-- ══ NAV ══ -->
+  <div id="page-top" class="nav-block" style="background-color: var(--rc-light);">
+    <div data-wf--nav-bar--variant="life-prescriber---nav">
+      <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-no-shadow-container w-nav">
+        <div class="container-regular container">
+          <div class="navbar-wrapper">
+            <a href="index.html" class="navbar-brand w-nav-brand">
+              <div class="text-block-7 w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">Excel Asaph</div>
+              <div class="text-block-9 w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">Software Engineer (ML)</div>
+            </a>
+            <nav role="navigation" class="nav-menu-wrapper w-nav-menu">
+              <ul role="list" class="nav-menu w-list-unstyled">
+                <li class="list-item"><a href="about.html" class="nav-link w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">About Me</a></li>
+                <li class="list-item">
+                  <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
+                    <div data-w-id="2f800a98-825f-3ce9-5a00-5a902d9c8b88" class="nav-dropdown-toggle w-dropdown-toggle">
+                      <div class="nav-dropdown-icon w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df w-icon-dropdown-toggle"></div>
+                      <div class="text-block-10 w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">Projects</div>
+                    </div>
+                    <nav class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
+                      <a href="life-prescriber.html" class="nav-dropdown-link w-dropdown-link">Life Prescriber</a>
+                      <a href="campus-cart.html" class="nav-dropdown-link w-dropdown-link">Campus Cart</a>
+                      <a href="collab-u.html" class="nav-dropdown-link w-dropdown-link">Collab-U</a>
+                    </nav>
+                  </div>
+                </li>
+                <li class="list-item"><a href="ml-projects.html" class="nav-link w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df w--current">ML Projects</a></li>
+              </ul>
+            </nav>
+            <div class="menu-button w-nav-button"><div class="w-icon-nav-menu"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EDITORIAL HERO ══ -->
+  <section class="rc-editorial-hero">
+    <h1 class="rc-editorial-title">ROAD CRASH<br>SEVERITY</h1>
+    <div class="rc-editorial-meta">
+      <p class="rc-editorial-meta-item"><strong>Role:</strong>&nbsp; ML Researcher</p>
+      <p class="rc-editorial-meta-item"><strong>Context:</strong>&nbsp; Academic Research</p>
+      <p class="rc-editorial-meta-item"><strong>Duration:</strong>&nbsp; 3 Weeks</p>
+    </div>
+    <div class="rc-showcase-frame">
+      <div class="rc-showcase-inner">
+        <div style="position: relative; width: 100%; padding-bottom: 56.25%;">
+          <iframe
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block;"
+            src="https://www.youtube.com/embed/IA_toaGb8As"
+            title="Road Crash Severity Prediction Nigeria — ML Project Presentation"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTRIBUTION BLOCK ══ -->
+  <section>
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex contribution-block">
+        <div class="contribution-heading">My individual contribution</div>
+        <div class="contribution-paragraph">I built this project as a research exercise on a dataset I had genuine interest in: FRSC quarterly crash records spanning all 37 Nigerian states. The 477:4 class imbalance was the first problem to solve, and SMOTE was the tool that made any real model comparison possible at all. I implemented and tuned five models: three neural network configurations with different regularization strategies, SVM with a sigmoid kernel, and XGBoost. The XGBoost result at 97.2% wasn't a surprise on its own. What surprised me was how sharply it outperformed the neural networks, and what the gap revealed about how these model families respond differently to small tabular datasets augmented with synthetic data.</div>
+
+        <div class="contribution-skills">Data Engineering &amp; SMOTE</div>
+        <div class="progress-bar"><div class="ml-progress-fill" style="--target-width: 92%;"></div></div>
+
+        <div class="contribution-skills">Model Implementation &amp; Tuning (5 models)</div>
+        <div class="progress-bar"><div class="ml-progress-fill" style="--target-width: 90%;"></div></div>
+
+        <div class="contribution-skills">Comparative Analysis &amp; Evaluation</div>
+        <div class="progress-bar"><div class="ml-progress-fill" style="--target-width: 95%;"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROJECT DETAILS ══ -->
+  <section>
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex project-headings">
+        <h3 class="project-top-heading"><strong class="bold-text-5">_______&nbsp;&nbsp; PROJECT DETAILS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2">Understanding the project</strong><span class="period-span"><strong class="bold-text-8">.</strong></span></h1>
+      </div>
+      <div class="horizontal-bar"></div>
+      <div class="w-layout-hflex project-main-block">
+        <div class="w-layout-vflex project-about-block">
+          <div class="project-body-heading">About</div>
+          <p class="project-body-paragraph">Road Crash Severity is an academic ML research project using FRSC quarterly road traffic data to predict whether a crash is fatal or non-fatal. The dataset covers 481 records spanning 37 Nigerian states and 13 quarters from Q3 2021 to Q3 2024. Five models were implemented and compared: three neural network configurations (unregularized, L1, and L2 with dropout), SVM, and XGBoost. SMOTE was applied to address a 477:4 class imbalance that would have made every model trivially predict "fatal" without it.</p>
+
+          <div class="project-body-heading">Problem Statement</div>
+          <p class="project-body-paragraph">Nigeria records 41,709 road fatalities annually, with speeding accounting for 56.3% of all recorded crashes. The FRSC national dataset provides state-level quarterly summaries of crash counts and causative factor breakdowns. The goal is to predict crash severity from these distributions. The catch is that the raw data is almost entirely labeled fatal: 477 records to 4, which makes model evaluation meaningless without addressing the imbalance first.</p>
+
+          <div class="project-body-heading">Project tags</div>
+          <div class="w-layout-hflex project-main-tags">
+            <div class="project-tags-button rc-tag"><div class="tag-button-text rc-tag-text">Predictive ML</div></div>
+            <div class="project-tags-button rc-tag"><div class="tag-button-text rc-tag-text">Class Imbalance</div></div>
+            <div class="project-tags-button rc-tag"><div class="tag-button-text rc-tag-text">Research</div></div>
+            <div class="project-tags-button rc-tag"><div class="tag-button-text rc-tag-text">Road Safety</div></div>
+          </div>
+
+          <div class="project-body-heading tech-stack">Tech Stack</div>
+          <div class="w-layout-hflex project-main-tags">
+            <div class="project-tags-button rc-tag"><div class="tag-button-text rc-tag-text">XGBoost</div></div>
+            <div class="project-tags-button rc-tag"><div class="tag-button-text rc-tag-text">Keras</div></div>
+            <div class="project-tags-button rc-tag"><div class="tag-button-text rc-tag-text">scikit-learn</div></div>
+            <div class="project-tags-button rc-tag"><div class="tag-button-text rc-tag-text">SMOTE</div></div>
+            <div class="project-tags-button rc-tag"><div class="tag-button-text rc-tag-text">Pandas / NumPy</div></div>
+          </div>
+        </div>
+
+        <div class="w-layout-vflex project-side-block">
+          <div class="horizontal-bar2"></div>
+          <a href="https://github.com/excel-asaph/Predicting-Road-Crash-Severity-in-Nigeria-Using-ML-Optimization-Techniques" target="_blank" class="link-block w-inline-block">
+            <div class="w-layout-hflex github-link">
+              <img src="images/mdi_github-1.svg" loading="lazy" alt="">
+              <div class="side-block-heading">GitHub</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="w-layout-hflex team-detail">
+        <div class="w-layout-vflex team-numbers">
+          <h1 class="team-heading">1</h1>
+          <div class="team-title">Researcher</div>
+        </div>
+        <div class="vertical-bar"></div>
+        <div class="w-layout-vflex team-numbers">
+          <h1 class="team-heading">481</h1>
+          <div class="team-title">Records</div>
+        </div>
+        <div class="vertical-bar"></div>
+        <div class="w-layout-vflex team-numbers">
+          <h1 class="team-heading">37</h1>
+          <div class="team-title">States</div>
+        </div>
+        <div class="vertical-bar"></div>
+        <div class="w-layout-vflex team-numbers">
+          <h1 class="team-heading">5</h1>
+          <div class="team-title">Models</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- ═══════════════════════════════════════════════════════
+     CHAPTER 1: PROBLEM & CONTEXT
+════════════════════════════════════════════════════════ -->
+<section class="chapter-section rc-chapter">
+  <div class="w-layout-hflex chapter-block">
+    <h1 class="chapter-h1">01 /</h1>
+    <div class="w-layout-vflex chapter-texts">
+      <p class="chapter-top-paragraph">CHAPTER</p>
+      <p class="paragraph-2">PROBLEM &amp; CONTEXT</p>
+    </div>
+  </div>
+</section>
+
+<section class="key-observation-section">
+  <div class="w-layout-blockcontainer container w-container">
+
+    <div class="large-statement">
+      477 fatal crash records. 4 non-fatal ones. A model trained on that learns nothing except to <em>always say fatal.</em>
+    </div>
+
+    <div style="margin-top: 56px;"></div>
+    <h3 class="project-top-heading"><strong class="bold-text-6">_______&nbsp;&nbsp; THREE PROBLEMS INSIDE ONE</strong></h3>
+    <h1 class="project-bottom-heading"><strong class="bold-text-2">What made this harder than it looks</strong><span class="period-span"><strong class="dot">.</strong></span></h1>
+    <div class="horizontal-bar dark"></div>
+
+    <div class="w-layout-hflex observation-block-cards">
+      <div class="w-layout-vflex observation-card">
+        <i class="ph ph-fill ph-warning-octagon obs-ph-icon"></i>
+        <div class="project-body-heading light experience-heading">The Imbalance Is a Data Collection Signal, Not Just a Technical Problem</div>
+        <p class="observation-card-paragraph">A 477:4 split doesn't just mean the classes are unequal. It means the FRSC records fatal crashes more systematically than non-fatal ones. That's a reporting pattern, not purely a road safety reality. Before any model sees the data, you have to decide whether SMOTE is fixing a learning problem or papering over a collection problem. I chose SMOTE because the learning problem was real and addressable, but I kept the collection question in mind when interpreting results.</p>
+        <i class="ph ph-fill ph-warning-octagon obs-ph-ghost"></i>
+      </div>
+      <div class="w-layout-vflex observation-card">
+        <i class="ph ph-fill ph-tree-structure obs-ph-icon"></i>
+        <div class="project-body-heading light experience-heading">Tree Models Should Always Be Your Tabular Baseline</div>
+        <p class="observation-card-paragraph">Neural networks get a lot of attention for their flexibility, but on tabular datasets with a few hundred rows, gradient boosting almost always wins. The inductive biases that make NNs powerful on images and sequences work against them when the dataset is small and structured. I ran three neural network configurations not because I expected them to beat XGBoost, but because the comparison itself was the research question: how do different regularization strategies respond when data is this limited?</p>
+        <i class="ph ph-fill ph-tree-structure obs-ph-ghost"></i>
+      </div>
+      <div class="w-layout-vflex observation-card">
+        <i class="ph ph-fill ph-scales obs-ph-icon"></i>
+        <div class="project-body-heading light experience-heading">97.2% Accuracy Means Less Than It Sounds Without Context</div>
+        <p class="observation-card-paragraph">After SMOTE, 97.2% accuracy is a real result. Before SMOTE, predicting "fatal" for every single record gives 99.2%. The number only means something if the dataset it's measured on is honest. This is why SMOTE must be applied after the train-test split: if synthetic samples leak into the test set, the metrics describe how well the model learned from SMOTE's interpolation, not from real crash patterns.</p>
+        <i class="ph ph-fill ph-scales obs-ph-ghost"></i>
+      </div>
+    </div>
+
+    <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-6">_______&nbsp;&nbsp; THE DATA</strong></h3>
+    <h1 class="project-bottom-heading"><strong class="bold-text-2">481 records, 37 states, 13 quarters</strong><span class="period-span"><strong class="dot">.</strong></span></h1>
+    <div class="horizontal-bar dark"></div>
+    <p class="project-body-paragraph">The FRSC Road Transport Data covers quarterly crash summaries across all 37 Nigerian states from Q3 2021 to Q3 2024. The raw Excel file stores crash statistics and causative factor data as two separate blocks at different row positions, which had to be extracted independently and joined on STATE and QUARTER before any feature engineering. Missing values in the merged data were handled with linear interpolation within each state's time series, followed by quarter-level mean imputation for any remaining gaps. I converted raw counts to percentage-based features to make them comparable across states and time periods with different total crash volumes. The target is a binary severity label: fatal if any fatalities were recorded in that state-quarter combination, non-fatal otherwise.</p>
+
+    <div class="imbalance-viz">
+      <div style="font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--rc-mid); margin-bottom:20px;">Class Imbalance — Before and After SMOTE</div>
+      <div style="font-size:12px; color:#94a3b8; margin-bottom:18px; line-height:1.6;">With only 4 non-fatal samples, SMOTE had to run with <code style="background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;font-size:11px;">k_neighbors=2</code> instead of the default 5 — using k=5 would have failed since you need at least k+1 minority samples to interpolate between.</div>
+      <div class="imbalance-bar-wrap">
+        <div class="imbalance-label"><span>Before SMOTE — Fatal</span><span>477 records (99.2%)</span></div>
+        <div class="imbalance-bar"><div class="imbalance-fill" style="width:99.2%; background:#dc2626;"></div></div>
+      </div>
+      <div class="imbalance-bar-wrap">
+        <div class="imbalance-label"><span>Before SMOTE — Non-Fatal</span><span>4 records (0.8%)</span></div>
+        <div class="imbalance-bar"><div class="imbalance-fill" style="width:0.8%; background:#94a3b8;"></div></div>
+      </div>
+      <div style="height:20px;"></div>
+      <div style="font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:#7dd3fc; margin-bottom:12px;">After SMOTE</div>
+      <div class="imbalance-bar-wrap">
+        <div class="imbalance-label"><span>After SMOTE — Fatal</span><span>477 records (50%)</span></div>
+        <div class="imbalance-bar"><div class="imbalance-fill" style="width:50%; background:#dc2626;"></div></div>
+      </div>
+      <div class="imbalance-bar-wrap">
+        <div class="imbalance-label"><span>After SMOTE — Non-Fatal (synthetic)</span><span>477 records (50%)</span></div>
+        <div class="imbalance-bar"><div class="imbalance-fill" style="width:50%; background:#22c55e;"></div></div>
+      </div>
+    </div>
+
+    <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-6">_______&nbsp;&nbsp; FEATURE ENGINEERING</strong></h3>
+    <h1 class="project-bottom-heading"><strong class="bold-text-2">Eight causative factors as percentage features</strong><span class="period-span"><strong class="dot">.</strong></span></h1>
+    <div class="horizontal-bar dark"></div>
+    <p class="project-body-paragraph">Raw crash counts vary significantly between states and quarters based on total traffic volume. Converting each causative factor to a percentage of total crashes in that state-quarter normalizes for volume and makes the features genuinely comparable across records. Speeding accounts for 56.3% of all crashes nationally and is the single most predictive feature in the trained XGBoost model.</p>
+
+    <div class="feature-grid">
+      <div class="feature-item"><span class="feature-code">SPV_PCT</span><span class="feature-desc">Speeding — 56.3% of crashes</span></div>
+      <div class="feature-item"><span class="feature-code">TBT_PCT</span><span class="feature-desc">Tire burst</span></div>
+      <div class="feature-item"><span class="feature-code">BFL_PCT</span><span class="feature-desc">Brake failure</span></div>
+      <div class="feature-item"><span class="feature-code">WOT_PCT</span><span class="feature-desc">Wrong overtaking</span></div>
+      <div class="feature-item"><span class="feature-code">DGD_PCT</span><span class="feature-desc">Dangerous driving</span></div>
+      <div class="feature-item"><span class="feature-code">RTV_PCT</span><span class="feature-desc">Road traffic violations</span></div>
+      <div class="feature-item"><span class="feature-code">SLV_PCT</span><span class="feature-desc">Overloading</span></div>
+      <div class="feature-item"><span class="feature-code">OTHERS_PCT</span><span class="feature-desc">Other causative factors</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     CHAPTER 2: MODELS & APPROACH
+════════════════════════════════════════════════════════ -->
+<section class="chapter-section rc-chapter">
+  <div class="w-layout-hflex chapter-block">
+    <h1 class="chapter-h1">02 /</h1>
+    <div class="w-layout-vflex chapter-texts">
+      <p class="chapter-top-paragraph">CHAPTER</p>
+      <p class="paragraph-2">MODELS &amp; APPROACH</p>
+    </div>
+  </div>
+</section>
+
+<section class="software-blueprint-section">
+  <div class="w-layout-blockcontainer container w-container">
+
+    <h3 class="project-top-heading"><strong class="bold-text-6">_______&nbsp;&nbsp; MODEL LINEUP</strong></h3>
+    <h1 class="project-bottom-heading"><strong class="bold-text-2">Five models compared on the same data</strong><span class="period-span"><strong class="dot">.</strong></span></h1>
+    <div class="horizontal-bar dark"></div>
+    <p class="project-body-paragraph">I implemented three neural network variants to isolate the effect of regularization: a baseline with no optimization, an L1-regularized version, and an L2 with dropout. SVM and XGBoost were the classical ML comparison points. Each model trained on the same SMOTE-balanced training set and was evaluated on the original unbalanced test split. Evaluating on unbalanced test data gives a more honest picture of how the model would perform in a real reporting environment rather than a cleaned-up one.</p>
+
+    <div class="rc-model-grid">
+      <div style="background:#fff; border:1.5px solid var(--rc-warm); border-radius:14px; padding:20px;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--rc-accent); margin-bottom:8px;">NN 1</div>
+        <div style="font-size:15px; font-weight:800; color:#0f172a; margin-bottom:6px;">No Optimization</div>
+        <div style="font-size:12px; color:#607d8b; line-height:1.6;">Adam · 10 epochs · No regularization · 4 layers (8, 10, 12, 1)</div>
+      </div>
+      <div style="background:#fff; border:1.5px solid var(--rc-warm); border-radius:14px; padding:20px;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--rc-accent); margin-bottom:8px;">NN 2</div>
+        <div style="font-size:15px; font-weight:800; color:#0f172a; margin-bottom:6px;">L1 Regularization</div>
+        <div style="font-size:12px; color:#607d8b; line-height:1.6;">Adam · LR=0.5 · L1(0.05) · Early stopping patience=3</div>
+      </div>
+      <div style="background:#fff; border:1.5px solid var(--rc-warm); border-radius:14px; padding:20px;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--rc-accent); margin-bottom:8px;">NN 3 — Best NN</div>
+        <div style="font-size:15px; font-weight:800; color:#0f172a; margin-bottom:6px;">L2 + Dropout</div>
+        <div style="font-size:12px; color:#607d8b; line-height:1.6;">RMSprop · LR=0.08 · L2(0.009) · 0.3 dropout · patience=5</div>
+      </div>
+      <div style="background:#fff; border:1.5px solid var(--rc-warm); border-radius:14px; padding:20px;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--rc-accent); margin-bottom:8px;">Classical ML</div>
+        <div style="font-size:15px; font-weight:800; color:#0f172a; margin-bottom:6px;">SVM</div>
+        <div style="font-size:12px; color:#607d8b; line-height:1.6;">C=5 · Sigmoid kernel · gamma=0.5 · Balanced class weights</div>
+      </div>
+      <div style="background:var(--rc-light); border:2px solid var(--rc-accent); border-radius:14px; padding:20px;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--rc-accent); margin-bottom:8px;">Best Overall</div>
+        <div style="font-size:15px; font-weight:800; color:#0f172a; margin-bottom:6px;">XGBoost</div>
+        <div style="font-size:12px; color:#607d8b; line-height:1.6;">max_depth=3 · LR=0.02 · n_estimators=100 · subsample=0.5 · colsample=0.4</div>
+      </div>
+    </div>
+
+    <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-6">_______&nbsp;&nbsp; PIPELINE ARCHITECTURE</strong></h3>
+    <h1 class="project-bottom-heading"><strong class="bold-text-2">From raw FRSC data to trained model</strong><span class="period-span"><strong class="dot">.</strong></span></h1>
+    <div class="horizontal-bar dark"></div>
+    <p class="project-body-paragraph">The pipeline starts with raw FRSC quarterly data, applies feature engineering to normalize crash counts into percentage distributions, then splits into train and test sets before SMOTE is applied. The order matters: SMOTE runs on the training set only, after the split, so synthetic samples never appear in the test data. After SMOTE the dataset grew from 481 to 954 samples, split 70/15/15 into 667 training, 143 validation, and 144 test records. All five models train on the same balanced set and are evaluated on the same 143-sample validation split.</p>
+
+    <div class="arch-wrap">
+      <div class="arch-label">Model Architecture — Road Traffic Prediction Pipeline</div>
+      <img src="images/road-crash-architecture.png" loading="lazy" alt="Road crash severity prediction pipeline architecture">
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     CHAPTER 3: RESULTS & EXECUTION
+════════════════════════════════════════════════════════ -->
+<section class="chapter-section rc-chapter">
+  <div class="w-layout-hflex chapter-block">
+    <h1 class="chapter-h1">03 /</h1>
+    <div class="w-layout-vflex chapter-texts">
+      <p class="chapter-top-paragraph">CHAPTER</p>
+      <p class="paragraph-2">RESULTS &amp; EXECUTION</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-9 rc-tint-section">
+  <div class="w-layout-blockcontainer container w-container">
+
+    <h3 class="project-top-heading"><strong class="bold-text-6">_______&nbsp;&nbsp; MODEL COMPARISON</strong></h3>
+    <h1 class="project-bottom-heading"><strong class="bold-text-2">XGBoost 97.2%, perfect precision</strong><span class="period-span"><strong class="dot">.</strong></span></h1>
+    <div class="horizontal-bar dark"></div>
+    <p class="project-body-paragraph">All five models were evaluated on the same unbalanced validation split after training on SMOTE-balanced data. XGBoost delivered the strongest performance across every metric: 97.2% accuracy, 0.9733 F1, and 100% precision. The L2-regularized neural network with dropout was the best-performing NN at 91.6% accuracy. The most instructive failure was NN2 with L1 regularization: a learning rate of 0.5 combined with aggressive L1 at 0.05 destabilized training so thoroughly that the model predicted FATAL for every single record. It achieved 100% recall for the fatal class and precision=0.00 for non-fatal — not because it learned anything, but because it found the trivially safe prediction and never escaped it.</p>
+
+    <div class="rc-metric-row">
+      <div class="rc-metric-card highlight">
+        <span class="rc-metric-n">97.2%</span>
+        <span class="rc-metric-l">XGBoost Accuracy</span>
+      </div>
+      <div class="rc-metric-card">
+        <span class="rc-metric-n">0.9733</span>
+        <span class="rc-metric-l">F1 Score</span>
+      </div>
+      <div class="rc-metric-card">
+        <span class="rc-metric-n">100%</span>
+        <span class="rc-metric-l">Precision</span>
+      </div>
+      <div class="rc-metric-card">
+        <span class="rc-metric-n">5</span>
+        <span class="rc-metric-l">Models Compared</span>
+      </div>
+    </div>
+
+    <div class="results-table-wrap">
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Accuracy</th>
+          <th>F1 Score</th>
+          <th>Precision</th>
+          <th>Recall</th>
+          <th>Loss</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>NN1 — No Optimization</td>
+          <td>0.9580</td>
+          <td>0.9595</td>
+          <td>0.9600</td>
+          <td>0.9590</td>
+          <td>0.1829</td>
+        </tr>
+        <tr>
+          <td>NN2 — L1 Regularization</td>
+          <td>0.4615 <span class="warn-badge">All FATAL predicted</span></td>
+          <td>0.7000</td>
+          <td>0.5000</td>
+          <td>1.0000</td>
+          <td>0.8641</td>
+        </tr>
+        <tr>
+          <td>NN3 — L2 + Dropout (Best NN)</td>
+          <td>0.9161</td>
+          <td>0.9419</td>
+          <td>0.9300</td>
+          <td>0.9500</td>
+          <td class="best-val">0.1574</td>
+        </tr>
+        <tr>
+          <td>SVM — Sigmoid Kernel</td>
+          <td>0.4615 <span class="warn-badge">Struggled</span></td>
+          <td>0.5032</td>
+          <td>0.5000</td>
+          <td>0.5065</td>
+          <td>—</td>
+        </tr>
+        <tr class="best-row">
+          <td><strong>XGBoost</strong> <span class="xgb-badge">Best</span></td>
+          <td class="best-val">0.9720</td>
+          <td class="best-val">0.9733</td>
+          <td class="best-val">1.0000</td>
+          <td>0.9481</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-6">_______&nbsp;&nbsp; WHY XGBOOST WON</strong></h3>
+    <h1 class="project-bottom-heading"><strong class="bold-text-2">Small data, tabular structure, SMOTE: a gradient boosting problem</strong><span class="period-span"><strong class="dot">.</strong></span></h1>
+    <div class="horizontal-bar dark"></div>
+    <p class="project-body-paragraph">Tree-based models outperform neural networks on small tabular datasets because their inductive biases fit the problem structure more naturally. XGBoost's gradient boosting iteratively corrects prediction errors from previous trees, which makes it robust to the kinds of feature distributions you get from percentage-normalized FRSC records. Its hyperparameters were tuned conservatively: max_depth=3 prevents overfitting on synthetic SMOTE samples, subsample=0.5 introduces randomness that reduces variance, and the low learning rate of 0.02 with 100 estimators builds the ensemble carefully. The SVM's poor result with the sigmoid kernel is also informative: sigmoid kernels behave similarly to neural networks on SMOTE data, which is why they struggled alongside the neural networks while XGBoost did not.</p>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     CHAPTER 4: LEARNINGS
+════════════════════════════════════════════════════════ -->
+<section class="chapter-section rc-chapter">
+  <div class="w-layout-hflex chapter-block">
+    <h1 class="chapter-h1">04 /</h1>
+    <div class="w-layout-vflex chapter-texts">
+      <p class="chapter-top-paragraph">CHAPTER</p>
+      <p class="paragraph-2">LEARNINGS</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-11">
+  <div class="w-layout-blockcontainer container w-container">
+    <div class="w-layout-vflex">
+      <h3 class="project-top-heading"><strong class="bold-text-13">_______&nbsp;&nbsp; KEY FINDINGS</strong></h3>
+      <h1 class="project-bottom-heading"><strong>What I took away from this research</strong><span><strong class="bold-text-9">.</strong></span></h1>
+      <div class="horizontal-bar light"></div>
+
+      <div class="div-block-11">
+        <h1 class="heading-4">"477:4 wasn't a data quality problem. It was a data collection signal: FRSC documents fatal crashes more consistently than non-fatal ones. That tells you something about the reporting system before it tells you anything about road safety. I'd want to understand why the imbalance is that extreme before relying on any model's predictions to inform policy decisions."</h1>
+      </div>
+
+      <div class="w-layout-hflex measuring-sucess">
+        <div class="w-layout-vflex flex-block-5">
+          <div class="project-body-heading">What worked well</div>
+          <p class="project-body-paragraph">SMOTE resolved the class imbalance cleanly enough that a real five-model comparison became possible. Without it, every model would converge to predicting "fatal" for everything and the study would produce no insight. With it, the regularization differences between the three neural network configurations became visible and interpretable: you can actually see the effect of L1 collapsing to pure recall prediction, while L2 with dropout holds stable at 91.6%.<br><br>The XGBoost result at 97.2% with 100% precision is the strongest number in the project, and the most meaningful part of it is the gap between XGBoost and the best neural network. That 6-percentage-point difference, on a dataset with 954 records after SMOTE, clarified something about how gradient boosting and deep learning relate to tabular data at small scale that I hadn't fully internalized before running these experiments.</p>
+        </div>
+        <div class="w-layout-vflex flex-block-6">
+          <div class="project-body-heading">What I would do differently</div>
+          <p class="project-body-paragraph">The most significant limitation is the data itself. 481 records of aggregated state-level quarterly data is a thin basis for a binary classifier, especially when 4 of those records represent the entire non-fatal class before SMOTE. Individual crash-level data, if it were accessible through FRSC, would change both the feature set and what you can actually conclude from the results. With crash-level records you could include road type, time of day, vehicle type, and driver demographics rather than percentage distributions of causative factors across an entire state for an entire quarter.<br><br>I would also add SHAP values to the XGBoost output. The model currently produces a severity prediction but no explanation for why that prediction was made. SHAP values would show which causative factors most influenced each prediction and would let you trace whether speeding or brake failure is the dominant predictor per state. That kind of interpretability is what makes a research model actually useful for road safety policy rather than just academically interesting.</p>
+        </div>
+      </div>
+
+      <a href="#page-top" class="scroll-to-top w-inline-block">
+        <img src="images/scroll-to-top.svg" loading="lazy" alt="" class="image-24">
+      </a>
+    </div>
+
+    <div class="w-layout-hflex footer-links">
+      <div class="footer-link">ALL ML PROJECTS</div>
+      <a href="ml-projects.html" class="footer-link">ML PROJECTS</a>
+      <a href="beevo.html" class="footer-link">BEEVO</a>
+      <a href="sparr-ai.html" class="footer-link">SPARR AI</a>
+      <a href="daladala.html" class="footer-link">DALADALA RL</a>
+      <a href="accident-detection.html" class="footer-link">ACCIDENT DETECTION</a>
+      <a href="travelbot.html" class="footer-link">TRAVELBOT</a>
+    </div>
+  </div>
+</section>
+
+<div class="horizontal-bar light footer-bar"></div>
+<section class="section-12"></section>
+
+<script src="js/webflow.js" type="text/javascript"></script>
+<script>
+  const scrollIndicatorEl = document.getElementById('scroll-indicator');
+  const scrollThumbEl     = document.getElementById('scroll-indicator-thumb');
+  let scrollHideTimer = null;
+  function updateScrollIndicator() {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress  = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
+    if (scrollThumbEl && scrollIndicatorEl) {
+      const trackH = scrollIndicatorEl.offsetHeight;
+      const thumbH = scrollThumbEl.offsetHeight;
+      scrollThumbEl.style.top = (progress * (trackH - thumbH)) + 'px';
+    }
+    if (scrollIndicatorEl) scrollIndicatorEl.classList.add('visible');
+    clearTimeout(scrollHideTimer);
+    scrollHideTimer = setTimeout(() => {
+      if (scrollIndicatorEl) scrollIndicatorEl.classList.remove('visible');
+    }, 1600);
+  }
+  window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+</script>
+<script>
+  const fills = document.querySelectorAll('.ml-progress-fill');
+  if (fills.length) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('animated'); io.unobserve(e.target); } });
+    }, { threshold: 0.4 });
+    fills.forEach(f => io.observe(f));
+  }
+</script>
+</body>
+</html>

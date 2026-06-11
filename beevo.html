@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en" data-wf-page="beevo" data-wf-site="678cf6b9ec8afcb96a1835c0">
+<head>
+  <meta charset="utf-8">
+  <title>Beevo — Excel Asaph</title>
+  <meta content="Beevo is an autonomous AI CMO that transforms a 6-week branding process into 6 minutes through a multi-agent architecture powered by Google Gemini." name="description">
+  <meta content="Beevo | Excel Asaph" property="og:title">
+  <meta content="Autonomous AI marketing platform built with Gemini Live, multi-agent orchestration, and Veo 3.1 video generation." property="og:description">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/emmanuels-portfolio-35c9fa.webflow.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({ google: { families: ["Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"] } });</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart" in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.svg" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.svg" rel="apple-touch-icon">
+  <style>
+    html { scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
+    html::-webkit-scrollbar { display: none; }
+
+    /* ══ BEEVO — BLUE ACCENT SYSTEM ══ */
+    :root {
+      --beevo-darkest: #0a3d5c;
+      --beevo-dark:    #0c5078;
+      --beevo-accent:  #0d81bc;
+      --beevo-mid:     #90cde3;
+      --beevo-light:   #dbebf8;
+      --beevo-tint:    #c5e0f580;
+    }
+    body { background-color: var(--beevo-light); }
+
+    /* ══ SCROLL INDICATOR ══ */
+    .scroll-indicator {
+      position: fixed;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 28vh;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .scroll-indicator.visible {
+      opacity: 1;
+      transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .scroll-indicator-track {
+      position: absolute;
+      inset: 0;
+      background: rgba(13,129,188,0.15);
+      border-radius: 999px;
+    }
+    .scroll-indicator-thumb {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 28px;
+      background: var(--beevo-accent);
+      border-radius: 999px;
+      top: 0;
+      will-change: top;
+    }
+
+    /* ══ CHAPTER (blue dark) ══ */
+    .beevo-chapter { background: var(--beevo-darkest); }
+    .beevo-chapter .chapter-h1 { color: var(--beevo-mid); }
+    .beevo-chapter .chapter-top-paragraph,
+    .beevo-chapter .paragraph-2 { color: #b3d9f0; }
+
+    /* ══ TINT SECTION ══ */
+    .beevo-tint-section { background-color: var(--beevo-light); }
+
+    /* ══ TAGS ══ */
+    .beevo-tag { background-color: #e0f0f8; border: 1px solid #b3d9f0; height: auto !important; }
+    .beevo-tag-text { color: var(--beevo-accent); font-weight: 600; white-space: nowrap; }
+
+    /* ══ LARGE STATEMENT ══ */
+    .large-statement {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 800;
+      color: #1a1a2e;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      max-width: 800px;
+      margin: 0 0 24px;
+    }
+    .large-statement em {
+      font-style: normal;
+      color: var(--beevo-accent);
+    }
+
+    /* ══ EDITORIAL HERO ══ */
+    .beevo-editorial-hero {
+      padding: 72px 152px 40px;
+      text-align: center;
+    }
+    .beevo-editorial-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--beevo-accent);
+      margin-bottom: 28px;
+    }
+    .beevo-editorial-title {
+      font-size: clamp(52px, 8vw, 120px);
+      font-weight: 800;
+      color: var(--beevo-darkest);
+      letter-spacing: -4px;
+      line-height: 0.9;
+      margin: 0 0 56px;
+    }
+    .beevo-editorial-meta {
+      display: flex;
+      justify-content: center;
+      gap: 72px;
+      margin-bottom: 100px;
+    }
+    .beevo-editorial-meta-item {
+      font-size: 15px;
+      font-weight: 300;
+      color: #607d8b;
+      margin: 0;
+    }
+    .beevo-editorial-meta-item strong {
+      color: #3a4248;
+      font-weight: 700;
+    }
+    .beevo-showcase-frame {
+      background: var(--beevo-darkest);
+      border-radius: 22px;
+      padding: 18px;
+      max-width: 1160px;
+      margin: 0 auto;
+      box-shadow: 0 60px 160px rgba(10,61,92,0.22), 0 0 0 1px rgba(10,61,92,0.08);
+    }
+    .beevo-showcase-inner {
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .beevo-showcase-inner img { width: 100%; display: block; }
+    @media (max-width: 991px) {
+      .beevo-editorial-hero { padding: 48px 70px 64px; }
+      .beevo-editorial-title { letter-spacing: -3px; }
+      .beevo-editorial-meta { flex-wrap: wrap; }
+    }
+    @media (max-width: 767px) {
+      .beevo-editorial-hero { padding: 40px 40px 56px; }
+      .beevo-editorial-meta-item { max-width: 50%; padding: 20px; }
+    }
+    @media (max-width: 479px) {
+      .beevo-editorial-hero { padding: 32px 20px 48px; }
+      .beevo-editorial-title { letter-spacing: -2px; }
+    }
+
+    /* ══ NAV OVERRIDES ══ */
+    .nav-block {
+      background-color: transparent !important;
+      background-image: none !important;
+      height: auto !important;
+      margin-bottom: 0 !important;
+    }
+    .navbar-no-shadow-container { background: transparent !important; }
+    .text-block-7.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
+    .text-block-9.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df { color: var(--beevo-darkest) !important; }
+    .nav-link.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
+    .text-block-10.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
+    .nav-dropdown-icon.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df { color: var(--beevo-darkest) !important; }
+
+    /* ══ TEAL ACCENT OVERRIDES (replace default Webflow blue) ══ */
+    .bold-text-2.dot,
+    .bold-text-5,
+    .bold-text-6,
+    .bold-text-8,
+    .bold-text-9,
+    .bold-text-11,
+    .bold-text-12,
+    .bold-text-13,
+    .text-block.exclaim { color: var(--beevo-accent) !important; }
+
+    /* ══ CHAPTER CONTENT — LIGHT BACKGROUNDS ══ */
+    .key-observation-section,
+    .software-blueprint-section,
+    .section-9 {
+      background-color: var(--beevo-light) !important;
+      background-image: none !important;
+    }
+    .key-observation-section .bold-text-2.white,
+    .software-blueprint-section .bold-text-2.white,
+    .section-9 .bold-text-2.white { color: #0a3d5c !important; }
+
+    .key-observation-section .project-body-heading.light,
+    .software-blueprint-section .project-body-heading.light,
+    .section-9 .project-body-heading.light { color: #3a4248 !important; }
+
+    .key-observation-section .project-body-heading.light.experience-heading,
+    .software-blueprint-section .project-body-heading.light.experience-heading,
+    .section-9 .project-body-heading.light.experience-heading { color: var(--beevo-accent) !important; }
+
+    .key-observation-section .project-body-paragraph.dark,
+    .software-blueprint-section .project-body-paragraph.dark,
+    .section-9 .project-body-paragraph.dark { color: #607d8b !important; }
+
+    .key-observation-section .horizontal-bar.dark,
+    .software-blueprint-section .horizontal-bar.dark,
+    .section-9 .horizontal-bar.dark { background-color: rgba(13,129,188,0.2) !important; }
+
+    /* ══ OBSERVATION CARDS — blue tint ══ */
+    .key-observation-section .observation-card,
+    .software-blueprint-section .observation-card,
+    .section-9 .observation-card {
+      background-color: #eaf4fb !important;
+      position: relative;
+      overflow: hidden;
+    }
+    .obs-ph-icon {
+      font-size: 44px;
+      color: var(--beevo-accent);
+      margin-bottom: 20px;
+      display: block;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+    }
+    .obs-ph-ghost {
+      position: absolute;
+      bottom: -24px;
+      right: -12px;
+      font-size: 150px;
+      color: var(--beevo-accent);
+      opacity: 0.06;
+      pointer-events: none;
+      line-height: 1;
+      z-index: 0;
+    }
+    .key-observation-section .observation-card .project-body-heading,
+    .key-observation-section .observation-card p {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ══ PROJECT SIDE BLOCK — BEEVO THEME + ANIMATIONS ══ */
+    .project-side-block .project-tags-button.live-site {
+      background-color: var(--beevo-accent) !important;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    .project-side-block .project-tags-button.live-site::after {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: -120%;
+      width: 55%;
+      height: 120%;
+      background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.32) 50%, transparent 80%);
+      transform: skewX(-18deg);
+      transition: left 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+    .project-side-block .live-site-link:hover .project-tags-button.live-site::after { left: 160%; }
+    .project-side-block .live-site-link:hover .project-tags-button.live-site { background-color: #0c9ad6 !important; }
+    .project-side-block .live-site-link .image-26 {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .project-side-block .live-site-link:hover .image-26 { transform: translate(3px, -3px); }
+    .project-side-block .side-block-heading {
+      color: var(--beevo-accent) !important;
+      transition: color 0.3s ease;
+    }
+    .project-side-block .github-link img {
+      filter: invert(40%) sepia(80%) saturate(400%) hue-rotate(170deg) brightness(90%) contrast(95%);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .project-side-block .link-block:hover .side-block-heading { color: #0c9ad6 !important; }
+    .project-side-block .link-block:hover .github-link img { transform: scale(1.12); }
+
+    /* ══ PROGRESS BARS ══ */
+    .ml-progress-fill {
+      height: 4px;
+      background: var(--beevo-accent);
+      border-radius: 4px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .ml-progress-fill.animated { width: var(--target-width); }
+    .progress-bar { background: rgba(13,129,188,0.12); }
+
+    /* ══ VIDEO EMBED ══ */
+    .video-embed-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 32px 0;
+      box-shadow: 0 8px 40px rgba(13,129,188,0.2);
+    }
+    .video-embed-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ══ BRIDGE ARCHITECTURE DIAGRAM ══ */
+    .bridge-diagram {
+      display: flex;
+      gap: 16px;
+      align-items: stretch;
+      margin: 32px 0;
+      flex-wrap: wrap;
+    }
+    .bridge-model {
+      flex: 1;
+      min-width: 220px;
+      border-radius: 12px;
+      padding: 28px 24px;
+      background: var(--beevo-darkest);
+    }
+    .bridge-model-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--beevo-mid);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .bridge-model-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .bridge-model-name span {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--beevo-mid);
+      margin-top: 2px;
+    }
+    .bridge-model-desc {
+      font-size: 13px;
+      color: #b3d9f0;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .bridge-bullet {
+      font-size: 12px;
+      color: #d0e9f7;
+      line-height: 1.8;
+    }
+    .bridge-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      color: var(--beevo-accent);
+      font-size: 28px;
+      font-weight: 300;
+    }
+
+    /* ══ 5-PHASE PIPELINE ══ */
+    .pipeline-track {
+      display: flex;
+      gap: 0;
+      margin: 32px 0;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .pipeline-step {
+      flex: 1;
+      min-width: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .pipeline-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      right: -1px;
+      width: 24px;
+      height: 2px;
+      background: var(--beevo-accent);
+      z-index: 1;
+    }
+    .pipeline-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--beevo-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .pipeline-connector {
+      width: 100%;
+      height: 2px;
+      background: #b3d9f0;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      z-index: 0;
+    }
+    .pipeline-content { margin-top: 12px; text-align: center; padding: 0 8px; }
+    .pipeline-title { font-size: 12px; font-weight: 700; color: var(--beevo-darkest); margin-bottom: 4px; }
+    .pipeline-desc { font-size: 11px; color: #607d8b; line-height: 1.5; }
+    .pipeline-time { font-size: 10px; color: var(--beevo-accent); font-weight: 600; margin-top: 4px; }
+
+    /* ══ WATCHER AGENTS GRID ══ */
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .agent-card {
+      border: 1px solid #b3d9f0;
+      border-radius: 12px;
+      padding: 24px 20px;
+      background: #eaf4fb;
+    }
+    .agent-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--beevo-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      color: white;
+      font-size: 16px;
+    }
+    .agent-name { font-size: 14px; font-weight: 700; color: var(--beevo-darkest); margin-bottom: 6px; }
+    .agent-role { font-size: 12px; color: var(--beevo-accent); font-weight: 600; margin-bottom: 8px; }
+    .agent-desc { font-size: 12px; color: #607d8b; line-height: 1.6; }
+
+    /* ══ METRIC CARDS ══ */
+    .metrics-row { display: flex; gap: 16px; margin: 32px 0; flex-wrap: wrap; }
+    .metric-card {
+      flex: 1;
+      min-width: 130px;
+      background: transparent;
+      border: 1.5px solid rgba(13,129,188,0.3);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .metric-card:hover {
+      border-color: rgba(13,129,188,0.6);
+      background: rgba(13,129,188,0.04);
+    }
+    .metric-value { font-size: 38px; font-weight: 800; color: var(--beevo-accent); line-height: 1; margin-bottom: 6px; }
+    .metric-unit { font-size: 16px; font-weight: 400; color: var(--beevo-accent); opacity: 0.7; }
+    .metric-label { font-size: 12px; color: #607d8b; line-height: 1.4; }
+
+    /* ══ TERMINAL CARD ══ */
+    .terminal-card {
+      background: #071e2e;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 32px 0;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 20px; }
+    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ff5f57; }
+    .t-yellow { background: #ffbd2e; }
+    .t-green { background: #28c840; }
+    .terminal-line { font-size: 13px; line-height: 2; color: #b3d9f0; }
+    .terminal-line .t-cmd { color: var(--beevo-mid); }
+    .terminal-line .t-success { color: #34d399; }
+    .terminal-line .t-warn { color: #fbbf24; }
+    .terminal-line .t-dim { color: #2a5a76; }
+    .terminal-line .t-val { color: #fff; font-weight: 600; }
+
+    /* ══ LOGO KIT GRID ══ */
+    .logo-kit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .logo-kit-card { border-radius: 10px; overflow: hidden; border: 1px solid #b3d9f0; }
+    .logo-kit-card img {
+      width: 100%; height: 120px;
+      object-fit: contain; padding: 16px;
+      background: #eaf4fb;
+    }
+    .logo-kit-card.dark img { background: var(--beevo-darkest); }
+    .logo-kit-label {
+      font-size: 11px; color: #607d8b;
+      text-align: center; padding: 8px;
+      background: #fff; border-top: 1px solid #b3d9f0;
+    }
+
+    /* ══ OUTPUT IMAGE GRID ══ */
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .output-img { border-radius: 10px; overflow: hidden; border: 1px solid #b3d9f0; }
+    .output-img img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .output-img-label { font-size: 11px; color: #607d8b; padding: 10px 12px; background: #eaf4fb; }
+
+    /* ══ MODEL STACK TABLE ══ */
+    .model-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13px; }
+    .model-table th {
+      text-align: left; padding: 10px 16px;
+      background: var(--beevo-darkest);
+      color: var(--beevo-mid);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .model-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #b3d9f0;
+      color: #607d8b; vertical-align: top;
+    }
+    .model-table td:first-child { color: var(--beevo-darkest); font-weight: 600; }
+    .model-table tr:last-child td { border-bottom: none; }
+
+    /* ══ HITL FLOW DIAGRAM ══ */
+    .hitl-flow { display: flex; flex-direction: column; gap: 0; margin: 24px 0; position: relative; }
+    .hitl-step { display: flex; gap: 16px; align-items: flex-start; padding-bottom: 24px; position: relative; }
+    .hitl-step:not(:last-child)::before {
+      content: ''; position: absolute;
+      left: 15px; top: 32px; width: 2px; bottom: 0;
+      background: #b3d9f0;
+    }
+    .hitl-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--beevo-accent); color: #fff;
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative; z-index: 1;
+      box-shadow: 0 3px 10px rgba(13,129,188,0.3);
+    }
+    .hitl-content { padding-top: 6px; }
+    .hitl-title { font-size: 13px; font-weight: 700; color: var(--beevo-darkest); margin-bottom: 4px; }
+    .hitl-text { font-size: 13px; color: #607d8b; line-height: 1.6; }
+
+    /* ══ COMPETITIVE ANALYSIS CARDS ══ */
+    .beevo-comp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+    .beevo-comp-card {
+      background: #eaf4fb;
+      border-radius: 10px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: -2px 10px 15px rgba(0,0,0,0.1);
+    }
+    .beevo-comp-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--beevo-darkest);
+      margin-bottom: 4px;
+    }
+    .beevo-comp-type {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 14px;
+    }
+    .beevo-comp-desc {
+      font-size: 14px;
+      color: #607d8b;
+      line-height: 1.65;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(13,129,188,0.15);
+    }
+    .beevo-comp-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+    .beevo-comp-list {
+      font-size: 14px;
+      color: #607d8b;
+      line-height: 1.8;
+      margin-bottom: 14px;
+      padding-left: 0;
+      list-style: none;
+    }
+    .beevo-comp-list li::before {
+      content: "____ ";
+      color: var(--beevo-accent);
+      font-weight: 600;
+    }
+    .beevo-comp-gap {
+      font-size: 13px;
+      color: var(--beevo-darkest);
+      font-weight: 600;
+      line-height: 1.5;
+      background: rgba(13,129,188,0.08);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-top: auto;
+    }
+    .beevo-comp-gap-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--beevo-accent);
+      margin-bottom: 4px;
+      display: block;
+    }
+    @media (max-width: 991px) { .beevo-comp-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 767px) { .beevo-comp-grid { grid-template-columns: 1fr; } }
+
+    /* ══ RESPONSIVE ══ */
+    @media screen and (max-width: 767px) {
+      .persona-grid { grid-template-columns: 1fr !important; }
+      .terminal-card { padding: 16px; }
+      .terminal-line { font-size: 11px; white-space: pre-wrap; word-break: break-word; }
+      .agents-grid { grid-template-columns: repeat(2, 1fr); }
+      .logo-kit-grid { grid-template-columns: repeat(2, 1fr); }
+      .output-grid { grid-template-columns: 1fr; }
+      .metrics-row { flex-direction: column; }
+      .bridge-diagram { flex-direction: column; }
+      .bridge-arrow { transform: rotate(90deg); }
+      .pipeline-track { flex-direction: column; gap: 16px; }
+      .pipeline-step::after { display: none; }
+      .model-table { display: block; overflow-x: auto; }
+    }
+    @media screen and (max-width: 479px) {
+      .agents-grid { grid-template-columns: 1fr; }
+      .logo-kit-grid { grid-template-columns: repeat(2, 1fr); }
+      .beevo-editorial-title { letter-spacing: -2px; }
+    }
+  </style>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body class="body">
+  <div id="page-enter-overlay" style="position:fixed;inset:0;z-index:9999;background:#dbebf8;pointer-events:none;transition:opacity 0.65s cubic-bezier(0.4,0,0.2,1);"></div>
+  <script>requestAnimationFrame(()=>{requestAnimationFrame(()=>{var e=document.getElementById('page-enter-overlay');if(e){e.style.opacity='0';setTimeout(()=>e.remove(),700);}})});</script>
+  <div id="page-top" class="nav-block">
+    <div data-wf--nav-bar--variant="life-prescriber---nav">
+      <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-no-shadow-container w-nav">
+        <div class="container-regular container">
+          <div class="navbar-wrapper">
+            <a href="index.html" class="navbar-brand w-nav-brand">
+              <div class="text-block-7 w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">Excel Asaph</div>
+              <div class="text-block-9 w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">Software Engineer (ML)</div>
+            </a>
+            <nav role="navigation" class="nav-menu-wrapper w-nav-menu">
+              <ul role="list" class="nav-menu w-list-unstyled">
+                <li class="list-item">
+                  <a href="about.html" class="nav-link w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">About Me</a>
+                </li>
+                <li class="list-item">
+                  <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
+                    <div data-w-id="2f800a98-825f-3ce9-5a00-5a902d9c8b88" class="nav-dropdown-toggle w-dropdown-toggle">
+                      <div class="nav-dropdown-icon w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df w-icon-dropdown-toggle"></div>
+                      <div class="text-block-10 w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">Projects</div>
+                    </div>
+                    <nav class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
+                      <a href="life-prescriber.html" class="nav-dropdown-link w-dropdown-link">Life Prescriber</a>
+                      <a href="campus-cart.html" class="nav-dropdown-link w-dropdown-link">Campus Cart</a>
+                      <a href="collab-u.html" class="nav-dropdown-link w-dropdown-link">Collab-U</a>
+                    </nav>
+                  </div>
+                </li>
+                <li class="list-item">
+                  <a href="ml-projects.html" class="nav-link w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df w--current">ML Projects</a>
+                </li>
+              </ul>
+            </nav>
+            <div class="menu-button w-nav-button">
+              <div class="w-icon-nav-menu"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCROLL INDICATOR ══ -->
+  <div class="scroll-indicator" id="scroll-indicator">
+    <div class="scroll-indicator-track"></div>
+    <div class="scroll-indicator-thumb" id="scroll-indicator-thumb"></div>
+  </div>
+
+  <!-- ══ EDITORIAL HERO ══ -->
+  <section class="beevo-editorial-hero">
+    <h1 class="beevo-editorial-title">BEEVO</h1>
+
+    <div class="beevo-editorial-meta">
+      <p class="beevo-editorial-meta-item"><strong>Role:</strong>&nbsp; Full-Stack AI Engineer</p>
+      <p class="beevo-editorial-meta-item"><strong>Context:</strong>&nbsp; Autonomous Marketing Intelligence</p>
+      <p class="beevo-editorial-meta-item"><strong>Duration:</strong>&nbsp; April 2025 – Present</p>
+      <p class="beevo-editorial-meta-item"><strong>Competition:</strong>&nbsp; Gemini 3 Hackathon &nbsp;·&nbsp; 12,491 participants &nbsp;·&nbsp; $100K prize pool</p>
+    </div>
+
+    <div class="beevo-showcase-frame">
+      <div class="beevo-showcase-inner">
+        <img src="ml-projects/Beevo/images/beevo-gif.gif" alt="Beevo — Autonomous AI CMO in action" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTRIBUTION ══ -->
+  <section>
+    <div class="w-layout-blockcontainer container w-container">
+
+      <!-- ── CONTRIBUTION BLOCK ── -->
+      <div class="w-layout-vflex contribution-block">
+        <div class="contribution-heading">My individual contribution</div>
+        <div class="contribution-paragraph">As a Full-Stack AI Engineer on Beevo, I worked with a team of three other engineers to build this for the Gemini API Developer Competition. My focus was the agent system and the product layer. I built all 15 autonomous agents, including the 6 Watcher Agents that continuously screenshot, analyze, and propose optimizations to the live landing page. I designed the Human-in-the-Loop control system that keeps founders in control of what the agents change, and wired up the multi-channel notification infrastructure so approvals could come in via the HITL Control Center, Telegram, or Web Push from any device. I also built the brand canvas using ReactFlow to visualize every agent decision as a Thought Signature, and assembled the landing page generation layer that pulls brand assets, DNA, and agent outputs into a live, renderable page.</div>
+
+        <div class="contribution-skills">System Architecture &amp; Design</div>
+        <div class="progress-bar">
+          <div class="ml-progress-fill" style="--target-width: 65%;"></div>
+        </div>
+        <div class="contribution-skills">AI / ML Integration (Gemini API)</div>
+        <div class="progress-bar">
+          <div class="ml-progress-fill" style="--target-width: 95%;"></div>
+        </div>
+        <div class="contribution-skills">Back-End Engineering (Node.js, Agents)</div>
+        <div class="progress-bar">
+          <div class="ml-progress-fill" style="--target-width: 60%;"></div>
+        </div>
+        <div class="contribution-skills">Front-End Development (React, ReactFlow)</div>
+        <div class="progress-bar">
+          <div class="ml-progress-fill" style="--target-width: 85%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECT DETAILS ── -->
+  <section>
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex project-headings">
+        <h3 class="project-top-heading"><strong class="bold-text-5">_______&nbsp;&nbsp; PROJECT DETAILS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2">Understanding the project</strong><span class="period-span"><strong class="bold-text-8">.</strong></span></h1>
+      </div>
+      <div class="horizontal-bar"></div>
+      <div class="w-layout-hflex project-main-block">
+        <div class="w-layout-vflex project-about-block">
+          <div class="project-body-heading">About</div>
+          <p class="project-body-paragraph">Beevo is an autonomous AI CMO that takes over the entire branding process from a single voice conversation. It runs live competitor research, generates a brand identity, and deploys a landing page with six autonomous agents continuously optimizing it in the background. What used to take 6 weeks and cost $15,000+ now takes 6 minutes.</p>
+
+          <div class="project-body-heading">Problem Statement</div>
+          <p class="project-body-paragraph">Most founders spend more time on marketing than on building their product. Hiring a branding agency costs $15,000+ minimum and takes weeks of back-and-forth. Competitor research, A/B testing, and landing page optimization each require their own tools, their own expertise, and their own budget. For early-stage startups, the gap between an idea and a professional market presence is one of the hardest to close.</p>
+
+          <div class="project-body-heading">Project tags</div>
+          <div class="w-layout-hflex project-main-tags">
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">AI Agents</div></div>
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">Voice AI</div></div>
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">Marketing Automation</div></div>
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">Multi-Model</div></div>
+          </div>
+
+          <div class="project-body-heading tech-stack">Tech Stack</div>
+          <div class="w-layout-hflex project-main-tags">
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">React / TypeScript</div></div>
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">Node.js / Express</div></div>
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">Gemini Live</div></div>
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">Veo 3.1</div></div>
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">Puppeteer</div></div>
+            <div class="project-tags-button beevo-tag"><div class="tag-button-text beevo-tag-text">ReactFlow</div></div>
+          </div>
+        </div>
+
+        <div class="w-layout-vflex project-side-block">
+          <div class="horizontal-bar2"></div>
+          <a href="https://github.com/excelasaph/beevo" target="_blank" class="link-block w-inline-block">
+            <div class="w-layout-hflex github-link">
+              <img src="images/mdi_github-1.svg" loading="lazy" alt="">
+              <div class="side-block-heading">GitHub</div>
+            </div>
+          </a>
+          <a href="https://beevo-430715776322.us-central1.run.app" target="_blank" class="live-site-link w-inline-block">
+            <div class="project-tags-button live-site">
+              <div class="tag-button-text live-site-btn">View Site</div>
+              <img src="images/lsicon_open-new-filled-1.svg" loading="lazy" alt="" class="image-26">
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Team -->
+      <div class="w-layout-hflex team-detail">
+        <div class="w-layout-vflex team-numbers">
+          <h1 class="team-heading">4</h1>
+          <div class="team-title">Engineers</div>
+        </div>
+        <div class="vertical-bar"></div>
+        <div class="w-layout-vflex team-numbers">
+          <h1 class="team-heading">5</h1>
+          <div class="team-title">Gemini Models</div>
+        </div>
+        <div class="vertical-bar"></div>
+        <div class="w-layout-vflex team-numbers">
+          <h1 class="team-heading">15</h1>
+          <div class="team-title">Autonomous Agents</div>
+        </div>
+        <div class="vertical-bar"></div>
+        <div class="w-layout-vflex team-numbers">
+          <h1 class="team-heading">24</h1>
+          <div class="team-title">Canvas Node Types</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════ -->
+  <!-- VIDEO DEMO                          -->
+  <!-- ════════════════════════════════════ -->
+  <section style="padding: 24px 0 120px; background: var(--beevo-light);">
+    <div class="w-layout-blockcontainer container w-container">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--beevo-darkest); margin: 0; letter-spacing: -1px;">See it in action</h2>
+      </div>
+      <div class="beevo-showcase-frame">
+        <div class="beevo-showcase-inner">
+          <div style="position: relative; width: 100%; padding-bottom: 56.25%;">
+            <iframe
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block;"
+              src="https://www.youtube.com/embed/scYFeDGdxNI"
+              title="Beevo — Autonomous AI CMO Demo"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- CHAPTER 01 / PROBLEM & CONTEXT            -->
+  <!-- ══════════════════════════════════════════ -->
+  <section class="chapter-section beevo-chapter">
+    <div class="w-layout-hflex chapter-block">
+      <h1 class="chapter-h1">01 /</h1>
+      <div class="w-layout-vflex chapter-texts">
+        <p class="chapter-top-paragraph">CHAPTER</p>
+        <p class="paragraph-2">PROBLEM &amp; CONTEXT</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="key-observation-section">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex observation-block">
+
+        <!-- Large statement -->
+        <div class="large-statement">
+          Your first impression shouldn't cost six weeks<br>and <em>$15,000.</em>
+        </div>
+
+        <div style="margin-top: 56px;"></div>
+        <h3 class="project-top-heading"><strong class="bold-text-6">_______&nbsp;&nbsp; KEY OBSERVATIONS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">Who is struggling, and why</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-heading light">Research context</div>
+        <div class="project-body-paragraph dark">Before building Beevo with the team, I spent time looking at the actual problem. Not the product problem, but the human one. Why were founders still paying agencies they couldn't afford, or launching with no brand at all? The pattern was clear: branding is a sequential process of interconnected decisions, and the tools available treat each of those decisions as someone else's problem. I wanted us to build something that owned the whole chain.</div>
+        <div class="project-body-paragraph dark" style="margin-top: 16px;">The closest product I found in this space was Pomelli, a Google Labs AI marketing tool. Pomelli is polished and genuinely useful for generating on-brand social assets and campaign ideas. But Pomelli is designed to <em>assist</em> a marketer. The distinction Beevo was built around is simpler: not assistance, but replacement. That shift (from tool to autonomous agent) is what every architectural decision in the system was built to support.</div>
+
+        <div class="w-layout-hflex observation-block-cards">
+          <div class="w-layout-vflex observation-card">
+            <i class="ph ph-fill ph-rocket-launch obs-ph-icon"></i>
+            <div class="project-body-heading light experience-heading">The Founder's Reality</div>
+            <p class="observation-card-paragraph">Early-stage founders are simultaneously building product, managing operations, and trying to go to market. When I looked at how they approach branding, the pattern was consistent: they either spend $15,000+ on an agency they can't afford, struggle with five or more disconnected tools, or launch with zero visual identity and hope traction follows. The branding process itself (competitor research, color theory, typography, landing page copy) takes four to six weeks minimum and demands expertise most founders simply don't have.</p>
+            <i class="ph ph-fill ph-rocket-launch obs-ph-ghost"></i>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <i class="ph ph-fill ph-chart-line-up obs-ph-icon"></i>
+            <div class="project-body-heading light experience-heading">The Marketer's Workflow</div>
+            <p class="observation-card-paragraph">Professional marketers use SWOT analysis, competitor research, A/B testing, and continuous optimization, all of which require specific expertise and expensive tooling. The landing page alone involves copywriting, visual design, CTA testing, and conversion analysis. What became clear was that these aren't creative mysteries. They're systematic, data-driven processes. The question became whether a multi-agent system could replicate these workflows reliably enough to produce professional-grade output without human intervention at every step.</p>
+            <i class="ph ph-fill ph-chart-line-up obs-ph-ghost"></i>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <i class="ph ph-fill ph-cpu obs-ph-icon"></i>
+            <div class="project-body-heading light experience-heading">The Engineering Challenge</div>
+            <p class="observation-card-paragraph">The core challenge was not AI capability. Gemini's models are powerful enough. The challenge was orchestration: how do you coordinate voice interaction, live competitor research, asset generation, and continuous page optimization without the system collapsing into conflicts, state inconsistencies, or response latency that breaks the conversation feel? The answer required a fundamentally different architecture. Not a single model trying to do everything, but a dual-model bridge that separates voice from execution, with a filesystem-based state layer that all agents share as a single source of truth.</p>
+            <i class="ph ph-fill ph-cpu obs-ph-ghost"></i>
+          </div>
+        </div>
+
+        <div class="project-body-heading light">Questions that drove the design</div>
+        <div class="project-body-paragraph dark question-paragraph">Every architectural decision in Beevo was driven by a specific question that emerged from watching the branding workflow up close. These weren't hypothetical. They were real friction points that required engineering solutions.</div>
+
+        <div class="w-layout-hflex observation-block-cards cards2">
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">How do you run real-time voice conversation while simultaneously executing multi-step tool workflows, without either breaking?</div>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">How do 6 autonomous optimization agents share a live landing page without stepping on each other's state?</div>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">How do you generate AI marketing assets (logos, videos, copy) that are actually brand-consistent and not just aesthetically pleasing?</div>
+          </div>
+        </div>
+        <div class="w-layout-hflex observation-block-cards cards2">
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">How do you keep a human in control of an autonomous system without forcing them to micromanage every decision?</div>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">Can a structured JSON schema replace generated HTML for producing reliable, renderable UI components from an LLM?</div>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">What does real-time competitor research look like when it must use live market data rather than static, pre-scraped databases?</div>
+          </div>
+        </div>
+
+        <!-- ═══ COMPETITIVE ANALYSIS ═══ -->
+        <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-6">_______&nbsp;&nbsp; COMPETITIVE ANALYSIS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">What founders use today</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-paragraph dark">Three tools come up every time a founder needs to build a brand. Each handles one piece of the puzzle. None of them handle the whole thing.</div>
+
+        <div class="beevo-comp-grid">
+          <!-- Looka -->
+          <div class="beevo-comp-card">
+            <img src="images/looka_logo.png" alt="Looka" style="height: 112px; width: auto; object-fit: contain; display: block; margin-top: -25px; margin-bottom: -16px;">
+            <div class="beevo-comp-type">AI Logo Generator</div>
+            <div class="beevo-comp-desc">Generates logo options from a form-based questionnaire about your brand name, industry, and style preferences.</div>
+            <div class="beevo-comp-label">Pros</div>
+            <ul class="beevo-comp-list">
+              <li>Quick and affordable for basic logo needs</li>
+              <li>No design skills required</li>
+              <li>Large template and style library</li>
+            </ul>
+            <div class="beevo-comp-label">Cons</div>
+            <ul class="beevo-comp-list">
+              <li>Stops at the logo; no brand strategy, no website, no competitor research</li>
+              <li>Template-based, not market-aware</li>
+              <li>No ongoing optimization after delivery</li>
+            </ul>
+            <div class="beevo-comp-gap">
+              <span class="beevo-comp-gap-label">The gap</span>
+              "Gives you a logo. Has no idea what your competitors look like or whether yours stands out."
+            </div>
+          </div>
+          <!-- Framer AI -->
+          <div class="beevo-comp-card">
+            <img src="images/framer_logo.png" alt="Framer AI" style="height: 112px; width: auto; object-fit: contain; display: block; margin-top: -20px; margin-bottom: -14px; margin-left: -20px;">
+            <div class="beevo-comp-type">AI Website Builder</div>
+            <div class="beevo-comp-desc">AI-assisted website builder that generates pages from a text prompt, with drag-and-drop editing and modern templates.</div>
+            <div class="beevo-comp-label">Pros</div>
+            <ul class="beevo-comp-list">
+              <li>Beautiful output, fast to publish</li>
+              <li>Strong design system and component library</li>
+              <li>Good for landing pages and portfolios</li>
+            </ul>
+            <div class="beevo-comp-label">Cons</div>
+            <ul class="beevo-comp-list">
+              <li>No brand research or competitor analysis phase</li>
+              <li>No voice input; all design decisions are manual</li>
+              <li>No continuous optimization after launch</li>
+            </ul>
+            <div class="beevo-comp-gap">
+              <span class="beevo-comp-gap-label">The gap</span>
+              "Builds you a nice page. Doesn't tell you what to say on it or whether it'll convert."
+            </div>
+          </div>
+          <!-- Canva -->
+          <div class="beevo-comp-card">
+            <img src="images/canva_logo.png" alt="Canva" style="height: 48px; width: auto; object-fit: contain; display: block; margin-top: 10px; margin-bottom: 22px;">
+            <div class="beevo-comp-type">Visual Design Platform</div>
+            <div class="beevo-comp-desc">A widely-used drag-and-drop design tool with templates for logos, presentations, social media, and basic websites.</div>
+            <div class="beevo-comp-label">Pros</div>
+            <ul class="beevo-comp-list">
+              <li>Familiar and flexible for non-designers</li>
+              <li>Huge template library, generous free tier</li>
+              <li>Covers almost every design format</li>
+            </ul>
+            <div class="beevo-comp-label">Cons</div>
+            <ul class="beevo-comp-list">
+              <li>Fully manual; every design decision is yours to make</li>
+              <li>No brand strategy, competitor research, or automation</li>
+              <li>Brand consistency requires discipline, not intelligence</li>
+            </ul>
+            <div class="beevo-comp-gap">
+              <span class="beevo-comp-gap-label">The gap</span>
+              "Gives you the tools. Still requires you to know what you're doing with them."
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ PERSONA DETAILS ═══ -->
+        <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-6">_______&nbsp;&nbsp; PERSONA DETAILS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">Who Beevo is built for</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-paragraph dark">Two types of founders kept coming up in every conversation before we started building. Different backgrounds, same stuck point.</div>
+
+        <div class="persona-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 24px 0 48px;">
+
+          <!-- Persona 1: Tunde -->
+          <div class="w-layout-hflex main-persona-block" style="margin-bottom: 0;">
+            <div class="w-layout-vflex persona-details">
+              <div class="persona-name">Tunde Adewale</div>
+              <div class="person-tags">Resourceful &nbsp;&nbsp;|&nbsp;&nbsp; Time-strapped &nbsp;&nbsp;|&nbsp;&nbsp; Design-blind</div>
+              <div class="w-layout-vflex persona-status">
+                <div class="text-block-5"><strong class="bold-text-3">Age:</strong> 27</div>
+                <div class="text-block-5"><strong class="bold-text-3">Occupation:</strong> Solo Founder, bootstrapped SaaS</div>
+                <div class="text-block-5"><strong class="bold-text-3">Status:</strong> Single</div>
+                <div class="text-block-5"><strong class="bold-text-3">Location:</strong> Lagos, Nigeria</div>
+                <div class="text-block-5"><strong class="bold-text-3">Tier:</strong> Founder</div>
+              </div>
+              <blockquote class="persona-comment">"I know my product is good. What I can't afford is six weeks and $15,000 to make it look like it is."</blockquote>
+              <div class="project-body-heading">Pain points:</div>
+              <p class="project-body-paragraph persona-details">Product is ready but the brand isn't. Can't use Canva well enough to look professional. Can't afford a designer. Has spent more time adjusting logo files than talking to potential customers.</p>
+              <div class="project-body-heading">Goals:</div>
+              <p class="project-body-paragraph persona-details">Get to a professional-looking brand fast enough to start pitching to early users without being embarrassed by the visual presentation.</p>
+            </div>
+          </div>
+
+          <!-- Persona 2: Sofia -->
+          <div class="w-layout-hflex main-persona-block" style="margin-bottom: 0;">
+            <div class="w-layout-vflex persona-details">
+              <div class="persona-name">Sofia Nakamura</div>
+              <div class="person-tags">Analytical &nbsp;&nbsp;|&nbsp;&nbsp; Fast-moving &nbsp;&nbsp;|&nbsp;&nbsp; Marketing-averse</div>
+              <div class="w-layout-vflex persona-status">
+                <div class="text-block-5"><strong class="bold-text-3">Age:</strong> 31</div>
+                <div class="text-block-5"><strong class="bold-text-3">Occupation:</strong> Technical Co-founder, pre-seed startup</div>
+                <div class="text-block-5"><strong class="bold-text-3">Status:</strong> Single</div>
+                <div class="text-block-5"><strong class="bold-text-3">Location:</strong> Berlin, Germany</div>
+                <div class="text-block-5"><strong class="bold-text-3">Tier:</strong> Founder</div>
+              </div>
+              <blockquote class="persona-comment">"I can build the product in my sleep. The branding is the part that paralyzes me. Too many decisions, and none of them feel like engineering problems."</blockquote>
+              <div class="project-body-heading">Pain points:</div>
+              <p class="project-body-paragraph persona-details">She and her co-founder keep delaying the public launch because the brand doesn't feel right. They've tried Canva and Looka but nothing looks consistent. Every tool gives a different visual "feel" with no connection between them.</p>
+              <div class="project-body-heading">Goals:</div>
+              <p class="project-body-paragraph persona-details">A coherent brand identity that looks like it was built by someone who actually understands the market they're entering, not stitched together from free templates.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- CHAPTER 02 / ARCHITECTURE & SYSTEM        -->
+  <!-- ══════════════════════════════════════════ -->
+  <section class="chapter-section beevo-chapter">
+    <div class="w-layout-hflex chapter-block">
+      <h1 class="chapter-h1">02 /</h1>
+      <div class="w-layout-vflex chapter-texts">
+        <p class="chapter-top-paragraph">CHAPTER</p>
+        <p class="paragraph-2">ARCHITECTURE &amp; SYSTEM</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="software-blueprint-section">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex flex-block-3">
+        <h3 class="project-top-heading"><strong class="bold-text-11">_______&nbsp;&nbsp; THE BRIDGE ARCHITECTURE</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">The dual-model core</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+
+        <div class="project-body-heading light">Why two models?</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">The most fundamental challenge in Beevo was making real-time voice conversation and complex tool execution coexist. A single model trying to do both fails in two directions: tool calls interrupt the voice stream, and response latency breaks the conversation feel entirely. The solution was architectural: separate voice from execution completely. Gemini Live handles only the human conversation layer. Gemini Flash handles all tool decisions and execution. They communicate through a 3-second transcript buffer, creating a coordinated system where the user experiences a natural CMO conversation while a parallel engine executes the actual work.</div>
+
+        <div class="bridge-diagram">
+          <div class="bridge-model">
+            <div class="bridge-model-label">Model 1</div>
+            <div class="bridge-model-name">Gemini Live <span>gemini-2.5-flash-native-audio-preview</span></div>
+            <div class="bridge-model-desc">Handles the real-time voice conversation. Listens, understands, responds. No tool calls, no latency spikes.</div>
+            <div class="bridge-bullet">→ Native audio streaming (PCM 16kHz input / 24kHz output)<br>→ Voice Activity Detection (VAD)<br>→ Buffers transcripts every 3 seconds<br>→ Pauses during tool execution<br>→ Phase management: discovery → execution → modification</div>
+          </div>
+          <div class="bridge-arrow">⟶</div>
+          <div class="bridge-model">
+            <div class="bridge-model-label">Model 2</div>
+            <div class="bridge-model-name">Gemini Flash (Brain) <span>gemini-3-flash-preview</span></div>
+            <div class="bridge-model-desc">Reads the transcript buffer, decides which tools to call, executes the entire brand-building workflow.</div>
+            <div class="bridge-bullet">→ Receives buffered transcripts every 3 seconds<br>→ 20+ function declarations for brand building<br>→ Calls downstream agents and services<br>→ Emits execution logs to the canvas in real time<br>→ Signals Live to resume after tool completion</div>
+          </div>
+        </div>
+
+        <div class="project-body-heading light">Design Philosophy</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">Every system decision in Beevo follows a single principle: autonomy with transparency. Agents act independently, but every decision is logged as a "Thought Signature", a visible reasoning chain on the brand canvas, so users understand exactly why the system proposed a change. This maintains trust in a system that most users have never experienced before: one that builds their brand and rewrites their website while they sleep.</div>
+      </div>
+
+      <!-- 5-Phase Pipeline -->
+      <div class="w-layout-vflex flex-block-3" style="margin-top: 150px;">
+        <h3 class="project-top-heading"><strong class="bold-text-11">_______&nbsp;&nbsp; THE RESEARCH PIPELINE</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">5 phases. 14 seconds. Complete brand DNA</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-heading light">Sequential execution</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">When a user describes their business to Beevo via voice, the Brain model triggers the ExecutionEngine, a 5-phase research orchestrator that runs end-to-end in approximately 14 seconds. Each phase writes its output to a shared workspace filesystem, which both the agents and the client canvas consume in real time.</div>
+
+        <div class="pipeline-track">
+          <div class="pipeline-step">
+            <div class="pipeline-dot">1</div>
+            <div class="pipeline-content">
+              <div class="pipeline-title">DNA Extraction</div>
+              <div class="pipeline-desc">Parses brand name, mission, voice, mood, values, target audience from conversation</div>
+              <div class="pipeline-time">~2 seconds</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-dot">2</div>
+            <div class="pipeline-content">
+              <div class="pipeline-title">Competitor Research</div>
+              <div class="pipeline-desc">Google Search Grounding finds top 5 live competitors with color palettes and brand vibes</div>
+              <div class="pipeline-time">~4 seconds</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-dot">3</div>
+            <div class="pipeline-content">
+              <div class="pipeline-title">Color Palettes</div>
+              <div class="pipeline-desc">Generates 3–5 differentiated palettes with hex codes, positioned against competitor colors</div>
+              <div class="pipeline-time">~3 seconds</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-dot">4</div>
+            <div class="pipeline-content">
+              <div class="pipeline-title">Typography</div>
+              <div class="pipeline-desc">Recommends Google Fonts pairings aligned to brand voice and mood</div>
+              <div class="pipeline-time">~2 seconds</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-dot">5</div>
+            <div class="pipeline-content">
+              <div class="pipeline-title">Strategy Synthesis</div>
+              <div class="pipeline-desc">Gemini 3 Pro runs SWOT analysis and generates a Thought Signature on the canvas</div>
+              <div class="pipeline-time">~3 seconds</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="terminal-card">
+          <div class="terminal-header">
+            <div class="terminal-dot t-red"></div>
+            <div class="terminal-dot t-yellow"></div>
+            <div class="terminal-dot t-green"></div>
+          </div>
+          <div class="terminal-line"><span class="t-cmd">$</span> ExecutionEngine.run(brandSummary: <span class="t-val">"Verde — sustainable activewear"</span>)</div>
+          <div class="terminal-line t-dim">──────────────────────────────────────────────────</div>
+          <div class="terminal-line"><span class="t-cmd">[Phase 1]</span> Extracting Brand DNA... <span class="t-success">✓ 2.1s</span></div>
+          <div class="terminal-line t-dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ name: "Verde" | mission: "Sustainable performance" | mood: "Premium, eco-conscious"</div>
+          <div class="terminal-line"><span class="t-cmd">[Phase 2]</span> Researching competitors via Search Grounding... <span class="t-success">✓ 4.3s</span></div>
+          <div class="terminal-line t-dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ Found: Nike, Patagonia, Lululemon, Allbirds, Outdoor Voices</div>
+          <div class="terminal-line"><span class="t-cmd">[Phase 3]</span> Generating color palettes... <span class="t-success">✓ 3.0s</span></div>
+          <div class="terminal-line t-dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ 3 palettes generated: "Eco-Green", "Ocean-Fresh", "Earth-Neutral"</div>
+          <div class="terminal-line"><span class="t-cmd">[Phase 4]</span> Selecting typography... <span class="t-success">✓ 2.2s</span></div>
+          <div class="terminal-line t-dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ Recommended: Montserrat (heading) + Lato (body)</div>
+          <div class="terminal-line"><span class="t-cmd">[Phase 5]</span> Running SWOT analysis (Gemini 3 Pro)... <span class="t-success">✓ 2.9s</span></div>
+          <div class="terminal-line t-dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ Strategic gap: "Performance messaging weak vs Patagonia. Verde owns 'no compromise.'"</div>
+          <div class="terminal-line t-dim">──────────────────────────────────────────────────</div>
+          <div class="terminal-line"><span class="t-success">✓ Research complete.</span> Total: <span class="t-val">14.5 seconds</span> | Broadcasting FULL_STATE_UPDATE to canvas...</div>
+        </div>
+      </div>
+
+      <!-- Watcher Agents -->
+      <div class="w-layout-vflex flex-block-3" style="margin-top: 150px;">
+        <h3 class="project-top-heading"><strong class="bold-text-11">_______&nbsp;&nbsp; THE WATCHER AGENTS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">6 agents. Continuous optimization</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-heading light">Always watching, always improving</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">Once the landing page is generated, Beevo deploys six specialized Watcher Agents that run on a continuous cycle. Each agent owns one section of the landing page. They screenshot it with Puppeteer, analyze visual hierarchy with Gemini 3 Pro Vision, reason about optimization opportunities with Gemini Flash, then propose changes through the Human-in-the-Loop control system before staging anything to the live page.</div>
+
+        <div class="agents-grid">
+          <div class="agent-card">
+            <div class="agent-icon">H</div>
+            <div class="agent-name">Hero Watcher</div>
+            <div class="agent-role">Above-the-fold impact</div>
+            <div class="agent-desc">Analyzes headline clarity, visual hierarchy, and CTA prominence. Proposes copy improvements and hero image variations based on scroll retention signals.</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-icon">P</div>
+            <div class="agent-name">Proof Watcher</div>
+            <div class="agent-role">Trust &amp; statistics</div>
+            <div class="agent-desc">Monitors dwell time on the proof section. Generates new evidence items (stats, trust badges, dashboards) using the NanoBanana Design System when engagement drops.</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-icon">O</div>
+            <div class="agent-name">Offer Watcher</div>
+            <div class="agent-role">Conversion optimization</div>
+            <div class="agent-desc">Tests CTA button text, color, and position. Analyzes click-through rates and suggests pricing layout changes to reduce friction at the conversion point.</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-icon">A</div>
+            <div class="agent-name">PAS Watcher</div>
+            <div class="agent-role">Messaging narrative</div>
+            <div class="agent-desc">Monitors the Problem-Agitate-Solve messaging flow. Ensures emotional progression is maintained and refines the 3-step narrative based on scroll depth analytics.</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-icon">S</div>
+            <div class="agent-name">Spec Watcher</div>
+            <div class="agent-role">Feature &amp; product details</div>
+            <div class="agent-desc">Tracks which features users engage with longest. Reorders and emphasizes high-engagement specs while suggesting updates to feature descriptions based on performance data.</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-icon">W</div>
+            <div class="agent-name">Social Watcher</div>
+            <div class="agent-role">Social proof</div>
+            <div class="agent-desc">Analyzes testimonial section performance and scroll-through rate. Suggests new testimonial content and sharing element positioning using Gemini image generation.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HITL System -->
+      <div class="w-layout-vflex flex-block-3" style="margin-top: 150px;">
+        <h3 class="project-top-heading"><strong class="bold-text-11">_______&nbsp;&nbsp; HUMAN-IN-THE-LOOP</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">Autonomy with control</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-heading light">The approval flow</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">Beevo never autonomously changes the live page without user awareness. Every Watcher Agent proposal goes through a configurable intervention system with real-time notifications via WebSocket, Telegram, and Web Push. Users can approve, reject, or modify proposals from any device. If they don't respond within a set timeout, the system auto-proceeds to keep optimization moving without blocking indefinitely.</div>
+
+        <div class="hitl-flow">
+          <div class="hitl-step">
+            <div class="hitl-num">1</div>
+            <div class="hitl-content">
+              <div class="hitl-title">Watcher detects an optimization opportunity</div>
+              <div class="hitl-text">e.g. Hero headline engagement below threshold. Screenshots captured via Puppeteer. Vision analysis completed by Gemini 3 Pro.</div>
+            </div>
+          </div>
+          <div class="hitl-step">
+            <div class="hitl-num">2</div>
+            <div class="hitl-content">
+              <div class="hitl-title">Proposal generated (PRE or POST mode)</div>
+              <div class="hitl-text">In PRE_GENERATION mode, Watcher asks approval before creating new content. In POST_GENERATION mode, it creates first, then asks approval to stage.</div>
+            </div>
+          </div>
+          <div class="hitl-step">
+            <div class="hitl-num">3</div>
+            <div class="hitl-content">
+              <div class="hitl-title">Multi-channel notification sent</div>
+              <div class="hitl-text">HITL Control Center (WebSocket), Telegram Bot, and Web Push (VAPID) all fire simultaneously. Notification: "Hero Watcher: Change headline to 'Performance that heals the planet'?"</div>
+            </div>
+          </div>
+          <div class="hitl-step">
+            <div class="hitl-num">4</div>
+            <div class="hitl-content">
+              <div class="hitl-title">User responds, or auto-proceed fires</div>
+              <div class="hitl-text">Approve → change stages to landing page. Reject → Watcher tries a different approach. No response after N minutes → auto-approved to keep optimization moving.</div>
+            </div>
+          </div>
+          <div class="hitl-step">
+            <div class="hitl-num">5</div>
+            <div class="hitl-content">
+              <div class="hitl-title">Live page updates via WebSocket</div>
+              <div class="hitl-text">Staging JSON pushed to the landing page component. React re-renders the updated section with a skeleton loader transition. The change is live.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-body-paragraph dark question-paragraph interaction-para" style="margin-top: 24px;">Here is what the multi-channel notification looks like when a Watcher Agent requests approval before staging a change to the live page:</div>
+        <div style="margin: 24px 0; max-width: 640px;">
+          <div class="beevo-showcase-frame">
+            <div class="beevo-showcase-inner">
+              <img src="ml-projects/Beevo/images/beevo_notification.png" loading="lazy" alt="Beevo HITL — Watcher Agent approval notification interface">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gemini Models Used -->
+      <div class="w-layout-vflex flex-block-3" style="margin-top: 150px;">
+        <h3 class="project-top-heading"><strong class="bold-text-11">_______&nbsp;&nbsp; MODEL STACK</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">5 Gemini models. One system</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <table class="model-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Purpose</th>
+              <th>Why this model</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gemini 2.5 Flash (Live)</td>
+              <td>Real-time voice conversation</td>
+              <td>Sub-100ms latency native audio streaming with built-in VAD. No other model handles PCM audio at this speed.</td>
+            </tr>
+            <tr>
+              <td>Gemini 3 Flash (Brain)</td>
+              <td>Tool orchestration &amp; generation</td>
+              <td>Fast, reliable multi-step reasoning. Handles 20+ function declarations without decision fatigue.</td>
+            </tr>
+            <tr>
+              <td>Gemini 3 Pro (Strategist)</td>
+              <td>SWOT analysis &amp; vision audits</td>
+              <td>Advanced reasoning for brand strategy. Also used for pixel-precise Guardian asset auditing.</td>
+            </tr>
+            <tr>
+              <td>Gemini 2.5 Flash Image</td>
+              <td>Logo &amp; campaign generation</td>
+              <td>Parallel generation of 4 simultaneous logo variants. Instruction-following for brand-consistent imagery.</td>
+            </tr>
+            <tr>
+              <td>Veo 3.1</td>
+              <td>Hero video generation</td>
+              <td>Cinematic MP4 output with camera movement, lighting, and color grade control from prompt.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Guardian -->
+      <div class="w-layout-vflex flex-block-3" style="margin-top: 150px;">
+        <h3 class="project-top-heading"><strong class="bold-text-11">_______&nbsp;&nbsp; THE GUARDIAN</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">Pixel-precise brand compliance</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-heading light">Asset auditing with Gemini Vision</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">The Guardian is a dedicated auditing module powered by Gemini 3 Pro Vision. You upload any brand asset (a logo, campaign image, or social graphic), and it checks it against the Brand DNA's hex codes, safe zone rules, and visual guidelines, then returns bounding-box overlays pinpointing exactly where violations occur on the image. The coordinates are pixel-precise: <code style="background: rgba(13,129,188,0.1); padding: 2px 6px; border-radius: 4px; font-size: 12px;">[ymin, xmin, ymax, xmax]</code> for every flag. Wrong color, logo distortion, safe zone intrusion, brand-inconsistent content. The Guardian finds it and shows you the exact pixel location.</div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0;">
+          <div class="agent-card">
+            <div class="agent-icon">C</div>
+            <div class="agent-name">Color Compliance</div>
+            <div class="agent-desc">Cross-references every dominant color in the asset against Brand DNA hex codes. Flags mismatches with the exact pixel region and the expected vs. found value.</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-icon">L</div>
+            <div class="agent-name">Logo Integrity</div>
+            <div class="agent-desc">Detects distortion, incorrect aspect ratios, and Safe Zone violations. Returns bounding-box coordinates for each issue found — the exact pixels, not a general description.</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-icon">T</div>
+            <div class="agent-name">Brand Tone Check</div>
+            <div class="agent-desc">Uses Gemini 3 Pro's reasoning to evaluate whether imagery content aligns with the brand voice, mood, and values defined in the Brand DNA vault.</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-icon">V</div>
+            <div class="agent-name">Visual Hierarchy Audit</div>
+            <div class="agent-desc">Pixel-precise analysis of landing page screenshots. Watcher Agents use this to identify hierarchy failures and justify optimization proposals before any change is staged.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- CHAPTER 03 / RESULTS & EXECUTION          -->
+  <!-- ══════════════════════════════════════════ -->
+  <section class="chapter-section beevo-chapter">
+    <div class="w-layout-hflex chapter-block">
+      <h1 class="chapter-h1">03 /</h1>
+      <div class="w-layout-vflex chapter-texts">
+        <p class="chapter-top-paragraph">CHAPTER</p>
+        <p class="paragraph-2">RESULTS &amp; EXECUTION</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-9 beevo-tint-section">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex flex-block-4">
+        <h3 class="project-top-heading"><strong class="bold-text-12">_______&nbsp;&nbsp; SYSTEM PERFORMANCE</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">What Beevo produces</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+
+        <!-- Key metrics -->
+        <div class="project-body-heading light" style="margin-top: 16px;">Performance metrics</div>
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div class="metric-value">14<span class="metric-unit">s</span></div>
+            <div class="metric-label">End-to-end brand research pipeline</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">15</div>
+            <div class="metric-label">Autonomous agents orchestrated</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">6<span class="metric-unit">min</span></div>
+            <div class="metric-label">Full brand identity from voice input</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">24</div>
+            <div class="metric-label">Custom ReactFlow node types on canvas</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">5</div>
+            <div class="metric-label">Gemini models integrated in one system</div>
+          </div>
+        </div>
+
+        <!-- Brand canvas screenshot -->
+        <div class="project-body-heading light" style="margin-top: 40px;">The brand canvas</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">Every AI decision in Beevo surfaces on an infinite ReactFlow canvas. Palette nodes, typography selections, competitor research results, Thought Signatures, the Logo Studio frame, and the live landing page preview all coexist as interconnected nodes you can inspect at any zoom level. The 24 custom node types span from interactive palette cards with copy-to-clipboard hex codes to the Voice Orb node, which is the embedded interface for the Gemini Live conversation. This is what the canvas looks like mid-session.</div>
+        <div class="beevo-showcase-frame" style="margin: 32px 0;">
+          <div class="beevo-showcase-inner">
+            <img src="ml-projects/Beevo/images/beevo_workspace.png" loading="lazy" alt="Beevo brand canvas — ReactFlow workspace with AI decision nodes">
+          </div>
+        </div>
+        <div style="font-size: 12px; color: #607d8b; text-align: center; margin-top: -24px; margin-bottom: 40px;">The Beevo brand canvas mid-session — palette nodes, Thought Signatures, watcher status indicators, and the live landing page frame, all visible at once</div>
+
+        <!-- AI-generated logo kit output -->
+        <div class="project-body-heading light" style="margin-top: 40px;">AI-generated logo kit output</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">Here's a sample logo kit Beevo generated for the "Evergreen" demo workspace. All 8 variants (primary, icon, wordmark, social, plus inverted versions) are produced simultaneously via 4 parallel Gemini Image API calls, then organized into a downloadable brand asset package.</div>
+
+        <div class="logo-kit-grid">
+          <div class="logo-kit-card">
+            <img src="images/beevo-logo-primary.png" loading="lazy" alt="Beevo Logo — Primary">
+            <div class="logo-kit-label">Primary</div>
+          </div>
+          <div class="logo-kit-card dark">
+            <img src="images/beevo-logo-inverted.png" loading="lazy" alt="Beevo Logo — Inverted">
+            <div class="logo-kit-label">Inverted</div>
+          </div>
+          <div class="logo-kit-card">
+            <img src="images/beevo-logo-wordmark.png" loading="lazy" alt="Beevo Logo — Wordmark">
+            <div class="logo-kit-label">Wordmark</div>
+          </div>
+          <div class="logo-kit-card dark">
+            <img src="images/beevo-logo-icon.png" loading="lazy" alt="Beevo Logo — Icon">
+            <div class="logo-kit-label">Icon / Favicon</div>
+          </div>
+        </div>
+
+        <!-- AI-generated landing page -->
+        <div class="project-body-heading light" style="margin-top: 40px;">AI-generated landing page</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">Once the brand research phase completes, the NanoBananaService generates a full landing page from structured JSON, not raw HTML. Each section (Hero, Proof, PAS, Offer, Spec, Social) is produced as a typed config against one of four named layout strategies: <strong>SPLIT</strong> (content alongside a visual), <strong>CLOUDS</strong> (floating card arrangement), <strong>TRIPTYCH</strong> (three-column editorial), or <strong>FORENSIC_GRID</strong> (data-heavy structured layout). An LLM will produce valid JSON against a fixed schema far more reliably than it will produce valid HTML, and switching to this approach made the landing page output far more consistent. Below is an actual landing page Beevo generated for a demo workspace, built entirely from Brand DNA with no human HTML written.</div>
+        <div class="beevo-showcase-frame" style="margin: 32px 0;">
+          <div class="beevo-showcase-inner">
+            <img src="ml-projects/Beevo/images/beevo_example_landing_page.png" loading="lazy" alt="Beevo — AI-generated landing page for a demo workspace">
+          </div>
+        </div>
+        <div style="font-size: 12px; color: #607d8b; text-align: center; margin-top: -24px; margin-bottom: 40px;">A complete landing page generated by Beevo — Hero, Proof, PAS, Offer, Spec, and Social sections rendered by React from structured JSON, no human HTML</div>
+
+        <!-- AI-generated social/testimonial output -->
+        <div class="project-body-heading light" style="margin-top: 40px;">AI-generated social proof assets</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">I wired the Social Watcher to use Gemini's image generation to produce testimonial graphics and social proof assets aligned to the brand DNA's colors, tone, and typography. They're generated autonomously and go through HITL approval before anything stages to the live page.</div>
+
+        <div class="output-grid">
+          <div class="output-img">
+            <img src="images/beevo-testimonial-1.png" loading="lazy" alt="AI-Generated Social Asset 1">
+            <div class="output-img-label">Social Watcher output — Testimonial variant 1</div>
+          </div>
+          <div class="output-img">
+            <img src="images/beevo-testimonial-2.png" loading="lazy" alt="AI-Generated Social Asset 2">
+            <div class="output-img-label">Social Watcher output — Testimonial variant 2</div>
+          </div>
+          <div class="output-img">
+            <img src="images/beevo-testimonial-3.png" loading="lazy" alt="AI-Generated Social Asset 3">
+            <div class="output-img-label">Social Watcher output — Testimonial variant 3</div>
+          </div>
+        </div>
+
+        <!-- Technical achievements -->
+        <div class="project-body-heading light" style="margin-top: 40px;">Key technical achievements</div>
+        <div class="terminal-card">
+          <div class="terminal-header">
+            <div class="terminal-dot t-red"></div>
+            <div class="terminal-dot t-yellow"></div>
+            <div class="terminal-dot t-green"></div>
+          </div>
+          <div class="terminal-line"><span class="t-success">✓</span> Bridge Architecture — voice and tool execution fully decoupled, zero latency cross-contamination</div>
+          <div class="terminal-line"><span class="t-success">✓</span> Workspace isolation — multi-tenant support with per-workspace filesystem and SQLite DB</div>
+          <div class="terminal-line"><span class="t-success">✓</span> NanoBananaService — LLM-generated structured JSON renders reliable Tailwind React components</div>
+          <div class="terminal-line"><span class="t-success">✓</span> Puppeteer in Cloud Run — Chrome installed in Docker, stealth plugin bypasses bot detection</div>
+          <div class="terminal-line"><span class="t-success">✓</span> Google Search Grounding — live competitor research from real market data, not static databases</div>
+          <div class="terminal-line"><span class="t-success">✓</span> Veo 3.1 video generation — cinematic hero MP4s with lighting, camera movement, and color grade</div>
+          <div class="terminal-line"><span class="t-success">✓</span> Thought Signatures — every AI decision made visible on the brand canvas for user trust</div>
+          <div class="terminal-line"><span class="t-success">✓</span> HITL auto-proceed — debounced approvals with timeout so watchers never block indefinitely</div>
+          <div class="terminal-line"><span class="t-success">✓</span> Deployed on Google Cloud Run — 2Gi RAM, 2 vCPU, full Chrome runtime, multi-tenant sessions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- CHAPTER 04 / DEMO & LEARNINGS             -->
+  <!-- ══════════════════════════════════════════ -->
+  <section class="chapter-section beevo-chapter">
+    <div class="w-layout-hflex chapter-block">
+      <h1 class="chapter-h1">04 /</h1>
+      <div class="w-layout-vflex chapter-texts">
+        <p class="chapter-top-paragraph">CHAPTER</p>
+        <p class="paragraph-2">LEARNINGS</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-11">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex">
+        <h3 class="project-top-heading"><strong class="bold-text-13">_______&nbsp;&nbsp; KEY FINDINGS</strong></h3>
+        <h1 class="project-bottom-heading"><strong>Measuring success</strong><span><strong class="bold-text-9">.</strong></span></h1>
+        <div class="horizontal-bar light"></div>
+
+        <div class="div-block-11">
+          <h1 class="heading-4">"The most important insight was not about AI capability. It was about trust. Users don't resist automation. They resist opacity. Once every AI decision became a visible Thought Signature on the canvas, user confidence in letting the system run autonomously increased immediately."</h1>
+        </div>
+
+        <div class="w-layout-hflex measuring-sucess">
+          <div class="w-layout-vflex flex-block-5">
+            <div class="project-body-heading">What worked well</div>
+            <p class="project-body-paragraph">The Bridge Architecture was the right call. Separating Gemini Live from the Brain completely eliminated the response latency problem that had made every earlier prototype feel broken. The voice interaction became natural enough that people who tried Beevo during the competition kept saying it felt like talking to a CMO, not a chatbot. The workspace isolation system also proved robust; multiple simultaneous demo sessions ran without state conflicts. Thought Signatures were the unexpected win: every person who saw the reasoning chain on the canvas trusted the system enough to let the Watcher Agents run on their own. Transparency, not capability, turned out to be the differentiator.<br><br>The NanoBanana approach, generating structured JSON config instead of raw HTML, was one of the best engineering decisions in the project. LLM-generated HTML is unreliable and hard to validate. Structured JSON with a fixed schema is predictable, renderable, and debuggable. The landing page sections rendered correctly on first attempt far more consistently after we switched to this approach.</p>
+          </div>
+          <div class="w-layout-vflex flex-block-6">
+            <div class="project-body-heading">What I would do differently</div>
+            <p class="project-body-paragraph">Persistent storage was the most painful gap in the current implementation. Cloud Run's ephemeral disk means workspace data is lost on container restart. For the hackathon timeline this was acceptable, but for a production system it's critical. The architecture needs Cloud SQL or Cloud Storage with proper persistence before real brands can rely on it. I would build this from day one rather than retrofitting it later.<br><br>Puppeteer's reliability on Cloud Run was inconsistent. Google Images IP blocking affected the logo inspiration scraping more than expected, even with the stealth plugin. The fallback to Search Grounding handled it, but a more robust design would integrate a dedicated screenshot API like Screenshotone or Browserless rather than running Chrome inside the application container.<br><br>Finally, I would build the A/B testing framework earlier. The Watcher Agents currently propose changes sequentially. True multivariate testing, deploying two landing page variants simultaneously and measuring which performs better, would make the optimization loop dramatically more powerful and would be the natural next step for what Beevo does.</p>
+          </div>
+        </div>
+
+        <a href="#page-top" class="scroll-to-top w-inline-block">
+          <img src="images/scroll-to-top.svg" loading="lazy" alt="" class="image-24">
+        </a>
+      </div>
+
+      <div class="w-layout-hflex footer-links">
+        <div class="footer-link">ALL ML PROJECTS</div>
+        <a href="ml-projects.html" class="footer-link">ML PROJECTS</a>
+        <a href="sparr-ai.html" class="footer-link">SPARR AI</a>
+        <a href="daladala.html" class="footer-link">DALADALA RL</a>
+        <a href="accident-detection.html" class="footer-link">ACCIDENT DETECTION</a>
+        <a href="travelbot.html" class="footer-link">TRAVELBOT</a>
+        <a href="road-crash.html" class="footer-link">ROAD CRASH</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="horizontal-bar light footer-bar"></div>
+  <section class="section-12"></section>
+
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=678cf6b9ec8afcb96a1835c0" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <script>
+    const scrollIndicatorEl = document.getElementById('scroll-indicator');
+    const scrollThumbEl     = document.getElementById('scroll-indicator-thumb');
+    let scrollHideTimer = null;
+    function updateScrollIndicator() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress  = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
+      if (scrollThumbEl && scrollIndicatorEl) {
+        const trackH = scrollIndicatorEl.offsetHeight;
+        const thumbH = scrollThumbEl.offsetHeight;
+        scrollThumbEl.style.top = (progress * (trackH - thumbH)) + 'px';
+      }
+      if (scrollIndicatorEl) scrollIndicatorEl.classList.add('visible');
+      clearTimeout(scrollHideTimer);
+      scrollHideTimer = setTimeout(() => {
+        if (scrollIndicatorEl) scrollIndicatorEl.classList.remove('visible');
+      }, 1600);
+    }
+    window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+  </script>
+
+  <script>
+    // Animate ML progress bars on scroll into view
+    const bars = document.querySelectorAll('.ml-progress-fill');
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('animated');
+          barObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    bars.forEach(b => barObserver.observe(b));
+  </script>
+</body>
+</html>

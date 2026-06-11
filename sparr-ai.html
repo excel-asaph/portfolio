@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="en" data-wf-page="sparr-ai" data-wf-site="678cf6b9ec8afcb96a1835c0">
+<head>
+  <meta charset="utf-8">
+  <title>Sparr AI — Excel Asaph</title>
+  <meta content="Sparr AI is a hyper-realistic AI mock interview platform with 5 distinct voice personas, resume-aware probing, and session continuity — built for the ElevenLabs x Google Cloud hackathon." name="description">
+  <meta content="Sparr AI | Excel Asaph" property="og:title">
+  <meta content="AI-powered interview simulator with voice personas, resume intelligence, and linked session chains." property="og:description">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/emmanuels-portfolio-35c9fa.webflow.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({ google: { families: ["Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"] } });</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart" in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.svg" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.svg" rel="apple-touch-icon">
+
+  <style>
+    html { scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
+    html::-webkit-scrollbar { display: none; }
+
+    .scroll-indicator {
+      position: fixed;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 28vh;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .scroll-indicator.visible {
+      opacity: 1;
+      transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .scroll-indicator-track {
+      position: absolute;
+      inset: 0;
+      background: rgba(13,148,136,0.15);
+      border-radius: 999px;
+    }
+    .scroll-indicator-thumb {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 28px;
+      background: var(--sparr-accent);
+      border-radius: 999px;
+      top: 0;
+      will-change: top;
+    }
+
+    /* ══ SPARR AI — TEAL ACCENT SYSTEM ══ */
+    :root {
+      --sparr-darkest: #042f2e;
+      --sparr-dark:    #0f4c40;
+      --sparr-accent:  #0d9488;
+      --sparr-mid:     #99f6e4;
+      --sparr-light:   #f0fdfa;
+      --sparr-tint:    #ccfbf180;
+    }
+    body { background-color: var(--sparr-light); }
+
+    /* ══ SCROLLING MARQUEE ══ */
+    .sparr-marquee-outer {
+      width: 100%;
+      overflow: hidden;
+      background: var(--sparr-darkest);
+      padding: 14px 0;
+      border-bottom: 1px solid #0d948830;
+    }
+    .sparr-marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: sparr-marquee 28s linear infinite;
+      width: max-content;
+    }
+    .sparr-marquee-track:hover { animation-play-state: paused; }
+    .sparr-marquee-item {
+      font-family: "Open Sans", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sparr-mid);
+      padding: 0 40px;
+    }
+    .sparr-marquee-sep {
+      color: var(--sparr-accent);
+      padding: 0 12px;
+    }
+    @keyframes sparr-marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ══ SPLIT HERO ══ */
+    .sparr-hero {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      padding: 60px 0 40px;
+    }
+    .sparr-hero-left { flex: 1; min-width: 0; }
+    .sparr-hero-right { flex: 1.2; min-width: 0; }
+    .sparr-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--sparr-light);
+      border: 1px solid var(--sparr-mid);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sparr-accent);
+      margin-bottom: 24px;
+    }
+    .sparr-hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--sparr-accent);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.7); }
+    }
+    .sparr-hero-title {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      color: #1a1a2e;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+    .sparr-hero-title em {
+      font-style: normal;
+      color: var(--sparr-accent);
+    }
+    .sparr-hero-desc {
+      font-size: 15px;
+      color: #607d8b;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 480px;
+    }
+    .sparr-hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .sparr-hero-meta-item {}
+    .sparr-hero-meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sparr-accent);
+      margin-bottom: 2px;
+    }
+    .sparr-hero-meta-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    /* ══ BROWSER FRAME ══ */
+    .browser-bar { display: none !important; }
+    .browser-frame {
+      background: #1e293b;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 16px;
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+    }
+    .browser-dot {
+      width: 11px; height: 11px;
+      border-radius: 50%;
+    }
+    .bd-red    { background: #fc6058; }
+    .bd-yellow { background: #ffc130; }
+    .bd-green  { background: #27c93f; }
+    .browser-url {
+      flex: 1;
+      background: #1e293b;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 11px;
+      color: #64748b;
+      margin-left: 8px;
+      font-family: monospace;
+    }
+    .browser-content { display: block; }
+    .browser-content img {
+      width: 100%;
+      display: block;
+      border-radius: 0;
+    }
+
+    /* ══ CHAPTER (teal dark) ══ */
+    .sparr-chapter {
+      background: var(--sparr-darkest);
+    }
+    .sparr-chapter .chapter-h1 { color: var(--sparr-mid); }
+    .sparr-chapter .chapter-top-paragraph,
+    .sparr-chapter .paragraph-2 { color: #a7f3d0; }
+
+    /* ══ TINT SECTION ══ */
+    .sparr-tint-section { background-color: var(--sparr-light); }
+
+    /* ══ LARGE STATEMENT ══ */
+    .large-statement {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 800;
+      color: #1a1a2e;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      max-width: 800px;
+      margin: 0 0 24px;
+    }
+    .large-statement em {
+      font-style: normal;
+      color: var(--sparr-accent);
+    }
+
+    /* ══ FULL-WIDTH SCENE ══ */
+    .scene-block {
+      margin: 40px auto;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+      max-width: 70%;
+    }
+    .scene-block img, .scene-block .browser-frame {
+      display: block;
+      width: 100%;
+      border-radius: 0;
+    }
+
+    /* ══ SPARR TAGS ══ */
+    .sparr-tag { background-color: var(--sparr-light); border: 1px solid var(--sparr-mid); height: auto !important; }
+    .sparr-tag-text { color: var(--sparr-accent); font-weight: 600; white-space: nowrap; }
+
+    /* ══ PERSONA CANVAS + WEB LAYOUT ══ */
+    .persona-canvas-wrap {
+      position: relative;
+      margin: 32px 0;
+      padding: 52px 20px 60px 0;
+      border-radius: 28px;
+      overflow: hidden;
+    }
+    .persona-web-grid {
+      margin-left: -32px;
+    }
+    .persona-canvas-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(13,148,136,0.32) 1.5px, transparent 1.5px);
+      background-size: 26px 26px;
+      -webkit-mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 15%, transparent 75%);
+      mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 15%, transparent 75%);
+      pointer-events: none;
+    }
+    .persona-web-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      align-items: center;
+    }
+    .pnc-side-col {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transform: scale(0.87);
+      opacity: 0.76;
+      transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform, opacity;
+    }
+    .pnc-side-col:first-child {
+      transform-origin: right center;
+      margin-right: -6px;
+    }
+    .pnc-side-col:first-child .pnc-avatar {
+      right: 56px;
+    }
+    .pnc-side-col:first-child .pnc-name,
+    .pnc-side-col:first-child .pnc-desc {
+      padding-right: 136px;
+    }
+    .pnc-side-col:last-child {
+      transform-origin: left center;
+      margin-left: -6px;
+    }
+    .pnc-side-col:last-child .pnc-top {
+      padding-left: 60px;
+    }
+    .pnc-side-col:hover {
+      opacity: 0.95;
+      transform: scale(0.91);
+    }
+    .pnc-center-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      transform: scale(1.07);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    .pnc-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+      transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform, box-shadow;
+    }
+    .pnc-card:hover {
+      box-shadow: 0 18px 44px rgba(0,0,0,0.13), 0 4px 10px rgba(0,0,0,0.06);
+      transform: translateY(-5px);
+    }
+    .pnc-center-col .pnc-card {
+      box-shadow: 0 12px 48px rgba(0,0,0,0.16), 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .pnc-top {
+      padding: 16px 16px 18px;
+      position: relative;
+      min-height: 152px;
+    }
+    .pnc-center-col .pnc-top {
+      min-height: 196px;
+    }
+    .pnc-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(0,0,0,0.13);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 9px;
+      font-weight: 600;
+      color: #374151;
+      letter-spacing: 0.2px;
+      margin-bottom: 10px;
+    }
+    .pnc-avatar {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.2);
+      border: 3px solid rgba(255,255,255,0.65);
+    }
+    .pnc-center-col .pnc-avatar {
+      width: 84px;
+      height: 84px;
+    }
+    .pnc-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pnc-name {
+      font-size: 19px;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.15;
+      margin-bottom: 6px;
+      padding-right: 86px;
+    }
+    .pnc-center-col .pnc-name {
+      font-size: 22px;
+      padding-right: 96px;
+    }
+    .pnc-desc {
+      font-size: 11px;
+      color: #4b5563;
+      line-height: 1.6;
+      padding-right: 86px;
+    }
+    .pnc-center-col .pnc-desc {
+      font-size: 12px;
+      padding-right: 96px;
+    }
+    .pnc-meta-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 14px;
+      font-size: 10px;
+      color: rgba(0,0,0,0.38);
+      font-weight: 500;
+    }
+    .pnc-meta-sep { color: rgba(0,0,0,0.18); }
+    .pnc-meta-lang {
+      font-weight: 600;
+      color: rgba(0,0,0,0.52);
+    }
+
+    /* ══ SIDE-BY-SIDE SCENE ══ */
+    .two-col-scene {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 32px 0;
+    }
+    .two-col-scene .browser-frame {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .scene-caption {
+      font-size: 12px;
+      color: #94a3b8;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* ══ METRIC CARDS (outlined ghost) ══ */
+    .sparr-metrics {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 32px 0;
+    }
+    .sparr-metric {
+      flex: 1;
+      min-width: 130px;
+      background: transparent;
+      border: 1.5px solid rgba(13,148,136,0.3);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .sparr-metric-val {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--sparr-accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .sparr-metric-unit {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--sparr-accent);
+      opacity: 0.7;
+    }
+    .sparr-metric-label {
+      font-size: 12px;
+      color: #607d8b;
+      line-height: 1.4;
+    }
+    .sparr-metric {
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .sparr-metric:hover {
+      border-color: rgba(13,148,136,0.6);
+      background: rgba(13,148,136,0.04);
+    }
+
+    /* ══ VIDEO EMBED ══ */
+    .video-embed-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 32px 0;
+      box-shadow: 0 8px 40px rgba(13,148,136,0.2);
+    }
+    .video-embed-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ══ SESSION SPACES DIAGRAM ══ */
+    .spaces-explainer {
+      background-color: #f7fffe;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 400'%3E%3Ccircle cx='580' cy='80' r='220' fill='none' stroke='%230d9488' stroke-opacity='0.09' stroke-width='1.5'/%3E%3Ccircle cx='580' cy='80' r='170' fill='none' stroke='%230d9488' stroke-opacity='0.07' stroke-width='1'/%3E%3Ccircle cx='580' cy='80' r='120' fill='none' stroke='%230d9488' stroke-opacity='0.05' stroke-width='1'/%3E%3C/svg%3E");
+      background-position: top right;
+      background-repeat: no-repeat;
+      background-size: 480px;
+      border-radius: 0;
+      padding: 60px 40px;
+      margin: 32px 0;
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      -webkit-mask-image: radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 88%);
+      mask-image: radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 88%);
+    }
+    .spaces-explainer::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -80px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle at center, rgba(13,148,136,0.14) 0%, rgba(13,148,136,0.05) 45%, transparent 70%);
+      pointer-events: none;
+      border-radius: 50%;
+    }
+    .spaces-explainer::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -60px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle at center, rgba(13,148,136,0.1) 0%, transparent 65%);
+      pointer-events: none;
+      border-radius: 50%;
+    }
+    .spaces-left { flex: 1; position: relative; z-index: 1; }
+    .spaces-right { flex: 1.2; position: relative; z-index: 1; }
+    .spaces-chain {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .spaces-node {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      position: relative;
+      padding-bottom: 24px;
+    }
+    .spaces-node:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 32px;
+      width: 2px;
+      bottom: 0;
+      background: var(--sparr-accent);
+      opacity: 0.3;
+    }
+    .spaces-node-dot {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--sparr-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 3px 10px rgba(13,148,136,0.3);
+    }
+    .spaces-node-content { padding-top: 6px; }
+    .spaces-node-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sparr-darkest);
+      margin-bottom: 3px;
+    }
+    .spaces-node-text {
+      font-size: 12px;
+      color: #4b6472;
+      line-height: 1.5;
+    }
+
+    /* ══ PROGRESS BARS ══ */
+    .ml-progress-fill {
+      height: 4px;
+      background: var(--sparr-accent);
+      border-radius: 4px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .ml-progress-fill.animated { width: var(--target-width); }
+
+    /* ══ RESPONSIVE ══ */
+    @media screen and (max-width: 991px) {
+      .sparr-hero { flex-direction: column; }
+      .persona-web-grid { grid-template-columns: 1fr 1fr; }
+      .pnc-center-col { grid-column: 1 / -1; }
+      .two-col-scene { grid-template-columns: 1fr; }
+      .spaces-explainer { flex-direction: column; }
+    }
+    @media screen and (max-width: 767px) {
+      .persona-web-grid {
+        grid-template-columns: 1fr;
+        margin-left: 0;
+        gap: 16px;
+      }
+      .persona-grid { grid-template-columns: 1fr !important; }
+      .pnc-center-col {
+        grid-column: auto;
+        transform: none;
+      }
+      .pnc-side-col {
+        transform: none !important;
+        opacity: 1 !important;
+        gap: 16px;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+      }
+      .pnc-side-col:first-child .pnc-name,
+      .pnc-side-col:first-child .pnc-desc { padding-right: 86px; }
+      .pnc-side-col:first-child .pnc-avatar { right: 12px; }
+      .pnc-side-col:last-child .pnc-top { padding-left: 16px; }
+      .pnc-card { max-width: 420px; margin-left: auto; margin-right: auto; }
+      .persona-canvas-wrap { padding: 16px 0; }
+    }
+    @media screen and (max-width: 767px) {
+      .sparr-metrics { flex-direction: column; }
+    }
+    @media screen and (max-width: 479px) {
+      .sparr-hero-title { font-size: 28px; }
+      .large-statement { font-size: 24px; }
+    }
+
+    /* ══ PROJECT SIDE BLOCK — SPARR THEME + ANIMATIONS ══ */
+    .project-side-block .project-tags-button.live-site {
+      background-color: var(--sparr-accent) !important;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    /* Shimmer sweep */
+    .project-side-block .project-tags-button.live-site::after {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: -120%;
+      width: 55%;
+      height: 120%;
+      background: linear-gradient(
+        105deg,
+        transparent 20%,
+        rgba(255,255,255,0.32) 50%,
+        transparent 80%
+      );
+      transform: skewX(-18deg);
+      transition: left 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+    .project-side-block .live-site-link:hover .project-tags-button.live-site::after {
+      left: 160%;
+    }
+    /* Hover — no lift, no shadow, stays steady */
+    .project-side-block .live-site-link:hover .project-tags-button.live-site {
+      background-color: #0aada0 !important;
+    }
+    /* Arrow icon diagonal nudge */
+    .project-side-block .live-site-link .image-26 {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .project-side-block .live-site-link:hover .image-26 {
+      transform: translate(3px, -3px);
+    }
+    /* GitHub teal color */
+    .project-side-block .side-block-heading {
+      color: var(--sparr-accent) !important;
+      transition: color 0.3s ease;
+    }
+    .project-side-block .github-link img {
+      filter: invert(48%) sepia(60%) saturate(500%) hue-rotate(139deg) brightness(85%) contrast(95%);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    /* GitHub subtle hover highlight */
+    .project-side-block .link-block:hover .side-block-heading {
+      color: #0aada0 !important;
+    }
+    .project-side-block .link-block:hover .github-link img {
+      transform: scale(1.12);
+    }
+
+    /* ══ NAV OVERRIDES — strip Webflow life-prescriber blue nav ══ */
+    .nav-block {
+      background-color: transparent !important;
+      background-image: none !important;
+      height: auto !important;
+      margin-bottom: 0 !important;
+    }
+    .navbar-no-shadow-container { background: transparent !important; }
+    .text-block-7.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
+    .text-block-9.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df { color: var(--sparr-darkest) !important; }
+    .nav-link.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
+    .text-block-10.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
+    .nav-dropdown-icon.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df { color: var(--sparr-darkest) !important; }
+
+    /* ══ NEW EDITORIAL HERO ══ */
+    .sparr-editorial-hero {
+      padding: 72px 152px 40px;
+      text-align: center;
+    }
+    .sparr-editorial-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sparr-accent);
+      margin-bottom: 28px;
+    }
+    .sparr-editorial-title {
+      font-size: clamp(52px, 8vw, 120px);
+      font-weight: 800;
+      color: var(--sparr-darkest);
+      letter-spacing: -4px;
+      line-height: 0.9;
+      margin: 0 0 56px;
+    }
+    .sparr-editorial-meta {
+      display: flex;
+      justify-content: center;
+      gap: 72px;
+      margin-bottom: 100px;
+    }
+    .sparr-editorial-meta-item {
+      font-size: 15px;
+      font-weight: 300;
+      color: #607d8b;
+      margin: 0;
+    }
+    .sparr-editorial-meta-item strong {
+      color: #3a4248;
+      font-weight: 700;
+    }
+    /* Dark-framed showcase — outer is the "border", inner holds the media */
+    .sparr-showcase-frame {
+      background: var(--sparr-darkest);
+      border-radius: 22px;
+      padding: 18px;
+      max-width: 1160px;
+      margin: 0 auto;
+      box-shadow: 0 60px 160px rgba(4,47,46,0.22), 0 0 0 1px rgba(4,47,46,0.08);
+    }
+    .sparr-showcase-inner {
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .sparr-showcase-inner img {
+      width: 100%; display: block;
+    }
+    @media (max-width: 991px) {
+      .sparr-editorial-hero { padding: 48px 70px 64px; }
+      .sparr-editorial-title { letter-spacing: -3px; }
+      .sparr-editorial-meta { flex-wrap: wrap; }
+      .sparr-editorial-meta-item { max-width: 50%; }
+    }
+    @media (max-width: 767px) {
+      .sparr-editorial-hero { padding: 40px 40px 56px; }
+      .sparr-editorial-meta-item { max-width: 50%; padding: 20px; }
+    }
+    @media (max-width: 479px) {
+      .sparr-editorial-hero { padding: 32px 20px 48px; }
+      .sparr-editorial-title { letter-spacing: -2px; }
+      .sparr-editorial-meta-item { max-width: 100%; border-right: none; border-bottom: 1px solid rgba(13,148,136,0.2); }
+      .sparr-showcase-frame { padding: 10px; border-radius: 14px; }
+    }
+
+    /* ══ TEAL ACCENT OVERRIDES (replace default Webflow blue #0d81bc) ══ */
+    .bold-text-2.dot,
+    .bold-text-5,
+    .bold-text-6,
+    .bold-text-8,
+    .bold-text-9,
+    .bold-text-11,
+    .bold-text-12,
+    .bold-text-13,
+    .text-block.exclaim { color: var(--sparr-accent) !important; }
+
+    /* Persona comment left bar — teal */
+    .key-observation-section .persona-comment {
+      border-left-color: var(--sparr-accent) !important;
+    }
+
+    /* ══ CHAPTER CONTENT — LIGHT BACKGROUNDS ══ */
+    .key-observation-section,
+    .software-blueprint-section,
+    .section-9 {
+      background-color: var(--sparr-light) !important;
+      background-image: none !important;
+    }
+    .key-observation-section .bold-text-2.white,
+    .software-blueprint-section .bold-text-2.white,
+    .section-9 .bold-text-2.white { color: #042f2e !important; }
+
+    .key-observation-section .project-body-heading.light,
+    .software-blueprint-section .project-body-heading.light,
+    .section-9 .project-body-heading.light { color: #3a4248 !important; }
+
+    .key-observation-section .project-body-heading.light.experience-heading,
+    .software-blueprint-section .project-body-heading.light.experience-heading,
+    .section-9 .project-body-heading.light.experience-heading { color: var(--sparr-accent) !important; }
+
+    .key-observation-section .project-body-paragraph.dark,
+    .software-blueprint-section .project-body-paragraph.dark,
+    .section-9 .project-body-paragraph.dark { color: #607d8b !important; }
+
+    .key-observation-section .horizontal-bar.dark,
+    .software-blueprint-section .horizontal-bar.dark,
+    .section-9 .horizontal-bar.dark { background-color: rgba(13,148,136,0.2) !important; }
+
+    /* ══ OBSERVATION CARDS — teal tint + ghosted icon ══ */
+    .key-observation-section .observation-card,
+    .software-blueprint-section .observation-card,
+    .section-9 .observation-card {
+      background-color: #f7fffe !important;
+      position: relative;
+      overflow: hidden;
+    }
+    .obs-ph-icon {
+      font-size: 44px;
+      color: var(--sparr-accent);
+      margin-bottom: 20px;
+      display: block;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+    }
+    .obs-ph-ghost {
+      position: absolute;
+      bottom: -24px;
+      right: -12px;
+      font-size: 150px;
+      color: var(--sparr-accent);
+      opacity: 0.06;
+      pointer-events: none;
+      line-height: 1;
+      z-index: 0;
+    }
+    .key-observation-section .observation-card .project-body-heading,
+    .key-observation-section .observation-card p {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ══ COMP CARD LOGOS ══ */
+    .sparr-comp-logo {
+      max-height: 56px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      align-self: flex-start;
+      margin-bottom: 14px;
+    }
+
+    /* ══ COMPETITIVE ANALYSIS CARDS ══ */
+    .sparr-comp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+    .sparr-comp-card {
+      background: #f7fffe;
+      border-radius: 10px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -2px 10px 15px rgba(0,0,0,0.1);
+    }
+    .sparr-comp-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    .sparr-comp-type {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 14px;
+    }
+    .sparr-comp-desc {
+      font-size: 14px;
+      color: #607d8b;
+      line-height: 1.65;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(13,148,136,0.15);
+    }
+    .sparr-comp-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+    .sparr-comp-list {
+      font-size: 14px;
+      color: #607d8b;
+      line-height: 1.8;
+      margin-bottom: 14px;
+      padding-left: 0;
+      list-style: none;
+    }
+    .sparr-comp-list li::before {
+      content: "____ ";
+      color: var(--sparr-accent);
+      font-weight: 600;
+    }
+    .sparr-comp-gap {
+      font-size: 13px;
+      color: var(--sparr-darkest);
+      font-weight: 600;
+      line-height: 1.5;
+      background: rgba(13,148,136,0.08);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-top: auto;
+    }
+    .sparr-comp-gap-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sparr-accent);
+      margin-bottom: 4px;
+      display: block;
+    }
+    @media (max-width: 991px) {
+      .sparr-comp-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 767px) {
+      .sparr-comp-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body class="body">
+
+  <!-- Page enter overlay — matches ml-projects transition exit color -->
+  <div id="page-enter-overlay" style="position:fixed;inset:0;z-index:9999;background:#f0fdfa;pointer-events:none;transition:opacity 0.65s cubic-bezier(0.4,0,0.2,1);"></div>
+  <script>
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = document.getElementById('page-enter-overlay');
+        if (el) { el.style.opacity = '0'; setTimeout(() => el.remove(), 700); }
+      });
+    });
+  </script>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator" id="scroll-indicator">
+    <div class="scroll-indicator-track"></div>
+    <div class="scroll-indicator-thumb" id="scroll-indicator-thumb"></div>
+  </div>
+
+  <!-- ══ NAV ══ -->
+  <div id="page-top" class="nav-block">
+    <div data-wf--nav-bar--variant="life-prescriber---nav">
+      <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-no-shadow-container w-nav">
+        <div class="container-regular container">
+          <div class="navbar-wrapper">
+            <a href="index.html" class="navbar-brand w-nav-brand">
+              <div class="text-block-7 w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">Excel Asaph</div>
+              <div class="text-block-9 w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">Software Engineer (ML)</div>
+            </a>
+            <nav role="navigation" class="nav-menu-wrapper w-nav-menu">
+              <ul role="list" class="nav-menu w-list-unstyled">
+                <li class="list-item">
+                  <a href="about.html" class="nav-link w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">About Me</a>
+                </li>
+                <li class="list-item">
+                  <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
+                    <div data-w-id="2f800a98-825f-3ce9-5a00-5a902d9c8b88" class="nav-dropdown-toggle w-dropdown-toggle">
+                      <div class="nav-dropdown-icon w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df w-icon-dropdown-toggle"></div>
+                      <div class="text-block-10 w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df">Projects</div>
+                    </div>
+                    <nav class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
+                      <a href="life-prescriber.html" class="nav-dropdown-link w-dropdown-link">Life Prescriber</a>
+                      <a href="campus-cart.html" class="nav-dropdown-link w-dropdown-link">Campus Cart</a>
+                      <a href="collab-u.html" class="nav-dropdown-link w-dropdown-link">Collab-U</a>
+                    </nav>
+                  </div>
+                </li>
+                <li class="list-item">
+                  <a href="ml-projects.html" class="nav-link w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df w--current">ML Projects</a>
+                </li>
+              </ul>
+            </nav>
+            <div class="menu-button w-nav-button">
+              <div class="w-icon-nav-menu"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EDITORIAL HERO ══ -->
+  <section class="sparr-editorial-hero">
+    <h1 class="sparr-editorial-title">SPARR AI</h1>
+
+    <div class="sparr-editorial-meta">
+      <p class="sparr-editorial-meta-item"><strong>Role:</strong>&nbsp; Full-Stack AI Engineer</p>
+      <p class="sparr-editorial-meta-item"><strong>Context:</strong>&nbsp; AI Interview Platform</p>
+      <p class="sparr-editorial-meta-item"><strong>Duration:</strong>&nbsp; May 2025 – Present</p>
+    </div>
+
+    <!-- Dark-framed showcase -->
+    <div class="sparr-showcase-frame">
+      <div class="sparr-showcase-inner">
+        <img src="images/sparr-spaces.gif" alt="Sparr AI — Session Spaces interface" loading="lazy">
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══ ROLE & CONTRIBUTION ══ -->
+  <section>
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex contribution-block">
+        <div class="contribution-heading">My individual contribution</div>
+        <div class="contribution-paragraph">As the Lead AI and Frontend Engineer on Sparr AI, I worked with a small team to build this for the ElevenLabs x Google Cloud hackathon. My focus was the product's intelligence and interface layers. I owned the ElevenLabs voice integration, connecting five distinct personas to a shared Gemini intelligence layer that reads the candidate's resume, generates company-specific job archetypes, and crafts each persona's system prompt before every session. I also built the full React frontend, including the onboarding wizard, the live interview interface, and the generated performance report with timestamped audio feedback and radar chart scoring. I contributed lightly to the backend where the AI and voice layers intersected with the rest of the system.</div>
+
+        <div class="contribution-skills">Voice AI Integration (ElevenLabs)</div>
+        <div class="progress-bar"><div class="ml-progress-fill" style="--target-width: 95%;"></div></div>
+
+        <div class="contribution-skills">AI / Gemini Prompt Engineering</div>
+        <div class="progress-bar"><div class="ml-progress-fill" style="--target-width: 92%;"></div></div>
+
+        <div class="contribution-skills">Front-End Development (React, Framer Motion)</div>
+        <div class="progress-bar"><div class="ml-progress-fill" style="--target-width: 88%;"></div></div>
+
+        <div class="contribution-skills">Backend &amp; API Design</div>
+        <div class="progress-bar"><div class="ml-progress-fill" style="--target-width: 30%;"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROJECT DETAILS ══ -->
+  <section>
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex project-headings">
+        <h3 class="project-top-heading"><strong class="bold-text-5">_______&nbsp;&nbsp; PROJECT DETAILS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2">Understanding the project</strong><span class="period-span"><strong class="bold-text-8">.</strong></span></h1>
+      </div>
+      <div class="horizontal-bar"></div>
+      <div class="w-layout-hflex project-main-block">
+        <div class="w-layout-vflex project-about-block">
+          <div class="project-body-heading">About</div>
+          <p class="project-body-paragraph">Sparr AI is a voice-first AI mock interview simulator. Candidates upload their resume, select a target company and role, choose from 5 AI interview personas (each with a distinct voice and personality), then complete a live voice interview. The system generates a detailed report with scored performance, timestamped audio feedback, and specific improvement recommendations. Interviews can be linked into Session Spaces that escalate difficulty based on prior weaknesses.</p>
+
+          <div class="project-body-heading">Problem Statement</div>
+          <p class="project-body-paragraph">Traditional interview prep tools are polite, scripted, and predictable. They give the same generic feedback regardless of the candidate's background, tell you "good job" when your answer is mediocre, and never simulate what a real FAANG technical round or a startup culture-fit conversation actually feels like under pressure. The result: candidates walk into real interviews having practiced only for the ideal version of a conversation that rarely exists.</p>
+
+          <div class="project-body-heading">Project tags</div>
+          <div class="w-layout-hflex project-main-tags">
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">Voice AI</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">Conversational AI</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">Career Tech</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">Resume AI</div></div>
+          </div>
+
+          <div class="project-body-heading tech-stack">Tech Stack</div>
+          <div class="w-layout-hflex project-main-tags">
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">React 18</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">Node.js / Express</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">ElevenLabs SDK</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">Gemini 2.5 Flash Lite</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">Firebase</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">Framer Motion</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">ReactFlow</div></div>
+            <div class="project-tags-button sparr-tag"><div class="tag-button-text sparr-tag-text">Recharts</div></div>
+          </div>
+        </div>
+
+        <div class="w-layout-vflex project-side-block">
+          <div class="horizontal-bar2"></div>
+          <a href="https://github.com/excel-asaph/sparr-ai" target="_blank" class="link-block w-inline-block">
+            <div class="w-layout-hflex github-link">
+              <img src="images/mdi_github-1.svg" loading="lazy" alt="">
+              <div class="side-block-heading">GitHub</div>
+            </div>
+          </a>
+          <a href="https://sparr-frontend-430715776322.us-central1.run.app" target="_blank" class="live-site-link w-inline-block">
+            <div class="project-tags-button live-site">
+              <div class="tag-button-text live-site-btn">View Site</div>
+              <img src="images/lsicon_open-new-filled-1.svg" loading="lazy" alt="" class="image-26">
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- VIDEO DEMO                          -->
+  <!-- ════════════════════════════════════ -->
+  <section style="padding: 80px 0 100px; background: var(--sparr-light);">
+    <div class="w-layout-blockcontainer container w-container">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--sparr-darkest); margin: 0; letter-spacing: -1px;">See it in action</h2>
+      </div>
+      <div class="sparr-showcase-frame">
+        <div class="sparr-showcase-inner">
+          <div style="position: relative; width: 100%; padding-bottom: 56.25%;">
+            <iframe
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block;"
+              src="https://www.youtube.com/embed/8WJDem5fetY"
+              title="Sparr AI — Survive The Interview Demo"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- CHAPTER 01 / PROBLEM & CONTEXT      -->
+  <!-- ════════════════════════════════════ -->
+  <section class="chapter-section sparr-chapter">
+    <div class="w-layout-hflex chapter-block">
+      <h1 class="chapter-h1">01 /</h1>
+      <div class="w-layout-vflex chapter-texts">
+        <p class="chapter-top-paragraph">CHAPTER</p>
+        <p class="paragraph-2">PROBLEM &amp; CONTEXT</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="key-observation-section">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex observation-block">
+
+        <!-- Large statement -->
+        <div class="large-statement">
+          Real interviews don't wait for you<br>to be <em>ready.</em>
+        </div>
+
+        <div style="margin-top: 56px;"></div>
+        <h3 class="project-top-heading"><strong class="bold-text-6">_______&nbsp;&nbsp; KEY OBSERVATIONS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">The gap between practice and reality</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-heading light">Research context</div>
+        <div class="project-body-paragraph dark">The motivation for Sparr came from real conversations, not data. Before a single line of code was written, I spent time talking to peers going through job applications: final-year students at ALU, bootcamp graduates, people making career transitions. The same pattern kept coming up. Technically capable people were failing not because they lacked knowledge, but because they had never practiced under real pressure. I watched friends do mock interviews with each other. The feedback was always gentle, always polite. Nobody pushed back on an answer. Nobody challenged a technical claim on their resume. And then they'd walk into a James-type interview and fall apart. Most prep tools optimize for comfort. Real interviewers optimize for signal. Sparr was built specifically for that gap.</div>
+
+        <div class="w-layout-hflex observation-block-cards">
+          <div class="w-layout-vflex observation-card">
+            <i class="ph ph-fill ph-mask-happy obs-ph-icon"></i>
+            <div class="project-body-heading light experience-heading">The Candidate's Trap</div>
+            <p class="observation-card-paragraph">In almost every conversation I had, candidates described some version of the same story: they'd practiced every common question, felt prepared, walked in, and completely unraveled the moment an interviewer pushed back. They'd rehearsed answers to "Tell me about yourself" but had never dealt with a skeptical senior engineer who immediately challenges the technical claims in their resume, or an HR interviewer who subtly probes for inconsistencies in their behavioral stories. The safe, affirming environment of most tools trains the wrong muscle: comfort, not composure under pressure.</p>
+            <i class="ph ph-fill ph-mask-happy obs-ph-ghost"></i>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <i class="ph ph-fill ph-users-three obs-ph-icon"></i>
+            <div class="project-body-heading light experience-heading">The Interviewer's Diversity</div>
+            <p class="observation-card-paragraph">Real interview panels are not homogeneous. In a single day a candidate might face a casual peer culture-fit conversation, a deeply technical algorithm discussion in a language they barely know, an HR behavioral screen, and a pragmatic startup founder who just wants to know if you can ship. Each requires a completely different communication style, level of formality, and type of evidence. No single AI persona can simulate all of these. So Sparr ships five, each with a distinct ElevenLabs voice, personality, and evaluation focus.</p>
+            <i class="ph ph-fill ph-users-three obs-ph-ghost"></i>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <i class="ph ph-fill ph-brain obs-ph-icon"></i>
+            <div class="project-body-heading light experience-heading">The Engineering Insight</div>
+            <p class="observation-card-paragraph">The most valuable thing an interview simulator can do is not ask better questions. It's to remember what the candidate got wrong last time and push harder there. Static practice is additive: every session is a fresh start. Real interviewers (especially at large companies with looped hiring) do look at past performance signals. Sparr's Session Spaces architecture uses Firestore linked-list chains to create interview continuity, where each new session inherits the context of previous weaknesses, making the AI progressively harder to satisfy on the areas that matter most.</p>
+            <i class="ph ph-fill ph-brain obs-ph-ghost"></i>
+          </div>
+        </div>
+
+        <div class="project-body-heading light">Questions that shaped the design</div>
+        <div class="project-body-paragraph dark question-paragraph">Every feature in Sparr answers a specific question that generic prep tools leave unanswered.</div>
+
+        <div class="w-layout-hflex observation-block-cards cards2">
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">How does a prep tool know which specific parts of YOUR resume a real interviewer would probe?</div>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">How do you practice for a FAANG technical screen AND a startup culture-fit in the same tool without them feeling identical?</div>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">What does "getting better at interviews" actually look like over time, and how do you measure it?</div>
+          </div>
+        </div>
+        <div class="w-layout-hflex observation-block-cards cards2">
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">Can an AI interviewer sound genuinely different from a chatbot, natural enough that the pressure of the conversation feels real?</div>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">How do you give feedback that's specific to what the candidate said, not generic performance advice they could find on any blog?</div>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="text-block exclaim">''</div>
+            <div class="project-body-heading light question-heading">How do you make an interview simulator work for candidates across different languages without losing the personality of each persona?</div>
+          </div>
+        </div>
+
+        <!-- ═══ COMPETITIVE ANALYSIS ═══ -->
+        <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-6">_______&nbsp;&nbsp; COMPETITIVE ANALYSIS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">What candidates use today</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-paragraph dark">Three tools come up most often when candidates talk about interview prep. Each solves part of the problem. None of them solve the part that matters most.</div>
+
+        <div class="sparr-comp-grid">
+          <!-- Pramp -->
+          <div class="sparr-comp-card">
+            <img src="images/pramp_logo.png" alt="Pramp" class="sparr-comp-logo" loading="lazy">
+            <div class="sparr-comp-type">Peer-to-Peer Mock Interviews</div>
+            <div class="sparr-comp-desc">Free mock interview platform where candidates are matched with each other. Popular for technical coding preparation.</div>
+            <div class="sparr-comp-label">Pros</div>
+            <ul class="sparr-comp-list">
+              <li>Real human interviewers, live conversation</li>
+              <li>Free to use, includes a coding environment</li>
+              <li>Covers DSA, system design, and behavioral rounds</li>
+            </ul>
+            <div class="sparr-comp-label">Cons</div>
+            <ul class="sparr-comp-list">
+              <li>Quality depends entirely on the stranger you're matched with</li>
+              <li>No resume-awareness; questions are not tied to your background</li>
+              <li>No session continuity across practice rounds</li>
+            </ul>
+            <div class="sparr-comp-gap">
+              <span class="sparr-comp-gap-label">The gap</span>
+              "Practice quality depends entirely on who shows up."
+            </div>
+          </div>
+          <!-- Big Interview -->
+          <div class="sparr-comp-card">
+            <img src="images/big-interview_logo.png" alt="Big Interview" class="sparr-comp-logo" loading="lazy" style="height: 150px; max-height: 150px; width: auto; align-self: flex-start; margin-top: -44px; margin-bottom: -30px;">
+            <div class="sparr-comp-type">AI-Powered Interview Training</div>
+            <div class="sparr-comp-desc">Structured video interview platform with a large question library, AI feedback on communication, and performance scoring.</div>
+            <div class="sparr-comp-label">Pros</div>
+            <ul class="sparr-comp-list">
+              <li>Large question bank organized by industry and role</li>
+              <li>Structured scoring across multiple dimensions</li>
+              <li>Good for behavioral and communication prep</li>
+            </ul>
+            <div class="sparr-comp-label">Cons</div>
+            <ul class="sparr-comp-list">
+              <li>Questions are not based on your resume or target company</li>
+              <li>No real voice pressure; text or video prompts only</li>
+              <li>No session memory or progressive difficulty</li>
+            </ul>
+            <div class="sparr-comp-gap">
+              <span class="sparr-comp-gap-label">The gap</span>
+              "You rehearse answers to common questions, not the specific probes a real interviewer would use on you."
+            </div>
+          </div>
+          <!-- Yoodli -->
+          <div class="sparr-comp-card">
+            <img src="images/Yoodli_Logo.jpg" alt="Yoodli" class="sparr-comp-logo" loading="lazy" style="mix-blend-mode: multiply;">
+            <div class="sparr-comp-type">AI Speech Coach</div>
+            <div class="sparr-comp-desc">An AI coach that joins your practice sessions and gives real-time feedback on pacing, filler words, and communication clarity.</div>
+            <div class="sparr-comp-label">Pros</div>
+            <ul class="sparr-comp-list">
+              <li>Strong real-time delivery coaching</li>
+              <li>Tracks communication patterns over time</li>
+              <li>Easy to layer on top of existing practice</li>
+            </ul>
+            <div class="sparr-comp-label">Cons</div>
+            <ul class="sparr-comp-list">
+              <li>Focuses on how you speak, not what you say</li>
+              <li>No technical depth, no persona-based pressure</li>
+              <li>No resume intelligence or session memory</li>
+            </ul>
+            <div class="sparr-comp-gap">
+              <span class="sparr-comp-gap-label">The gap</span>
+              "Teaches you to communicate more clearly. Doesn't teach you to think clearly under pressure."
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ PERSONA DETAILS ═══ -->
+        <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-6">_______&nbsp;&nbsp; PERSONA DETAILS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">Who Sparr is built for</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-paragraph dark">Two profiles came up in nearly every conversation before we started building. The details differ, but the underlying problem is the same.</div>
+
+        <div class="persona-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 24px 0 48px;">
+
+          <!-- Persona 1: Kofi -->
+          <div class="w-layout-hflex main-persona-block" style="margin-bottom: 0;">
+            <div class="w-layout-vflex persona-details">
+              <div class="persona-name">Kofi Asante</div>
+              <div class="person-tags">Technical &nbsp;&nbsp;|&nbsp;&nbsp; Ambitious &nbsp;&nbsp;|&nbsp;&nbsp; Unnerved under scrutiny</div>
+              <div class="w-layout-vflex persona-status">
+                <div class="text-block-5"><strong class="bold-text-3">Age:</strong> 23</div>
+                <div class="text-block-5"><strong class="bold-text-3">Occupation:</strong> Final-Year CS Student</div>
+                <div class="text-block-5"><strong class="bold-text-3">Status:</strong> Single</div>
+                <div class="text-block-5"><strong class="bold-text-3">Location:</strong> Accra, Ghana</div>
+                <div class="text-block-5"><strong class="bold-text-3">Tier:</strong> Candidate</div>
+              </div>
+              <blockquote class="persona-comment">"I can solve most LeetCode mediums. But the moment someone pushes back on my answer, I start second-guessing everything I just said."</blockquote>
+              <div class="project-body-heading">Pain points:</div>
+              <p class="project-body-paragraph persona-details">Practices alone or with friends who give gentle, encouraging feedback. Has never been challenged mid-answer by someone with no reason to be kind. Every mock interview ends on a positive note. Real interviews don't.</p>
+              <div class="project-body-heading">Goals:</div>
+              <p class="project-body-paragraph persona-details">Simulate a skeptical, pressure-heavy technical round so that when the real thing happens, it doesn't feel like the first time he's been pushed.</p>
+            </div>
+          </div>
+
+          <!-- Persona 2: Zara -->
+          <div class="w-layout-hflex main-persona-block" style="margin-bottom: 0;">
+            <div class="w-layout-vflex persona-details">
+              <div class="persona-name">Zara Mensah</div>
+              <div class="person-tags">Determined &nbsp;&nbsp;|&nbsp;&nbsp; Self-taught &nbsp;&nbsp;|&nbsp;&nbsp; New to technical interview dynamics</div>
+              <div class="w-layout-vflex persona-status">
+                <div class="text-block-5"><strong class="bold-text-3">Age:</strong> 29</div>
+                <div class="text-block-5"><strong class="bold-text-3">Occupation:</strong> Business Analyst → Product Manager</div>
+                <div class="text-block-5"><strong class="bold-text-3">Status:</strong> Single</div>
+                <div class="text-block-5"><strong class="bold-text-3">Location:</strong> Lagos, Nigeria</div>
+                <div class="text-block-5"><strong class="bold-text-3">Tier:</strong> Candidate</div>
+              </div>
+              <blockquote class="persona-comment">"I know what I'm capable of. What I don't know is how to communicate that to someone interviewing dozens of people who has no reason to take my word for it."</blockquote>
+              <div class="project-body-heading">Pain points:</div>
+              <p class="project-body-paragraph persona-details">Moving from business analysis into product management. Different interviewers expect completely different things, and she has no way to practice shifting between a culture-fit conversation and a technical deep-dive.</p>
+              <div class="project-body-heading">Goals:</div>
+              <p class="project-body-paragraph persona-details">Exposure to multiple interview styles so she can adapt her approach in real time, not just rehearse a single type of answer until it sounds polished.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- CHAPTER 02 / THE SYSTEM             -->
+  <!-- ════════════════════════════════════ -->
+  <section class="chapter-section sparr-chapter">
+    <div class="w-layout-hflex chapter-block">
+      <h1 class="chapter-h1">02 /</h1>
+      <div class="w-layout-vflex chapter-texts">
+        <p class="chapter-top-paragraph">CHAPTER</p>
+        <p class="paragraph-2">THE SYSTEM</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="software-blueprint-section">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex flex-block-3">
+
+        <!-- Persona showcase — full-width scene -->
+        <h3 class="project-top-heading"><strong class="bold-text-11">_______&nbsp;&nbsp; THE 5 INTERVIEWER PERSONAS</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">Five voices. Five different kinds of pressure</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-heading light">Each persona is a real interview type</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">Each of the five interviewers has a unique ElevenLabs voice ID, a distinct personality profile, a defined questioning style, and a specific evaluation focus. Gemini dynamically generates a multi-paragraph system prompt for each persona before every session, tailored to the candidate's resume, the target company, the role, and any weaknesses identified from previous sessions.</div>
+
+        <!-- Persona cards — canvas web layout -->
+        <div class="persona-canvas-wrap">
+          <div class="persona-canvas-dots"></div>
+          <div class="persona-web-grid">
+
+            <!-- Left column: Michael + Kelsey -->
+            <div class="pnc-side-col">
+              <div class="pnc-card">
+                <div class="pnc-top" style="background: #fce7f3;">
+                  <div class="pnc-avatar">
+                    <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=400&h=400&fit=crop" alt="Michael">
+                  </div>
+                  <span class="pnc-badge">Vibe Check</span>
+                  <div class="pnc-name">Michael</div>
+                  <div class="pnc-desc">Casual, unstructured. Tests cultural fit. Wants to know if you're fun to work with.</div>
+                  <div class="pnc-meta-row">
+                    <span>Voice AI</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span>ElevenLabs</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span class="pnc-meta-lang">English</span>
+                  </div>
+                </div>
+              </div>
+              <div class="pnc-card">
+                <div class="pnc-top" style="background: #dbeafe;">
+                  <div class="pnc-avatar">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop" alt="Kelsey">
+                  </div>
+                  <span class="pnc-badge">Behavioral HR</span>
+                  <div class="pnc-name">Kelsey</div>
+                  <div class="pnc-desc">Warm but probing. Obsessed with soft skills and conflict resolution stories.</div>
+                  <div class="pnc-meta-row">
+                    <span>Voice AI</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span>ElevenLabs</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span class="pnc-meta-lang">English</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Center: Ellen (featured) -->
+            <div class="pnc-center-col">
+              <div class="pnc-card">
+                <div class="pnc-top" style="background: #ccfbf1;">
+                  <div class="pnc-avatar">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop" alt="Ellen" style="object-position: center 25%; transform: scale(1.4);">
+                  </div>
+                  <span class="pnc-badge" style="background: rgba(13,148,136,0.12); border-color: rgba(13,148,136,0.3); color: #0d7a72;">Algo Purist</span>
+                  <div class="pnc-name">Ellen</div>
+                  <div class="pnc-desc">Cold, logical, obsessed with efficiency. Big-O, system design, technical depth. Speaks 10+ languages.</div>
+                  <div class="pnc-meta-row">
+                    <span>Voice AI</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span>ElevenLabs</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span class="pnc-meta-lang">10+ Languages</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right column: James + Mark -->
+            <div class="pnc-side-col">
+              <div class="pnc-card">
+                <div class="pnc-top" style="background: #fef9c3;">
+                  <div class="pnc-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" alt="James">
+                  </div>
+                  <span class="pnc-badge">Skeptic Senior</span>
+                  <div class="pnc-name">James</div>
+                  <div class="pnc-desc">Direct, skeptical. Detects BS immediately. Challenges your engineering decisions.</div>
+                  <div class="pnc-meta-row">
+                    <span>Voice AI</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span>ElevenLabs</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span class="pnc-meta-lang">English</span>
+                  </div>
+                </div>
+              </div>
+              <div class="pnc-card">
+                <div class="pnc-top" style="background: #ede9fe;">
+                  <div class="pnc-avatar">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop" alt="Mark" style="object-position: 60% 65%; transform: scale(1.9);">
+                  </div>
+                  <span class="pnc-badge">Startup Hustler</span>
+                  <div class="pnc-name">Mark</div>
+                  <div class="pnc-desc">Impatient, pragmatic. Hates theory. Wants to know if you can ship code. Now.</div>
+                  <div class="pnc-meta-row">
+                    <span>Voice AI</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span>ElevenLabs</span>
+                    <span class="pnc-meta-sep">·</span>
+                    <span class="pnc-meta-lang">English</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Persona selector screenshot -->
+        <div class="scene-block" style="margin-top: 32px;">
+          <div class="browser-frame" style="border-radius: 16px;">
+            <div class="browser-bar" style="display: flex !important;">
+              <div class="browser-dot bd-red"></div><div class="browser-dot bd-yellow"></div><div class="browser-dot bd-green"></div>
+              <div class="browser-url">Sparr — Select your interviewer</div>
+            </div>
+            <div class="browser-content">
+              <img src="images/sparr-select-interviewer.png" loading="lazy" alt="Sparr AI — Interviewer persona selection screen">
+            </div>
+          </div>
+        </div>
+        <div style="font-size:12px; color:#607d8b; text-align:center; margin-top:-24px; margin-bottom:48px;">The actual persona selection screen — candidates pick their interviewer type before configuring the session</div>
+
+        <!-- Ellen's multilingual - side screenshot -->
+        <div class="project-body-heading light" style="margin-top: 40px;">Ellen speaks 10 languages</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">Ellen is the only persona with multilingual capability, designed for candidates who want to practice technical interviews in their native language or in a language they're targeting for relocation. The language is selected during onboarding and injected into Ellen's Gemini-generated system prompt, ensuring the entire interview (questions, follow-ups, and evaluation criteria) runs in the chosen language at native technical fluency. The 10 supported languages are: <strong>English, Spanish, Russian, Romanian, Slovak, Croatian, Italian, German, Polish, and Danish.</strong></div>
+
+        <div class="two-col-scene">
+          <div>
+            <div class="browser-frame">
+              <div class="browser-bar">
+                <div class="browser-dot bd-red"></div><div class="browser-dot bd-yellow"></div><div class="browser-dot bd-green"></div>
+                <div class="browser-url">Ellen — Language selection</div>
+              </div>
+              <div class="browser-content">
+                <img src="images/sparr-ellen-languages.png" loading="lazy" alt="Ellen's multilingual language selection">
+              </div>
+            </div>
+            <div class="scene-caption">Language selector — available for Ellen persona only</div>
+          </div>
+          <div>
+            <div class="browser-frame">
+              <div class="browser-bar">
+                <div class="browser-dot bd-red"></div><div class="browser-dot bd-yellow"></div><div class="browser-dot bd-green"></div>
+                <div class="browser-url">Sparr — Create interview session</div>
+              </div>
+              <div class="browser-content">
+                <img src="images/sparr-create-popup.png" loading="lazy" alt="Sparr AI — New session creation modal">
+              </div>
+            </div>
+            <div class="scene-caption">New session modal — company, role, experience level, resume</div>
+          </div>
+        </div>
+
+        <!-- Session Spaces -->
+        <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-11">_______&nbsp;&nbsp; SESSION SPACES</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">The AI that remembers what you got wrong</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">Session Spaces was the feature I was most excited to build. Interviews can be linked into chains using Firestore's parentId/childId document references, creating a persistent session memory where each follow-up interview inherits the context of previous performance and deliberately revisits areas where the candidate underperformed.</div>
+
+        <div class="spaces-explainer">
+          <div class="spaces-left">
+            <div class="spaces-chain">
+              <div class="spaces-node">
+                <div class="spaces-node-dot">1</div>
+                <div class="spaces-node-content">
+                  <div class="spaces-node-title">First Interview (Root Session)</div>
+                  <div class="spaces-node-text">Candidate completes interview with James (Skeptic Senior). Report identifies weakness: System Design explanations too high-level.</div>
+                </div>
+              </div>
+              <div class="spaces-node">
+                <div class="spaces-node-dot">2</div>
+                <div class="spaces-node-content">
+                  <div class="spaces-node-title">Follow-Up Session (childId linked)</div>
+                  <div class="spaces-node-text">New session created with parentId pointing to session 1. Gemini reads the prior report, and James probes system design harder, earlier, with less patience.</div>
+                </div>
+              </div>
+              <div class="spaces-node">
+                <div class="spaces-node-dot">3</div>
+                <div class="spaces-node-content">
+                  <div class="spaces-node-title">Progression Tracked in Firestore</div>
+                  <div class="spaces-node-text">Each session in a Space is visualized as a linked node in the ReactFlow workflow builder. Candidate sees their full interview history as a conversation flow.</div>
+                </div>
+              </div>
+              <div class="spaces-node">
+                <div class="spaces-node-dot">∞</div>
+                <div class="spaces-node-content">
+                  <div class="spaces-node-title">Escalating Difficulty</div>
+                  <div class="spaces-node-text">The chain doesn't reset. Every session builds on the last. The AI becomes harder to satisfy on weak areas. The candidate either improves, or stays exposed.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="spaces-right">
+            <div class="browser-frame">
+              <div class="browser-bar">
+                <div class="browser-dot bd-red"></div><div class="browser-dot bd-yellow"></div><div class="browser-dot bd-green"></div>
+                <div class="browser-url">Sparr — Session Spaces</div>
+              </div>
+              <div class="browser-content">
+                <img src="images/sparr-spaces.gif" loading="lazy" alt="Sparr AI — Session Spaces linked interview chain">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resume intelligence -->
+        <h3 class="project-top-heading" style="margin-top: 150px;"><strong class="bold-text-11">_______&nbsp;&nbsp; RESUME-AWARE PROBING</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">The AI that reads your resume before judging it</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">During onboarding, candidates upload their resume as a PDF. The backend extracts text via pdf-parse (2000 character window), then passes it to Gemini along with the target role and company context. Gemini returns 3–5 specific technical weaknesses it identifies in the resume relative to the job requirements. These weaknesses are then injected into the persona's dynamically-generated system prompt so the interviewer doesn't ask generic questions. It asks about the specific gaps between what you've claimed and what the role demands.</div>
+
+        <div class="project-body-heading light" style="margin-top: 0;">The intelligence pipeline</div>
+        <div class="w-layout-hflex observation-block-cards">
+          <div class="w-layout-vflex observation-card">
+            <div class="project-body-heading light experience-heading">Step 1 — Resume parse</div>
+            <p class="observation-card-paragraph">PDF uploaded to backend via Multer. pdf-parse extracts raw text. Gemini receives text, target role, company, and experience level.</p>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="project-body-heading light experience-heading">Step 2 — Gap analysis</div>
+            <p class="observation-card-paragraph">Gemini identifies 3–5 specific weaknesses: missing skills, shallow experience in key areas, or credentials that don't match the role requirements.</p>
+          </div>
+          <div class="w-layout-vflex observation-card">
+            <div class="project-body-heading light experience-heading">Step 3 — Prompt injection</div>
+            <p class="observation-card-paragraph">Weaknesses are injected into the persona's system prompt alongside personality traits, questioning style, and language preference. ElevenLabs receives the final prompt and begins the interview.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- CHAPTER 03 / RESULTS & EXECUTION    -->
+  <!-- ════════════════════════════════════ -->
+  <section class="chapter-section sparr-chapter">
+    <div class="w-layout-hflex chapter-block">
+      <h1 class="chapter-h1">03 /</h1>
+      <div class="w-layout-vflex chapter-texts">
+        <p class="chapter-top-paragraph">CHAPTER</p>
+        <p class="paragraph-2">RESULTS &amp; EXECUTION</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-9 sparr-tint-section">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex flex-block-4">
+        <h3 class="project-top-heading"><strong class="bold-text-12">_______&nbsp;&nbsp; THE INTERVIEW REPORT</strong></h3>
+        <h1 class="project-bottom-heading"><strong class="bold-text-2 white">What Sparr delivers after every session</strong><span class="period-span"><strong class="bold-text-2 dot">.</strong></span></h1>
+        <div class="horizontal-bar dark"></div>
+
+        <div class="project-body-heading light" style="margin-top: 16px;">The live interview interface</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">The interview window runs full-screen with a 3D animated orb (built in Three.js) serving as the visual focus while ElevenLabs streams audio in real time. The candidate's workbook is accessible as a slide-out panel for taking notes during the session. ElevenLabs is configured with an eager turn-taking mode: 7 seconds of silence triggers a response prompt, 20 seconds auto-ends the candidate's turn. Maximum interview duration is <strong>5 minutes per session</strong>, keeping each session focused and preventing the sprawling conversations that make transcripts hard to analyse.</div>
+
+        <div class="scene-block" style="max-width: 100%;">
+          <div class="browser-frame" style="border-radius: 16px;">
+            <div class="browser-bar" style="display: flex !important;">
+              <div class="browser-dot bd-red"></div>
+              <div class="browser-dot bd-yellow"></div>
+              <div class="browser-dot bd-green"></div>
+              <div class="browser-url">Sparr — Live interview session</div>
+            </div>
+            <div class="browser-content">
+              <img src="images/sparr-interview-window.png" loading="lazy" alt="Sparr AI — Live interview window with 3D orb and voice visualization">
+            </div>
+          </div>
+        </div>
+
+        <div class="project-body-heading light" style="margin-top: 56px;">Report generation</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">After each interview, the full conversation transcript is sent to Gemini for analysis. The generated report includes timestamped feedback linked to specific moments in the audio, a radar chart scoring the candidate across 6–8 dimensions (communication, technical depth, problem-solving, composure, etc.), a waveform timeline with highlighted feedback moments, and actionable improvement recommendations. I also wired up PDF export so candidates can save and share their reports.</div>
+
+        <!-- Report GIF — full-width scene -->
+        <div class="scene-block">
+          <div class="browser-frame" style="border-radius: 16px;">
+            <div class="browser-bar">
+              <div class="browser-dot bd-red"></div>
+              <div class="browser-dot bd-yellow"></div>
+              <div class="browser-dot bd-green"></div>
+              <div class="browser-url">Sparr — Interview Report</div>
+            </div>
+            <div class="browser-content">
+              <img src="images/sparr-report.gif" loading="lazy" alt="Sparr AI — Report generation with waveform timeline and radar chart">
+            </div>
+          </div>
+        </div>
+
+        <!-- Side-by-side: report + dashboard -->
+        <div class="project-body-heading light" style="margin-top: 40px;">Performance dashboard</div>
+        <div class="project-body-paragraph dark question-paragraph interaction-para">The progress dashboard aggregates scores across all sessions, tracking improvement over time across performance dimensions. Candidates can see not just how they did in a single interview, but how their composure, technical depth, and communication scores trend across a series of sessions within a Space.</div>
+
+        <div class="two-col-scene">
+          <div>
+            <div class="browser-frame">
+              <div class="browser-bar">
+                <div class="browser-dot bd-red"></div><div class="browser-dot bd-yellow"></div><div class="browser-dot bd-green"></div>
+                <div class="browser-url">Sparr — Session report</div>
+              </div>
+              <div class="browser-content">
+                <img src="images/sparr-report.png" loading="lazy" alt="Sparr AI — Detailed session report">
+              </div>
+            </div>
+            <div class="scene-caption">Detailed report — scores, strengths, weaknesses, recommendations</div>
+          </div>
+          <div>
+            <div class="browser-frame">
+              <div class="browser-bar">
+                <div class="browser-dot bd-red"></div><div class="browser-dot bd-yellow"></div><div class="browser-dot bd-green"></div>
+                <div class="browser-url">Sparr — Progress dashboard</div>
+              </div>
+              <div class="browser-content">
+                <img src="images/sparr-progress-dashboard.png" loading="lazy" alt="Sparr AI — Progress dashboard with radar chart">
+              </div>
+            </div>
+            <div class="scene-caption">Progress dashboard — performance trends across all sessions</div>
+          </div>
+        </div>
+
+        <!-- Metrics -->
+        <div class="project-body-heading light" style="margin-top: 40px;">Key metrics</div>
+        <div class="sparr-metrics">
+          <div class="sparr-metric">
+            <div class="sparr-metric-val">5</div>
+            <div class="sparr-metric-label">Distinct voice personas with unique ElevenLabs voices</div>
+          </div>
+          <div class="sparr-metric">
+            <div class="sparr-metric-val">10<span class="sparr-metric-unit">+</span></div>
+            <div class="sparr-metric-label">Languages supported via Ellen persona</div>
+          </div>
+          <div class="sparr-metric">
+            <div class="sparr-metric-val">&lt;1<span class="sparr-metric-unit">s</span></div>
+            <div class="sparr-metric-label">Voice latency via ElevenLabs Conversational AI</div>
+          </div>
+          <div class="sparr-metric">
+            <div class="sparr-metric-val">7</div>
+            <div class="sparr-metric-label">Step onboarding wizard generating job archetypes</div>
+          </div>
+          <div class="sparr-metric">
+            <div class="sparr-metric-val">∞</div>
+            <div class="sparr-metric-label">Linked session chains via Firestore parentId references</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- CHAPTER 04 / LEARNINGS              -->
+  <!-- ════════════════════════════════════ -->
+  <section class="chapter-section sparr-chapter">
+    <div class="w-layout-hflex chapter-block">
+      <h1 class="chapter-h1">04 /</h1>
+      <div class="w-layout-vflex chapter-texts">
+        <p class="chapter-top-paragraph">CHAPTER</p>
+        <p class="paragraph-2">LEARNINGS</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-11">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="w-layout-vflex">
+        <h3 class="project-top-heading"><strong class="bold-text-13">_______&nbsp;&nbsp; KEY FINDINGS</strong></h3>
+        <h1 class="project-bottom-heading"><strong>Measuring success</strong><span><strong class="bold-text-9">.</strong></span></h1>
+        <div class="horizontal-bar light"></div>
+
+        <div class="div-block-11">
+          <h1 class="heading-4">"The most effective thing Sparr does is not ask harder questions. It asks the right questions to the right person. When James reads your resume and immediately challenges the one Django project where your role was ambiguous, that's not a generic interview. That's a conversation you've never had the chance to practice for."</h1>
+        </div>
+
+        <div class="w-layout-hflex measuring-sucess">
+          <div class="w-layout-vflex flex-block-5">
+            <div class="project-body-heading">What worked well</div>
+            <p class="project-body-paragraph">The ElevenLabs integration performed better than expected. Sub-second voice latency made conversations feel genuinely natural, unlike the stilted turn-taking you get from most voice AI tools. The candidates and engineers who used Sparr during and after the hackathon kept coming back to one thing: Ellen, specifically, felt like a real technical interview, not a chatbot. That was exactly the validation the persona-specific system prompt approach needed. The dynamic prompt approach, where Gemini crafts a fresh persona instruction from scratch for each session by pulling from resume analysis, company context, and prior session data, consistently outperformed the static prompts we tried early on. Every interview felt different.<br><br>The Firestore linked-list approach for Session Spaces was clean to implement and scale. I chose parentId/childId document references specifically because it meant no complex graph database was needed. Firestore's document model handled the chain structure naturally. The ReactFlow visualization of the interview chain was one of the features I was most proud of, and it added genuine value beyond aesthetics: candidates could see exactly how their sessions were connected and where they'd been challenged before.</p>
+          </div>
+          <div class="w-layout-vflex flex-block-6">
+            <div class="project-body-heading">What I would do differently</div>
+            <p class="project-body-paragraph">A lot of Sparr's architectural decisions were made fast. We were building under hackathon constraints, and speed forced clarity but also created technical debt. The most obvious place it shows is the resume parsing pipeline. I chose pdf-parse because it was quick to integrate, and it handles most PDF formats well enough. But heavily formatted resumes (tables, columns, custom fonts) produce messy extracted text that confuses Gemini's gap analysis. With more time, I'd swap it for a dedicated document intelligence service like Google Document AI. I'd also parse by section (Experience, Skills, Projects) rather than by raw character count, which would give Gemini a much more structured context to work from.<br><br>The report generation could be significantly richer. Right now it produces a single-pass analysis of the full transcript after the interview ends. A better approach would process the transcript progressively during the interview itself, tagging specific moments in real time and building the report as the conversation unfolds. That would also open the door to live coaching, nudging the candidate mid-interview when an answer is going off track, which is something none of the current tools do.</p>
+          </div>
+        </div>
+
+        <a href="#page-top" class="scroll-to-top w-inline-block">
+          <img src="images/scroll-to-top.svg" loading="lazy" alt="" class="image-24">
+        </a>
+      </div>
+
+      <div class="w-layout-hflex footer-links">
+        <div class="footer-link">ALL ML PROJECTS</div>
+        <a href="ml-projects.html" class="footer-link">ML PROJECTS</a>
+        <a href="beevo.html" class="footer-link">BEEVO</a>
+        <a href="daladala.html" class="footer-link">DALADALA RL</a>
+        <a href="accident-detection.html" class="footer-link">ACCIDENT DETECTION</a>
+        <a href="travelbot.html" class="footer-link">TRAVELBOT</a>
+        <a href="road-crash.html" class="footer-link">ROAD CRASH</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="horizontal-bar light footer-bar"></div>
+  <section class="section-12"></section>
+
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=678cf6b9ec8afcb96a1835c0" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <script>
+    const bars = document.querySelectorAll('.ml-progress-fill');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('animated'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    bars.forEach(b => obs.observe(b));
+  </script>
+
+  <script>
+    const scrollIndicatorEl = document.getElementById('scroll-indicator');
+    const scrollThumbEl     = document.getElementById('scroll-indicator-thumb');
+    let scrollHideTimer = null;
+
+    function updateScrollIndicator() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress  = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
+      if (scrollThumbEl && scrollIndicatorEl) {
+        const trackH = scrollIndicatorEl.offsetHeight;
+        const thumbH = scrollThumbEl.offsetHeight;
+        scrollThumbEl.style.top = (progress * (trackH - thumbH)) + 'px';
+      }
+      if (scrollIndicatorEl) scrollIndicatorEl.classList.add('visible');
+      clearTimeout(scrollHideTimer);
+      scrollHideTimer = setTimeout(() => {
+        if (scrollIndicatorEl) scrollIndicatorEl.classList.remove('visible');
+      }, 1600);
+    }
+
+    window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+  </script>
+</body>
+</html>

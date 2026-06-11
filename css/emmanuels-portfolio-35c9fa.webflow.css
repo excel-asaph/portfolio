@@ -191,6 +191,12 @@
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 16px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.nav-dropdown-link:hover {
+  background-color: rgba(159, 108, 73, 0.08);
+  color: #9f6c49;
 }
 
 .nav-dropdown-link:focus-visible,
@@ -2119,6 +2125,36 @@
   padding: 14px 22px;
   font-size: 16px;
   display: flex;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+.top-button::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -120%;
+  width: 55%;
+  height: 120%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.25), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.get-in-touch-link {
+  text-decoration: none;
+}
+.get-in-touch-link:hover .top-button {
+  background-color: #8a5c3a;
+}
+.get-in-touch-link:hover .top-button::after {
+  left: 160%;
+}
+.top-button img {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.get-in-touch-link:hover .top-button img {
+  transform: translate(3px, -3px);
 }
 
 .get-in-touch {
@@ -2716,11 +2752,12 @@
   }
 
   .w-nav-button {
-    color: #fff;
+    color: #607d8b;
   }
 
-  .w-nav-button.home-nav-button {
-    color: #607d8b;
+  .nav-link.w--current {
+    color: #9f6c49;
+    font-weight: 600;
   }
 
   .container {
@@ -3432,4 +3469,13 @@
   .about-stats {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+
+/* ── Nav dropdown: chevron rotation ── */
+.w-icon-dropdown-toggle {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.w-dropdown.w--open .w-icon-dropdown-toggle {
+  transform: rotate(180deg);
 }

@@ -1,0 +1,7 @@
+# Claude AI memory — never commit
+.claude/
+
+# Scratch / analysis files
+lusion_homepage_analysis.md
+resume_text.json
+resume_text.txt
