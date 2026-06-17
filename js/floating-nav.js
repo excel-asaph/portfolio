@@ -2,6 +2,12 @@
   var navEl = document.querySelector('.navbar-no-shadow-container');
   if (!navEl) return;
 
+  // Apply sticky to the outermost nav wrapper so it spans the full page height.
+  // .nav-block (project pages) → direct child of body, full-page sibling of content.
+  // [data-wf--nav-bar--variant] (index.html) → direct child of .main-content.
+  var stickyTarget = navEl.closest('.nav-block') || navEl.parentElement;
+  if (stickyTarget) stickyTarget.classList.add('nav-sticky-wrapper');
+
   // If a child dropdown link is active, mark the parent toggle too
   var activeDropLink = navEl.querySelector('.nav-dropdown-link.w--current');
   if (activeDropLink) {
