@@ -69,7 +69,7 @@
       top: 0;
       will-change: top;
       cursor: grab;
-      transition: width 0.15s ease, background 0.15s ease;
+      transition: width 0.15s ease, background 0.15s ease, top 0.12s ease-out;
     }
     .scroll-indicator-thumb:hover {
       width: 8px;
@@ -79,6 +79,7 @@
       width: 8px;
       background: var(--beevo-dark);
       cursor: grabbing;
+      transition: width 0.15s ease, background 0.15s ease;
     }
     body.is-scroll-dragging {
       cursor: grabbing !important;
