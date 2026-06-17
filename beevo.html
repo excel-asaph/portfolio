@@ -1635,8 +1635,10 @@
       const maxTrack = trackH - thumbH;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const delta = e.clientY - dragStartY;
-      const newScroll = dragStartScrollY + (delta / maxTrack) * maxScroll;
-      window.scrollTo(0, Math.max(0, Math.min(maxScroll, newScroll)));
+      const clampedScroll = Math.max(0, Math.min(maxScroll, dragStartScrollY + (delta / maxTrack) * maxScroll));
+      // Update thumb position immediately (don't wait for scroll event to bounce back)
+      scrollThumbEl.style.top = ((clampedScroll / maxScroll) * maxTrack) + 'px';
+      window.scrollTo(0, clampedScroll);
     });
     document.addEventListener('mouseup', () => {
       if (!isDragging) return;
