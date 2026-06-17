@@ -33,13 +33,12 @@
     /* ══ SCROLL INDICATOR ══ */
     .scroll-indicator {
       position: fixed;
-      right: 18px;
+      right: 10px;
       top: 50%;
       transform: translateY(-50%);
-      width: 6px;
+      width: 20px;
       height: 28vh;
       z-index: 999;
-      pointer-events: none;
       opacity: 0;
       transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -52,6 +51,7 @@
       inset: 0;
       background: rgba(10, 10, 10, 0.1);
       border-radius: 999px;
+      pointer-events: none;
     }
     .scroll-indicator-thumb {
       position: absolute;
@@ -63,7 +63,20 @@
       border-radius: 999px;
       top: 0;
       will-change: top;
+      cursor: grab;
+      transition: width 0.15s ease, background 0.15s ease, top 0.12s ease-out;
     }
+    .scroll-indicator-thumb:hover {
+      width: 8px;
+      background: #000000;
+    }
+    .scroll-indicator-thumb.is-dragging {
+      width: 8px;
+      background: #000000;
+      cursor: grabbing;
+      transition: width 0.15s ease, background 0.15s ease;
+    }
+    body.is-scroll-dragging { cursor: grabbing !important; user-select: none; }
 
     /* ══ NAV OVERRIDES — strip Webflow blue nav ══ */
     .nav-block {
@@ -943,7 +956,20 @@
     const scrollIndicatorEl = document.getElementById('scroll-indicator');
     const scrollThumbEl     = document.getElementById('scroll-indicator-thumb');
     let scrollHideTimer = null;
-    function updateScrollIndicator() {
+    let isDragging = false;
+    let dragStartY = 0;
+    let dragStartScrollY = 0;
+
+    function showIndicator() {
+      if (scrollIndicatorEl) scrollIndicatorEl.classList.add('visible');
+    }
+    function scheduleHide() {
+      clearTimeout(scrollHideTimer);
+      scrollHideTimer = setTimeout(() => {
+        if (!isDragging && scrollIndicatorEl) scrollIndicatorEl.classList.remove('visible');
+      }, 1600);
+    }
+    function updateThumbPosition() {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const progress  = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
       if (scrollThumbEl && scrollIndicatorEl) {
@@ -951,13 +977,51 @@
         const thumbH = scrollThumbEl.offsetHeight;
         scrollThumbEl.style.top = (progress * (trackH - thumbH)) + 'px';
       }
-      if (scrollIndicatorEl) scrollIndicatorEl.classList.add('visible');
-      clearTimeout(scrollHideTimer);
-      scrollHideTimer = setTimeout(() => {
-        if (scrollIndicatorEl) scrollIndicatorEl.classList.remove('visible');
-      }, 1600);
+    }
+    function updateScrollIndicator() {
+      if (!isDragging) updateThumbPosition();
+      showIndicator();
+      scheduleHide();
     }
     window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+
+    scrollIndicatorEl && scrollIndicatorEl.addEventListener('mouseenter', () => {
+      clearTimeout(scrollHideTimer);
+      showIndicator();
+    });
+    scrollIndicatorEl && scrollIndicatorEl.addEventListener('mouseleave', () => {
+      if (!isDragging) scheduleHide();
+    });
+
+    scrollThumbEl && scrollThumbEl.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      dragStartY = e.clientY;
+      dragStartScrollY = window.scrollY;
+      scrollThumbEl.classList.add('is-dragging');
+      document.body.classList.add('is-scroll-dragging');
+      clearTimeout(scrollHideTimer);
+      showIndicator();
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const trackH    = scrollIndicatorEl.offsetHeight;
+      const thumbH    = scrollThumbEl.offsetHeight;
+      const maxTrack  = trackH - thumbH;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const delta     = e.clientY - dragStartY;
+      const clampedScroll = Math.max(0, Math.min(maxScroll, dragStartScrollY + (delta / maxTrack) * maxScroll));
+      scrollThumbEl.style.top = ((clampedScroll / maxScroll) * maxTrack) + 'px';
+      window.scrollTo(0, clampedScroll);
+    });
+    document.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      scrollThumbEl && scrollThumbEl.classList.remove('is-dragging');
+      document.body.classList.remove('is-scroll-dragging');
+      updateThumbPosition();
+      scheduleHide();
+    });
   </script>
 
   <script>
