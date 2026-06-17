@@ -20,12 +20,12 @@
 
 /* Scrolled — glass pill activates */
 .nav-is-scrolled .nav-menu-wrapper {
-  background: rgba(10, 10, 10, 0.78);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(10, 10, 10, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(255, 255, 255, 0.12);
   padding: 5px 8px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* Nav links — always pill-shaped, transition padding on scroll */
