@@ -51,7 +51,10 @@
       transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .scroll-indicator-track {
-      position: absolute; inset: 0;
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%; transform: translateX(-50%);
+      width: 6px;
       background: rgba(217,119,6,0.15);
       border-radius: 999px;
       pointer-events: none;
