@@ -1,0 +1,67 @@
+/* ══ FLOATING PILL NAV ══ */
+
+/* Sticky — nav stays visible on scroll */
+.navbar-no-shadow-container {
+  position: sticky !important;
+  top: 0;
+  z-index: 100 !important;
+}
+
+/* Prepare wrapper for smooth pill transition */
+.nav-menu-wrapper {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition:
+    background 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Scrolled — glass pill activates */
+.nav-is-scrolled .nav-menu-wrapper {
+  background: rgba(10, 10, 10, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.1);
+  padding: 5px 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Nav links — always pill-shaped, transition padding on scroll */
+.nav-menu .nav-link,
+.nav-menu .nav-dropdown-toggle {
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease, padding 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* All link text → muted white inside the scrolled pill */
+.nav-is-scrolled .nav-menu .nav-link,
+.nav-is-scrolled .nav-menu .nav-dropdown-toggle {
+  color: rgba(255, 255, 255, 0.65) !important;
+  padding: 5px 12px !important;
+}
+
+.nav-is-scrolled .nav-dropdown-icon {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Active link — inner white pill */
+.nav-is-scrolled .nav-menu .nav-link.w--current,
+.nav-is-scrolled .nav-menu .nav-dropdown-toggle.nav-active {
+  background: rgba(255, 255, 255, 0.13);
+  color: #fff !important;
+}
+
+/* Hover inside pill */
+.nav-is-scrolled .nav-menu .nav-link:not(.w--current):hover,
+.nav-is-scrolled .nav-menu .nav-dropdown-toggle:not(.nav-active):hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Brand name stays readable on dark scroll */
+.nav-is-scrolled .navbar-brand .text-block-7,
+.nav-is-scrolled .navbar-brand .text-block-9 {
+  transition: color 0.4s ease;
+}
