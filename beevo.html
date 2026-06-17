@@ -1602,7 +1602,7 @@
       }
     }
     function onScroll() {
-      updateThumbPosition();
+      if (!isDragging) updateThumbPosition();
       showIndicator();
       scheduleHide();
     }
@@ -1645,6 +1645,7 @@
       isDragging = false;
       scrollThumbEl && scrollThumbEl.classList.remove('is-dragging');
       document.body.classList.remove('is-scroll-dragging');
+      updateThumbPosition();
       scheduleHide();
     });
   </script>
