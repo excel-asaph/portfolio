@@ -95,6 +95,17 @@
     .text-block-10.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df,
     .nav-dropdown-icon.w-variant-0a0a99ef-21f1-95bb-ea01-7a7cf16935df { color: #0a0a0a !important; }
 
+    /* Floating pill — light theme for white page */
+    :root {
+      --nav-pill-bg: rgba(255, 255, 255, 0.72);
+      --nav-pill-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      --nav-pill-link-color: rgba(0, 0, 0, 0.5);
+      --nav-pill-active-bg: rgba(0, 0, 0, 0.07);
+      --nav-pill-active-color: #0a0a0a;
+      --nav-pill-hover-bg: rgba(0, 0, 0, 0.05);
+      --nav-pill-hover-color: rgba(0, 0, 0, 0.8);
+    }
+
     /* HERO */
     .about-hero-section {
       padding: 48px 0 80px;
@@ -738,7 +749,7 @@
   </section>
 
   <!-- ══ EXPERIENCE — dark ══ -->
-  <section class="key-observation-section about-exp-section">
+  <section class="key-observation-section about-exp-section" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="about-eyebrow">_______&nbsp;&nbsp; WORK HISTORY</div>
       <div class="about-section-title light">Where I've worked.</div>
@@ -886,7 +897,7 @@
   </section>
 
   <!-- ══ FOOTER ══ -->
-  <footer class="about-footer">
+  <footer class="about-footer" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
 
       <div class="about-footer-statement">

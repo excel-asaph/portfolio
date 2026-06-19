@@ -60,6 +60,17 @@
       z-index: 100;
     }
 
+    /* Floating pill — light theme for light-gray page */
+    :root {
+      --nav-pill-bg: rgba(242, 242, 242, 0.72);
+      --nav-pill-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      --nav-pill-link-color: rgba(0, 0, 0, 0.5);
+      --nav-pill-active-bg: rgba(0, 0, 0, 0.07);
+      --nav-pill-active-color: #0a0a0a;
+      --nav-pill-hover-bg: rgba(0, 0, 0, 0.05);
+      --nav-pill-hover-color: rgba(0, 0, 0, 0.8);
+    }
+
     /* ══════════════════════════════════════════════════════
        HERO
     ══════════════════════════════════════════════════════ */
@@ -1035,7 +1046,7 @@
 </div>
 
 <!-- ══ FOOTER ══ -->
-<footer class="about-footer">
+<footer class="about-footer" data-nav-theme="dark">
   <div class="w-layout-blockcontainer container w-container">
     <div class="about-footer-statement">
       Let's build<br>something<span>.</span>
@@ -1325,24 +1336,6 @@
     hwObserver.observe(heresWorkEl);
   }
 
-  /* ── Nav bg on dark connect section ── */
-  const navEl = document.getElementById('ml-nav');
-  const connectSection = document.getElementById('connect');
-
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (navEl) {
-        navEl.style.background = entry.isIntersecting
-          ? 'rgba(10,10,14,0.94)'
-          : 'rgba(255,255,255,0.94)';
-        navEl.style.borderBottomColor = entry.isIntersecting
-          ? 'rgba(255,255,255,0.08)'
-          : 'rgba(0,0,0,0.06)';
-      }
-    });
-  }, { threshold: 0.1 });
-
-  if (connectSection) navObserver.observe(connectSection);
 
   /* ── Back transition: reverse the card-lunge when user hits browser back ── */
   window.addEventListener('pageshow', function() {
