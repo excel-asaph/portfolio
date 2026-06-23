@@ -25,10 +25,39 @@
     @media screen and (max-width: 991px) {
       .menu-button.w-nav-button { color: #fff; }
     }
+
+    /* The hero nav-block is 375px tall — making the whole thing sticky would pin
+       the entire blue hero to the top. Reset the JS-added sticky on the block,
+       then fix only the inner nav bar to the viewport instead. */
+    #page-top.nav-sticky-wrapper { position: relative !important; z-index: auto !important; }
+    .nav-block [data-wf--nav-bar--variant="life-prescriber---nav"] {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    .navbar-no-shadow-container { background: transparent !important; }
+
+    /* Compensate for the fixed nav being pulled out of flow: push the hero
+       container down by the nav bar's natural height (~100px) so the hero
+       image appears exactly where it did in the original Webflow design. */
+    #page-top.nav-block { padding-top: 100px; }
+
+    /* Floating pill — light theme for white/light sections (dark sections handled by JS) */
+    :root {
+      --nav-pill-bg: rgba(255, 255, 255, 0.72);
+      --nav-pill-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      --nav-pill-link-color: rgba(0, 0, 0, 0.5);
+      --nav-pill-active-bg: rgba(0, 0, 0, 0.07);
+      --nav-pill-active-color: #0a0a0a;
+      --nav-pill-hover-bg: rgba(0, 0, 0, 0.05);
+      --nav-pill-hover-color: rgba(0, 0, 0, 0.8);
+    }
   </style>
 </head>
 <body class="body">
-  <div id="page-top" class="nav-block">
+  <div id="page-top" class="nav-block" data-nav-theme="dark">
     <div data-wf--nav-bar--variant="life-prescriber---nav">
       <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-no-shadow-container w-nav">
         <div class="container-regular container">
@@ -190,7 +219,7 @@
       </div>
     </div>
   </section>
-  <section class="chapter-section">
+  <section class="chapter-section" data-nav-theme="dark">
     <div class="w-layout-hflex chapter-block">
       <h1 class="chapter-h1">01 /</h1>
       <div class="w-layout-vflex chapter-texts">
@@ -199,7 +228,7 @@
       </div>
     </div>
   </section>
-  <section class="key-observation-section">
+  <section class="key-observation-section" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex observation-block">
         <h3 class="project-top-heading"><strong class="bold-text-6">_______   KEY OBSERVATIONS</strong></h3>
@@ -356,7 +385,7 @@
       </div>
     </div>
   </section>
-  <section class="chapter-section">
+  <section class="chapter-section" data-nav-theme="dark">
     <div class="w-layout-hflex chapter-block">
       <h1 class="chapter-h1">02 /</h1>
       <div class="w-layout-vflex chapter-texts">
@@ -365,7 +394,7 @@
       </div>
     </div>
   </section>
-  <section class="software-blueprint-section">
+  <section class="software-blueprint-section" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex flex-block-3">
         <h3 class="project-top-heading"><strong class="bold-text-11">_______   SOFTWARE BLUEPRINT</strong></h3>
@@ -384,7 +413,7 @@
       <div class="section-img img-2"></div>
     </div>
   </section>
-  <section class="chapter-section">
+  <section class="chapter-section" data-nav-theme="dark">
     <div class="w-layout-hflex chapter-block">
       <h1 class="chapter-h1">03 /</h1>
       <div class="w-layout-vflex chapter-texts">
@@ -393,7 +422,7 @@
       </div>
     </div>
   </section>
-  <section class="section-9">
+  <section class="section-9" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex flex-block-4">
         <h3 class="project-top-heading"><strong class="bold-text-12">_______   HIGH FIDELITY DESIGNS</strong></h3>
@@ -402,7 +431,7 @@
       </div>
     </div>
   </section>
-  <section class="chapter-section">
+  <section class="chapter-section" data-nav-theme="dark">
     <div class="w-layout-hflex chapter-block">
       <h1 class="chapter-h1">04 /</h1>
       <div class="w-layout-vflex chapter-texts">

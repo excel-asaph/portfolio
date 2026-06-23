@@ -25,10 +25,33 @@
     @media screen and (max-width: 991px) {
       .menu-button.w-nav-button { color: #fff; }
     }
+
+    /* Hero nav-block is 375px — reset JS-added sticky, fix only the inner nav */
+    #page-top.nav-sticky-wrapper { position: relative !important; z-index: auto !important; }
+    .collab-nav [data-wf--nav-bar--variant="life-prescriber---nav"] {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    .navbar-no-shadow-container { background: transparent !important; }
+    #page-top.collab-nav { padding-top: 100px; }
+
+    /* Floating pill — light theme default (dark sections handled by JS) */
+    :root {
+      --nav-pill-bg: rgba(255, 255, 255, 0.72);
+      --nav-pill-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      --nav-pill-link-color: rgba(0, 0, 0, 0.5);
+      --nav-pill-active-bg: rgba(0, 0, 0, 0.07);
+      --nav-pill-active-color: #0a0a0a;
+      --nav-pill-hover-bg: rgba(0, 0, 0, 0.05);
+      --nav-pill-hover-color: rgba(0, 0, 0, 0.8);
+    }
   </style>
 </head>
 <body class="body">
-  <div id="page-top" class="collab-nav">
+  <div id="page-top" class="collab-nav" data-nav-theme="dark">
     <div data-wf--nav-bar--variant="life-prescriber---nav">
       <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-no-shadow-container w-nav">
         <div class="container-regular container">
@@ -192,7 +215,7 @@
       </div>
     </div>
   </section>
-  <section class="collab-chapter-section">
+  <section class="collab-chapter-section" data-nav-theme="dark">
     <div class="w-layout-hflex chapter-block">
       <h1 class="chapter-h1 collab-h1">01 /</h1>
       <div class="w-layout-vflex chapter-texts">
@@ -201,7 +224,7 @@
       </div>
     </div>
   </section>
-  <section class="key-observation-section collab-observation">
+  <section class="key-observation-section collab-observation" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex observation-block">
         <h3 class="project-top-heading"><strong class="bold-text-6 collab-heading">_______   KEY OBSERVATIONS</strong></h3>
@@ -359,7 +382,7 @@
       </div>
     </div>
   </section>
-  <section class="collab-chapter-section">
+  <section class="collab-chapter-section" data-nav-theme="dark">
     <div class="w-layout-hflex chapter-block">
       <h1 class="chapter-h1 collab-h1">02 /</h1>
       <div class="w-layout-vflex chapter-texts">
@@ -368,7 +391,7 @@
       </div>
     </div>
   </section>
-  <section class="software-blueprint-section collab-observation">
+  <section class="software-blueprint-section collab-observation" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex flex-block-3">
         <h3 class="project-top-heading"><strong class="bold-text-11 collab-heading">_______   SOFTWARE BLUEPRINT</strong></h3>
@@ -390,7 +413,7 @@
       </div>
     </div>
   </section>
-  <section class="collab-chapter-section">
+  <section class="collab-chapter-section" data-nav-theme="dark">
     <div class="w-layout-hflex chapter-block">
       <h1 class="chapter-h1 collab-h1">03 /</h1>
       <div class="w-layout-vflex chapter-texts">
@@ -399,7 +422,7 @@
       </div>
     </div>
   </section>
-  <section class="section-9 collab-observation">
+  <section class="section-9 collab-observation" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex flex-block-4">
         <h3 class="project-top-heading"><strong class="bold-text-12 collab-heading">_______   HIGH FIDELITY DESIGNS</strong></h3>
@@ -477,7 +500,7 @@
       </div>
     </div>
   </section>
-  <section class="collab-chapter-section">
+  <section class="collab-chapter-section" data-nav-theme="dark">
     <div class="w-layout-hflex chapter-block">
       <h1 class="chapter-h1 collab-h1">04 /</h1>
       <div class="w-layout-vflex chapter-texts">

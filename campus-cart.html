@@ -25,6 +25,29 @@
     @media screen and (max-width: 991px) {
       .menu-button.w-nav-button { color: #fff; }
     }
+
+    /* Hero nav-block is 375px — reset JS-added sticky, fix only the inner nav */
+    #page-top.nav-sticky-wrapper { position: relative !important; z-index: auto !important; }
+    .campus-nav [data-wf--nav-bar--variant="life-prescriber---nav"] {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    .navbar-no-shadow-container { background: transparent !important; }
+    #page-top.campus-nav { padding-top: 100px; }
+
+    /* Floating pill — light theme default (amber hero + chapter sections are light) */
+    :root {
+      --nav-pill-bg: rgba(255, 255, 255, 0.72);
+      --nav-pill-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      --nav-pill-link-color: rgba(0, 0, 0, 0.5);
+      --nav-pill-active-bg: rgba(0, 0, 0, 0.07);
+      --nav-pill-active-color: #0a0a0a;
+      --nav-pill-hover-bg: rgba(0, 0, 0, 0.05);
+      --nav-pill-hover-color: rgba(0, 0, 0, 0.8);
+    }
   </style>
 </head>
 <body class="body">
@@ -198,7 +221,7 @@
       </div>
     </div>
   </section>
-  <section class="key-observation-section campus-observation">
+  <section class="key-observation-section campus-observation" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex observation-block">
         <h3 class="project-top-heading"><strong class="bold-text-6 campus-sub">_______   KEY OBSERVATIONS</strong></h3>
@@ -366,7 +389,7 @@
       </div>
     </div>
   </section>
-  <section class="software-blueprint-section campus-observation">
+  <section class="software-blueprint-section campus-observation" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex flex-block-3">
         <h3 class="project-top-heading"><strong class="bold-text-11 campus-sub">_______   SOFTWARE BLUEPRINT</strong></h3>
@@ -414,7 +437,7 @@
       </div>
     </div>
   </section>
-  <section class="section-9 campus-observation">
+  <section class="section-9 campus-observation" data-nav-theme="dark">
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex flex-block-4">
         <h3 class="project-top-heading"><strong class="bold-text-12 campus-dot">_______   HIGH FIDELITY DESIGNS</strong></h3>

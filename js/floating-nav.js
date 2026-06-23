@@ -31,9 +31,7 @@
     }
 
     requestAnimationFrame(positionPill);
-    window.addEventListener('resize', function () {
-      requestAnimationFrame(positionPill);
-    });
+    window.addEventListener('resize', function () { requestAnimationFrame(positionPill); });
   }
 
   // ── Theme state ──────────────────────────────────────────────────────────
@@ -49,9 +47,8 @@
   var darkVarKeys = Object.keys(darkPillVars);
 
   var isDarkTheme = false;
-  var currentSectionBg = null; // rgba string from data-bg tint, or null
+  var currentSectionBg = null;
 
-  // Resolves --nav-pill-bg: dark wins, else section tint, else page default
   function applyPillBg() {
     var root = document.documentElement;
     if (isDarkTheme) {
@@ -78,41 +75,23 @@
     applyPillBg();
   }
 
-  // ── Dark section detection (data-nav-theme="dark" + page-overlay) ────────
+  // ── Dark section detection — getBoundingClientRect stays accurate after
+  //    images load and push sections to their final positions ────────────────
   var darkSections = Array.from(document.querySelectorAll('[data-nav-theme="dark"]'));
-  var sectionRanges = [];
-
-  function cacheSectionRanges() {
-    sectionRanges = darkSections.map(function(s) {
-      return { top: s.offsetTop, bottom: s.offsetTop + s.offsetHeight };
-    });
-  }
-
   var pageOverlay = document.getElementById('page-overlay');
 
   function updatePillTheme() {
-    if (!sectionRanges.length) return;
-    var scrollY   = window.scrollY;
-    var navBottom = scrollY + navEl.offsetHeight;
-
-    var isDark = sectionRanges.some(function(r) {
-      return navBottom > r.top && scrollY < r.bottom;
+    if (!darkSections.length) return;
+    var navRect = navEl.getBoundingClientRect();
+    var isDark = darkSections.some(function(s) {
+      var r = s.getBoundingClientRect();
+      return navRect.bottom > r.top && navRect.bottom < r.bottom;
     });
-
     if (!isDark && pageOverlay) {
       var overlayOpacity = parseFloat(pageOverlay.style.opacity) || 0;
       if (overlayOpacity > 0.12) isDark = true;
     }
-
     applyPillTheme(isDark);
-  }
-
-  if (darkSections.length) {
-    cacheSectionRanges();
-    window.addEventListener('resize', function() {
-      cacheSectionRanges();
-      updatePillTheme();
-    });
   }
 
   // ── Per-section bg tint (data-bg) ────────────────────────────────────────
