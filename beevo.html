@@ -140,7 +140,7 @@
       display: flex;
       justify-content: center;
       gap: 72px;
-      margin-bottom: 100px;
+      margin-bottom: 40px;
     }
     .beevo-editorial-meta-item {
       font-size: 15px;
@@ -151,6 +151,24 @@
     .beevo-editorial-meta-item strong {
       color: #3a4248;
       font-weight: 700;
+    }
+    .beevo-competition-pill {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 80px;
+    }
+    .beevo-competition-pill span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 22px;
+      border-radius: 100px;
+      border: 1px solid rgba(30, 60, 90, 0.18);
+      background: rgba(30, 60, 90, 0.05);
+      font-size: 13px;
+      font-weight: 400;
+      color: #3a4248;
+      letter-spacing: 0.01em;
     }
     .beevo-showcase-frame {
       background: var(--beevo-darkest);
@@ -173,11 +191,14 @@
     }
     @media (max-width: 767px) {
       .beevo-editorial-hero { padding: 40px 40px 56px; }
-      .beevo-editorial-meta-item { max-width: 50%; padding: 20px; }
+      .beevo-editorial-meta { gap: 4px; }
+      .beevo-editorial-meta-item { max-width: 50%; padding: 8px 16px; }
     }
     @media (max-width: 479px) {
       .beevo-editorial-hero { padding: 32px 20px 48px; }
       .beevo-editorial-title { letter-spacing: -2px; }
+      .beevo-editorial-meta { flex-direction: column; align-items: center; gap: 2px; }
+      .beevo-editorial-meta-item { max-width: 100%; padding: 6px 0; text-align: center; }
     }
 
     /* ══ NAV OVERRIDES ══ */
@@ -738,10 +759,21 @@
     <h1 class="beevo-editorial-title">BEEVO</h1>
 
     <div class="beevo-editorial-meta">
-      <p class="beevo-editorial-meta-item"><strong>Role:</strong>&nbsp; Full-Stack AI Engineer</p>
+      <p class="beevo-editorial-meta-item"><strong>Role:</strong>&nbsp; Full-Stack & ML Engineer</p>
       <p class="beevo-editorial-meta-item"><strong>Context:</strong>&nbsp; Autonomous Marketing Intelligence</p>
       <p class="beevo-editorial-meta-item"><strong>Duration:</strong>&nbsp; April 2025 – Present</p>
-      <p class="beevo-editorial-meta-item"><strong>Competition:</strong>&nbsp; Gemini 3 Hackathon &nbsp;·&nbsp; 12,491 participants &nbsp;·&nbsp; $100K prize pool</p>
+    </div>
+
+    <div class="beevo-competition-pill">
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:6px;flex-shrink:0;">
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+          <path d="M4 22h16"/>
+          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+          <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+        </svg><strong>Gemini 3 Hackathon</strong> &nbsp;·&nbsp; 12,491 participants &nbsp;·&nbsp; $100K prize pool</span>
     </div>
 
     <div class="beevo-showcase-frame">
@@ -758,7 +790,7 @@
       <!-- ── CONTRIBUTION BLOCK ── -->
       <div class="w-layout-vflex contribution-block">
         <div class="contribution-heading">My individual contribution</div>
-        <div class="contribution-paragraph">As a Full-Stack AI Engineer on Beevo, I worked with a team of three other engineers to build this for the Gemini API Developer Competition. My focus was the agent system and the product layer. I built all 15 autonomous agents, including the 6 Watcher Agents that continuously screenshot, analyze, and propose optimizations to the live landing page. I designed the Human-in-the-Loop control system that keeps founders in control of what the agents change, and wired up the multi-channel notification infrastructure so approvals could come in via the HITL Control Center, Telegram, or Web Push from any device. I also built the brand canvas using ReactFlow to visualize every agent decision as a Thought Signature, and assembled the landing page generation layer that pulls brand assets, DNA, and agent outputs into a live, renderable page.</div>
+        <div class="contribution-paragraph">As a Full-Stack ML Engineer on Beevo, I worked with a team of three other engineers to build this for the Gemini API Developer Competition. My focus was the agent system and the product layer. I built all 15 autonomous agents, including the 6 Watcher Agents that continuously screenshot, analyze, and propose optimizations to the live landing page. I designed the Human-in-the-Loop control system that keeps founders in control of what the agents change, and wired up the multi-channel notification infrastructure so approvals could come in via the HITL Control Center, Telegram, or Web Push from any device. I also built the brand canvas using ReactFlow to visualize every agent decision as a Thought Signature, and assembled the landing page generation layer that pulls brand assets, DNA, and agent outputs into a live, renderable page.</div>
 
         <div class="contribution-skills">System Architecture &amp; Design</div>
         <div class="progress-bar">

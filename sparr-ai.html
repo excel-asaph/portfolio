@@ -749,7 +749,7 @@
       display: flex;
       justify-content: center;
       gap: 72px;
-      margin-bottom: 100px;
+      margin-bottom: 40px;
     }
     .sparr-editorial-meta-item {
       font-size: 15px;
@@ -760,6 +760,24 @@
     .sparr-editorial-meta-item strong {
       color: #3a4248;
       font-weight: 700;
+    }
+    .sparr-competition-pill {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 80px;
+    }
+    .sparr-competition-pill span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 22px;
+      border-radius: 100px;
+      border: 1px solid rgba(13, 148, 136, 0.22);
+      background: rgba(13, 148, 136, 0.05);
+      font-size: 13px;
+      font-weight: 400;
+      color: #3a4248;
+      letter-spacing: 0.01em;
     }
     /* Dark-framed showcase — outer is the "border", inner holds the media */
     .sparr-showcase-frame {
@@ -786,12 +804,14 @@
     }
     @media (max-width: 767px) {
       .sparr-editorial-hero { padding: 40px 40px 56px; }
-      .sparr-editorial-meta-item { max-width: 50%; padding: 20px; }
+      .sparr-editorial-meta { gap: 4px; }
+      .sparr-editorial-meta-item { max-width: 50%; padding: 8px 16px; }
     }
     @media (max-width: 479px) {
       .sparr-editorial-hero { padding: 32px 20px 48px; }
       .sparr-editorial-title { letter-spacing: -2px; }
-      .sparr-editorial-meta-item { max-width: 100%; border-right: none; border-bottom: 1px solid rgba(13,148,136,0.2); }
+      .sparr-editorial-meta { flex-direction: column; align-items: center; gap: 2px; }
+      .sparr-editorial-meta-item { max-width: 100%; padding: 6px 0; text-align: center; }
       .sparr-showcase-frame { padding: 10px; border-radius: 14px; }
     }
 
@@ -1036,9 +1056,22 @@
     <h1 class="sparr-editorial-title">SPARR AI</h1>
 
     <div class="sparr-editorial-meta">
-      <p class="sparr-editorial-meta-item"><strong>Role:</strong>&nbsp; Full-Stack AI Engineer</p>
+      <p class="sparr-editorial-meta-item"><strong>Role:</strong>&nbsp; Full-Stack & ML Engineer</p>
       <p class="sparr-editorial-meta-item"><strong>Context:</strong>&nbsp; AI Interview Platform</p>
       <p class="sparr-editorial-meta-item"><strong>Duration:</strong>&nbsp; May 2025 – Present</p>
+    </div>
+
+    <div class="sparr-competition-pill">
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:6px;flex-shrink:0;">
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+          <path d="M4 22h16"/>
+          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+          <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+        </svg><strong>ElevenLabs x Google Cloud Hackathon</strong> &nbsp;·&nbsp; 6,930 participants &nbsp;·&nbsp; $75,000 prize pool
+      </span>
     </div>
 
     <!-- Dark-framed showcase -->
@@ -1055,7 +1088,7 @@
     <div class="w-layout-blockcontainer container w-container">
       <div class="w-layout-vflex contribution-block">
         <div class="contribution-heading">My individual contribution</div>
-        <div class="contribution-paragraph">As the Lead AI and Frontend Engineer on Sparr AI, I worked with a small team to build this for the ElevenLabs x Google Cloud hackathon. My focus was the product's intelligence and interface layers. I owned the ElevenLabs voice integration, connecting five distinct personas to a shared Gemini intelligence layer that reads the candidate's resume, generates company-specific job archetypes, and crafts each persona's system prompt before every session. I also built the full React frontend, including the onboarding wizard, the live interview interface, and the generated performance report with timestamped audio feedback and radar chart scoring. I contributed lightly to the backend where the AI and voice layers intersected with the rest of the system.</div>
+        <div class="contribution-paragraph">As the Lead ML and Frontend Engineer on Sparr AI, I worked with a small team to build this for the ElevenLabs x Google Cloud hackathon. My focus was the product's intelligence and interface layers. I owned the ElevenLabs voice integration, connecting five distinct personas to a shared Gemini intelligence layer that reads the candidate's resume, generates company-specific job archetypes, and crafts each persona's system prompt before every session. I also built the full React frontend, including the onboarding wizard, the live interview interface, and the generated performance report with timestamped audio feedback and radar chart scoring. I contributed lightly to the backend where the AI and voice layers intersected with the rest of the system.</div>
 
         <div class="contribution-skills">Voice AI Integration (ElevenLabs)</div>
         <div class="progress-bar"><div class="ml-progress-fill" style="--target-width: 95%;"></div></div>
